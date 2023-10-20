@@ -50,7 +50,7 @@ export default {
     return {
       maxWidth: {
         selectCard: 1600,
-        setCardData: 1600,
+        setCardData: 900,
         possessionCardSetting: 'auto',
         setLeaningLevel: 600,
         settings: 600

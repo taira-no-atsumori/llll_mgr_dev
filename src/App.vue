@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
       <v-btn class="d-none d-sm-block" text @click="pageMove('/llll_mgr_dev/')">Home</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('formation')" disabled>Formation</v-btn>
-      <v-btn class="d-none d-sm-block" text @click="pageMove('cardlist')" disabled>Card List</v-btn>
+      <v-btn class="d-none d-sm-block" text @click="pageMove('cardlist')">Card List</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('musiclist')">Music List</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('itemlist')">Item List</v-btn>
       <v-icon @click="pageMove('/llll_mgr_dev/')" class="hidden-sm-and-up" style="margin-right: 10px;">mdi-home</v-icon>
@@ -30,13 +30,13 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item @click="pageMove('formation')">
             <v-list-item-title>Formation</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Card List</v-list-item-title>
           </v-list-item>-->
+
+          <v-list-item @click="pageMove('cardlist')">
+            <v-list-item-title>Card List</v-list-item-title>
+          </v-list-item>
 
           <v-list-item @click="pageMove('musiclist')">
             <v-list-item-title>Music List</v-list-item-title>
@@ -45,6 +45,10 @@
           <v-list-item @click="pageMove('itemlist')">
             <v-list-item-title>Item List</v-list-item-title>
           </v-list-item>
+
+          <v-list-item @click="pageMove('license')">
+            <v-list-item-title>License</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -52,6 +56,32 @@
       <router-view/>
     </v-main>
     <Modal/>
+    <v-footer
+      color="pink"
+    >
+      <v-row
+        justify="center"
+        no-gutters
+      >
+        <v-col
+          class="mt-2 mb-3 text-center"
+          cols="12"
+        >
+          <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('/llll_mgr_dev/')">HOME</a>
+          <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" disabled>FORMATION</a>
+          <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('cardlist')">CARD LIST</a>
+          <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('musiclist')">MUSIC LIST</a>
+          <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('itemlist')">ITEM LIST</a>
+          <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('license')">LICENSE</a>
+        </v-col>
+        <v-col
+          class="text-center"
+          cols="12"
+        >
+          © 2023 - {{ new Date().getFullYear() }} <strong>taira no atsumori</strong>
+        </v-col>
+      </v-row>
+    </v-footer>
   </v-app>
 </template>
 
@@ -89,6 +119,13 @@ export default {
   store.getLocalStorage();
 </script>
 
+<style lang="scss" scoped>
+.footer-link {
+  display: inline-block;
+  color: #fff;
+}
+</style>
+
 <style lang="scss">
 /* メンバーイメージカラー */
 $kaho: #F8B500;
@@ -109,6 +146,19 @@ $hasunosora: #ffc0cb;
 
 h1 {
   font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .pb10 {
@@ -139,8 +189,7 @@ h1 {
   margin-bottom: 10px;
 }
 
-main,
-footer {
+main {
   width: 1600px;
   margin: 0 auto;
 }

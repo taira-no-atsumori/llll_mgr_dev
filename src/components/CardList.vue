@@ -1,6 +1,16 @@
 <template>
-  <div id="possessionCardSettingArea">
-    <p class="mb10">所持カード設定</p>
+  <v-container fluid>
+    <h1 class="mb-3">所持カード設定</h1>
+    <v-expansion-panels class="mb10">
+      <v-expansion-panel>
+        <v-expansion-panel-title>ページ詳細</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          リンクラに実装されているカード一覧です。<br>
+          各カードをクリックすると、カードの詳細が見られます。<br>
+          詳細画面に設定した楽曲マスタリーLv.は、絞り込みの下に表示されます。
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
     <ul id="possessionCard_header">
       <li v-for="(name_ja, name_en) in store.charactorName" :key="name_ja" :data-charactor="name_en" :data-selected="selectTab === name_en" @click="changeTab(name_en)">
         {{ name_ja.last }}
@@ -8,7 +18,7 @@
     </ul>
     <ul id="possessionCard_container">
       <li v-for="(name_ja, name_en) in store.charactorName" :key="name_en" :data-charactor="name_en" v-show="selectTab === name_en">
-        <dl v-for="rare in rarity" :key="rare" :data-rare="rare">
+        <dl v-for="rare in store.rarity" :key="rare" :data-rare="rare">
           <dt>
             {{ rare }}
           </dt>
@@ -18,7 +28,7 @@
         </dl>
       </li>
     </ul>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -27,23 +37,6 @@ export default {
   props: ['updateData'],
   data() {
     return {
-      styleType: {
-        performer: 'パフォーマー',
-        moodMaker: 'ムードメーカー',
-        cheerLeader: 'チアリーダー',
-        trickStar: 'トリックスター'
-      },
-      mood: {
-        happy: 'ハッピー',
-        neutral: 'ニュートラル',
-        melow: 'メロウ'
-      },
-      rarity: ['DR', 'UR', 'SR', 'R'],
-      styleHeadline: {
-        main: 'MAIN STYLE',
-        side1: 'SIDE STYLE 1',
-        side2: 'SIDE STYLE 2'
-      },
       selectTab: 'kaho'
     }
   },

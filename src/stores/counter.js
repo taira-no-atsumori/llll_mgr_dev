@@ -187,7 +187,7 @@ export const useStoreCounter = defineStore('store', {
           '',
           '個のスキルハートを獲得する。さらにこのセクション中、獲得するLOVEを+',
           '%する。'
-        ],
+        ]
       },
       UR: {
         'ハートキャプチャ': [
@@ -233,6 +233,23 @@ export const useStoreCounter = defineStore('store', {
           'このステージ中、獲得するLOVEを+',
           '%する。さらにメンタルを最大値の',
           '%減少させる。'
+        ],
+        'ラブアトラクト': [
+          'このステージ中、獲得するLOVEを+',
+          '%する。'
+        ],
+        'エンデュランス': [
+          'メンタルを最大値の',
+          '%回復させる。さらにボルテージPt.を',
+          'する。'
+        ],
+        'リゲインボルテージ': [
+          '手札を全て捨てて、デッキから手札上限までスキルを引く。さらにボルテージPt.を+',
+          'する。'
+        ],
+        'エクステボルテージ': [
+          'このセクション中、手札の上限枚数を3枚増加する。さらにボルテージPt.を+',
+          'する。'
         ],
       },
       SR: {
@@ -856,6 +873,47 @@ export const useStoreCounter = defineStore('store', {
           }
         },
         UR: {
+          '宇宙警察★うさぴょん': {
+            styleType: 'trickStar',
+            mood: 'neutral',
+            fluctuationStatus: {
+              cardLevel: 1,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1730,
+              pure: 2330,
+              cool: 1330,
+              mental: 193,
+              BP: 100
+            },
+            specialAppeal: {
+              name: 'リゲインボルテージ',
+              AP: 6,
+              level: 1,
+              detail: [
+                [20, 22, 24, 26, 28, 30, 32, 34, 36, 40, '??', '??', '??', 50]
+              ],
+              type: ['voltage']
+            },
+            skill: {
+              name: 'エクステボルテージ',
+              AP: 5,
+              level: 1,
+              detail: [
+                [10, 11, 12, 13, 14, 15, 16, 17, 18, 20, '??', '??', '??', 24]
+              ],
+              type: ['voltage']
+            },
+            characteristic: {
+              name: 'チェイン : 瑠璃乃',
+              detail: '瑠璃乃のスキルを使用した後、ドローされる確率が増加する。',
+              type: ['chain', 'rurino']
+            }
+          },
           'SPLASH!!!!': {
             styleType: 'moodMaker',
             mood: 'neutral',
@@ -947,14 +1005,47 @@ export const useStoreCounter = defineStore('store', {
             releaseLevel: 1
           },
           'Dream Believers': {
-            styleType: '',
-            mood: '',
-            possession: true,
-            cardLevel: 1,
-            trainingLevel: 0,
-            SALevel: 1,
-            SLevel: 1,
-            releaseLevel: 1
+            styleType: 'performer',
+            mood: 'happy',
+            fluctuationStatus: {
+              possession: true,
+              cardLevel: 1,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 2230,
+              pure: 1630,
+              cool: 1430,
+              mental: 203,
+              BP: 100
+            },
+            specialAppeal: {
+              name: 'ハートアトラクション',
+              AP: 6,
+              level: 1,
+              detail: [
+                [5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 11, 12, 13, 14],
+                [6, 6.6, 7.2, 7.8, 8.4, 9, 9.6, 10.2, 10.8, 11.4, 12, 12.6, 13.2, 13.8],
+              ],
+              type: ['voltage']
+            },
+            skill: {
+              name: 'ハートキャプチャ',
+              AP: 5,
+              level: 1,
+              detail: [
+                [5, 6, 6, 7, 7, 8, 8, 8, 9, 10, 11, 12, 13, 14]
+              ],
+              type: ['heartCaptcha']
+            },
+            characteristic: {
+              name: 'オーバーセクション : ラブアトラクト',
+              detail: '手札にある状態でセクションが変わるたび、このセクション中、獲得するLOVEを+15%する。',
+              type: ['oversection', 'heartCaptcha']
+            }
           }
         },
         SR: {
@@ -1935,6 +2026,48 @@ export const useStoreCounter = defineStore('store', {
           }
         },
         UR: {
+          'Au Bord du Lac': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1030,
+              pure: 2230,
+              cool: 1930,
+              mental: 213,
+              BP: 100
+            },
+            specialAppeal: {
+              name: 'ラブアトラクト',
+              AP: 5,
+              level: 1,
+              detail: [
+                [4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 8, 8.4, '8.8?', '9.2?', '10?']
+              ],
+              type: ['loveAttract']
+            },
+            skill: {
+              name: 'エンデュランス',
+              AP: 5,
+              level: 1,
+              detail: [
+                [5.2, 5.72, 6.24, 6.76, 7.28, 7.8, 8.32, 8.84, 9.36, 10.4, 10.92, '11.44?', '11.96?', '13?'],
+                [5, 6, 6, 7, 7, 8, 8, 8, 9, 10, 11, '12?', '13?', '15?']
+              ],
+              type: ['endurance']
+            },
+            characteristic: {
+              name: 'フェイバリット : 1',
+              detail: 'フィーバーセクションを除いた1セクション目でドローされる確率が増加する。',
+              type: ['favorite']
+            }
+          },
           '約束の舞踏会': {
             styleType: 'cheerLeader',
             mood: 'neutral',
@@ -2582,7 +2715,7 @@ export const useStoreCounter = defineStore('store', {
         level: 0,
         term: 103,
         center: 'rurino',
-        bonusSkill: 'ボルテージアップ',
+        bonusSkill: 'LOVEボーナス',
         singingMembers: ['rurino', 'megumi']
       },
       'アイデンティティ': {
@@ -2713,7 +2846,7 @@ export const useStoreCounter = defineStore('store', {
       },
       'Preserved Roses': {
         musicData: {
-          singer: 'みらくらぱーく！',
+          singer: 'スリーズブーケ',
           releaseDate: {
             year: 2023,
             month: 3,
@@ -2767,7 +2900,7 @@ export const useStoreCounter = defineStore('store', {
       },
       '名前のない怪物': {
         musicData: {
-          singer: '村野 さやか',
+          singer: 'DOLLCHESTRA',
           releaseDate: {
             year: 2023,
             month: 3,
@@ -2781,7 +2914,7 @@ export const useStoreCounter = defineStore('store', {
         term: 103,
         center: 'sayaka',
         bonusSkill: 'ボルテージアップ',
-        singingMembers: ['sayaka']
+        singingMembers: ['sayaka', 'tsuzuri']
       },
       '狙いうち': {
         musicData: {
@@ -3007,7 +3140,6 @@ export const useStoreCounter = defineStore('store', {
         for (const rare of this.rarity) {
           for (const cardName in this.card[name][rare]) {
             this.card[name][rare][cardName].fluctuationStatus = {
-              possession: false,
               cardLevel: 1,
               trainingLevel: 0,
               SALevel: 1,

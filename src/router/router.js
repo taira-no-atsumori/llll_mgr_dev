@@ -2,9 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 // import { createRouter } from 'vue-router'
 import Home from '../components/Home.vue'
 // import Formation from '../components/FormationArea.vue'
-// import CardList from '../components/CardList.vue'
+import CardList from '../components/CardList.vue'
 import MusicList from '../components/MusicList.vue'
 import ItemList from '../components/ItemList.vue'
+import License from '../components/License.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,12 +19,12 @@ const router = createRouter({
       path: '/formation',
       name: 'Formation',
       component: Formation
-    },
+    }, */
     {
-      path: '/cardlist',
+      path: '/llll_mgr_dev/cardlist',
       name: 'CardList',
       component: CardList
-    }, */
+    },
     {
       path: '/llll_mgr_dev/musicList',
       name: 'MusicList',
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/llll_mgr_dev/itemList',
       name: 'ItemList',
       component: ItemList
+    },
+    {
+      path: '/llll_mgr_dev/license',
+      name: 'License',
+      component: License
     }
   ]
 });
