@@ -1,22 +1,57 @@
 <template>
   <v-container fluid>
-    <h1 class="mb-3">所持カード設定</h1>
-    <v-expansion-panels class="mb10">
+    <h1 class="mb-3">CARD LIST ～カード一覧 / 所持カード設定～</h1>
+    <v-expansion-panels class="mb-3">
       <v-expansion-panel>
         <v-expansion-panel-title>ページ詳細</v-expansion-panel-title>
         <v-expansion-panel-text>
           リンクラに実装されているカード一覧です。<br>
-          各カードをクリックすると、カードの詳細が見られます。<br>
-          詳細画面に設定した楽曲マスタリーLv.は、絞り込みの下に表示されます。
+          各カードを選択すると、カードの詳細が見られます。<br>
+          さらに、詳細画面では各カードにパラメータを設定できます。<br>
+          ※アプリ本編ではカードレベル0は存在しませんが、本サイトではカードレベル0を未所持状態、レベル1以上を所持状態と定義しています。
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
-    <ul id="possessionCard_header">
+
+    <v-btn
+      elevation="3"
+      class="mb-1 mr-2"
+      @click="store.showModalEvent('CardListFilter')"
+      color="pink"
+    ><v-icon class="mr-2">mdi-filter</v-icon>絞り込み</v-btn>
+    絞り込み結果：{{ store.outputCardList.length }}枚
+    <hr class="my-3">
+
+    <div id="cardListArea">
+      <div v-if="store.outputCardList.length === 0">
+        見つからなかったよ😢<br>
+        絞り込み条件を変えてね
+      </div>
+      <div v-else
+        v-for="key in store.outputCardList"
+        :key="key"
+        :class="`ma-1 card ${key.mood}`"
+        @click="store.showModalEvent('setCardData'); store.cardSelect(key.memberName, key.rare, key.cardName)"
+      >
+        <img
+          :src="require(`@/assets/card_illust/${store.conversion(key.cardName)}_${store.charactorName[key.memberName].last}_覚醒後.png`)"
+        >
+        <div class="px-2 pb-1 cardName">
+          <v-img
+            :src="require(`@/assets/styleType_icon/icon_${key.styleType}.png`)"
+            class="icon type"
+          ></v-img>
+          {{ key.cardName }}
+        </div>
+      </div>
+    </div>
+
+    <ul id="possessionCard_header" v-if="false">
       <li v-for="(name_ja, name_en) in store.charactorName" :key="name_ja" :data-charactor="name_en" :data-selected="selectTab === name_en" @click="changeTab(name_en)">
         {{ name_ja.last }}
       </li>
     </ul>
-    <ul id="possessionCard_container">
+    <ul id="possessionCard_container" v-if="false">
       <li v-for="(name_ja, name_en) in store.charactorName" :key="name_en" :data-charactor="name_en" v-show="selectTab === name_en">
         <dl v-for="rare in store.rarity" :key="rare" :data-rare="rare">
           <dt>
@@ -34,22 +69,16 @@
 <script>
 export default {
   name: 'CardList',
-  props: ['updateData'],
+  props: [],
   data() {
     return {
-      selectTab: 'kaho'
+      selectTab: 'kaho',
+      range: [0, 120]
     }
   },
-  created() {
-    
-  },
-  mounted() {
-  },
-  computed: {
-    setCard() {
-      return this.updateData.selectCard;
-    }
-  },
+  created() {},
+  mounted() {},
+  computed: {},
   methods: {
     changeTab(selectCharactor) {
       this.selectTab = selectCharactor;
@@ -67,6 +96,7 @@ export default {
 <script setup>
   import { useStoreCounter } from '../stores/counter';
   const store = useStoreCounter();
+  store.setOutputCardList();
 </script>
 
 <style lang="scss" scoped>
@@ -74,6 +104,41 @@ export default {
 $happy: #EF8DC8;
 $neutral: #A9FCC7;
 $melow: #A1BAFA;
+
+.happy {
+  background: $happy;
+}
+
+.neutral {
+  background: $neutral;
+}
+
+.melow {
+  background: $melow;
+}
+
+#cardListArea {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  //justify-content: space-between;
+
+  .card {
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .cardName {
+    width: 188px;
+    font-weight: bold;
+  }
+
+  img {
+    width: 188px;
+    border-radius: 5px 5px 0 0;
+  }
+}
 
 #possessionCard_container {
   border: 1px solid #000;
@@ -122,6 +187,34 @@ $melow: #A1BAFA;
     &[data-mood="melow"] {
       border-color: $melow;
     }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #cardListArea {
+    .card {
+      width: calc(50% - 8px);
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.icon {
+  display: inline-block;
+
+  &.mood {
+    width: 20px;
+  }
+
+  &.type {
+    width: 18px;
+  }
+
+  &.member {
+    width: 35px;
   }
 }
 </style>

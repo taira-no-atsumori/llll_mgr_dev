@@ -1,44 +1,63 @@
 <template>
-  <v-container fluid>
-    <v-row class="mb-0 text-center">
+  <v-container fluid class="pa-0">
+    <v-row no-gutters class="mb-2 text-center">
       <v-col class="pa-0">
-        <h2 class="mb-2">
-          {{ store.charactorName[store.settingCard.name].first + ' ' + store.charactorName[store.settingCard.name].last }} カードステータス設定
-        </h2>
-        <h3>{{ store.settingCard.rare + ' ' + store.settingCard.card }}</h3>
+        <h2>{{ store.settingCard.rare }} [{{ store.settingCard.card }}] {{ store.charactorName[store.settingCard.name].first }} {{ store.charactorName[store.settingCard.name].last }}</h2>
       </v-col>
     </v-row>
-    <v-row class="mb-5">
+    <v-row no-gutters class="mb-5">
       <v-col
         cols="12"
         sm="7"
-        class="py-0 pl-0 pr-4"
+        class="py-0 pl-0 pr-0 pr-sm-4 pr-md-4 pr-lg-4 pr-xl-4"
       >
-        <!--<h2 class="mb-2">カードステータス設定</h2>-->
         <v-carousel
-          class="mb-7"
+          class="mb-1"
           height="auto"
           hide-delimiter-background
           show-arrows-on-hover
+          :show-arrows="false"
+          :hide-delimiters="store.settingCard.rare === 'DR'"
         >
           <v-carousel-item
-            v-for="tst in ['前', '後']"
-            :key="tst"
-            :src="require(`@/assets/card_illust/ペンギンアイス花帆_覚醒${tst}.png`)"
+            v-for="kakusei in store.settingCard.rare === 'DR' ? ['後'] : ['前', '後']"
+            :key="kakusei"
+            :src="require(`@/assets/card_illust/${store.conversion(store.settingCard.card)}_${store.charactorName[store.settingCard.name].last}_覚醒${kakusei}.png`)"
           >
           </v-carousel-item>
         </v-carousel>
-        <v-row id="styleAndMoodArea" class="mb-3">
+        <v-row no-gutters id="styleAndMoodArea" class="text-center mb-1">
           <v-col
-        class="py-0 pl-0 pr-1">
-            <span class="left">タイプ</span><span class="right">{{ store.styleType[store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].styleType] }}</span>
+            cols="12"
+            sm="6"
+            class="py-2"
+          >
+            <span class="left">タイプ</span>
+            <span class="right">
+              <v-img
+                :src="require(`@/assets/styleType_icon/icon_${store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].styleType}.png`)"
+                class="icon type"
+                v-if="false"
+              ></v-img>{{ store.styleType[store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].styleType] }}
+            </span>
           </v-col>
           <v-col
-        class="py-0 pl-0 pr-1">
-            <span class="left">ムード</span><span class="right">{{ store.mood[store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].mood] }}</span>
+            cols="12"
+            sm="6"
+            class="py-2"
+          >
+            <span class="left">ムード</span>
+            <span class="right" style="padding-left: 5px;">
+              <v-img
+                :src="require(`@/assets/mood_icon/icon_${store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].mood}.png`)"
+                class="icon mood"
+                v-if="false"
+              ></v-img>
+            {{ store.mood[store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].mood] }}
+          </span>
           </v-col>
         </v-row>
-        <table id="statusDisplayArea">
+        <table no-gutters id="statusDisplayArea">
           <thead>
             <tr>
               <th>スマイル</th>
@@ -50,10 +69,10 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].uniqueStatus.smile + (store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.cardLevel - 1) * 30 }}</td>
-              <td>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].uniqueStatus.pure + (store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.cardLevel - 1) * 30 }}</td>
-              <td>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].uniqueStatus.cool + (store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.cardLevel - 1) * 30 }}</td>
-              <td>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].uniqueStatus.mental + (store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.cardLevel - 1) * 3 }}</td>
+              <td>{{ store.tst('smile') }}</td>
+              <td>{{ store.tst('pure') }}</td>
+              <td>{{ store.tst('cool') }}</td>
+              <td>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].uniqueStatus.mental + (store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.cardLevel - 1) * (store.settingCard.rare === 'R' && store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.cardLevel % 2 === 1 ? 2 : 3) }}</td>
               <td>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].uniqueStatus.BP }}</td>
             </tr>
           </tbody>
@@ -81,7 +100,7 @@
           <v-col
             align="center"
             justify="center"
-            class="pa-0"
+            class="px-0 pt-1 pb-0"
           >
             {{ ['none', '+', '++'][store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.trainingLevel] }}
           </v-col>
@@ -132,7 +151,7 @@
           <v-col
             align="center"
             justify="center"
-            class="pa-0"
+            class="px-0 pt-2 pb-0"
           >
             {{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.cardLevel }}
           </v-col>
@@ -177,7 +196,7 @@
             <v-btn
               :disabled="store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].specialAppeal.level === 1"
               x-small
-              @click="store.valueChange('specialAppeal', '1')"
+              @click="store.valueChange('specialAppeal', 1)"
             >
               MIN
             </v-btn>
@@ -200,7 +219,7 @@
           <v-col
             align="center"
             justify="center"
-            class="pa-0"
+            class="px-0 pt-2 pb-0"
           >
             {{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].specialAppeal.level }}
           </v-col>
@@ -268,7 +287,7 @@
           <v-col
             align="center"
             justify="center"
-            class="pa-0"
+            class="px-0 pt-2 pb-0"
           >
             {{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].skill.level }}
           </v-col>
@@ -303,7 +322,7 @@
           <v-spacer></v-spacer>
         </v-row>
         <h4 class="mb-3">解放Lv</h4>
-        <v-row>
+        <v-row class="mb-0">
           <v-spacer></v-spacer>
           <v-col
             align="center"
@@ -336,7 +355,7 @@
           <v-col
             align="center"
             justify="center"
-            class="pa-0"
+            class="px-0 pt-2 pb-0"
           >
             {{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.releaseLevel }}
           </v-col>
@@ -372,27 +391,27 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row no-gutters>
       <v-col cols="12" class="px-0 pt-0 pb-1">
         <span class="specialAppeal">スペシャルアピール</span>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].specialAppeal.name }}
-        <span class="AP">AP</span>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].specialAppeal.AP - store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.trainingLevel }}
+        <span class="AP">AP{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].specialAppeal.AP - store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].fluctuationStatus.trainingLevel }}</span>
       </v-col>
       <v-col cols="12" class="pa-0 mb-3">
-        Lv {{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].specialAppeal.level }}
+        <span class="skillLevel">Lv {{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].specialAppeal.level }}</span>
         {{ store.setSkillText('specialAppeal') }}
       </v-col>
     </v-row>
-    <v-row>
+    <v-row no-gutters>
       <v-col cols="12" class="px-0 pt-0 pb-1">
         <span class="specialAppeal">スキル</span>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].skill.name }}
-        <span class="AP">AP</span>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].skill.AP }}
+        <span class="AP">AP{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].skill.AP }}</span>
       </v-col>
       <v-col cols="12" class="pa-0 mb-3">
-        Lv {{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].skill.level }}
+        <span class="skillLevel">Lv {{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].skill.level }}</span>
         {{ store.setSkillText('skill') }}
       </v-col>
     </v-row>
-    <v-row>
+    <v-row no-gutters v-if="store.settingCard.rare !== 'R'">
       <v-col cols="12" class="px-0 pt-0 pb-1">
         <span class="specialAppeal">特性</span>{{ store.card[store.settingCard.name][store.settingCard.rare][store.settingCard.card].characteristic.name }}
       </v-col>
@@ -401,14 +420,6 @@
       </v-col>
     </v-row>
   </v-container>
-  <!--
-  <label for="cardList">カード名</label>
-  <select v-model="store.selectCard[store.submitData.charactorName][store.submitData.style]" name="cardList" id="cardList">
-    <option label="" value="none"></option>
-    <optgroup v-for="rare in store.rarity" :key="rare" :label="rare">
-      <option v-for="(ary, cardName) in store.card[store.submitData.charactorName][rare]" :key="ary" :label="cardName" :value="cardName"></option>
-    </optgroup>
-  </select>-->
 </template>
 
 <script>
@@ -449,9 +460,16 @@ export default {
   }
 }
 
-#styleAndMoodArea {
-  text-align: center;
+.AP {
+  font-weight: bold;
+  color: pink;
+}
 
+.skillLevel {
+  font-weight: bold;
+}
+
+#styleAndMoodArea {
   span {
     padding: 3px 10px;
     border: 2px solid #e5762c;
@@ -476,5 +494,22 @@ export default {
   border: 2px solid #e5762c;
   border-radius: 0 15px 15px 0;
   margin-right: 7px;
+}
+
+.icon {
+  display: inline-block;
+  margin-right: 5px;
+
+  &.mood {
+    width: 20px;
+  }
+
+  &.type {
+    width: 20px;
+  }
+
+  &.member {
+    width: 35px;
+  }
 }
 </style>
