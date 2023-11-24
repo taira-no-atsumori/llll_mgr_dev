@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <h1>Link！Like！ラブライブ！ 管理ツール</h1>
-        Ver.γ(アーリーアクセス)
+        Ver.ε.01(アーリーアクセス)
       </v-col>
     </v-row>
     <v-row v-if="this.eventCheck()">
@@ -48,7 +48,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-btn tile block @click="pageMove('formation')" disabled>Formation</v-btn>
+        <v-btn tile block @click="pageMove('simulation')">Simulation</v-btn>
       </v-col>
       <v-col>
         <v-btn tile block @click="pageMove('cardlist')">Card List</v-btn>
@@ -63,27 +63,22 @@
     <v-row>
       <v-col>
         <h2>About</h2>
-        このサイトは、アプリ「Link！Like！ラブライブ！」(通称リンクラ)をもっと楽しく！もっと深く！もっと便利に！をモットーに作成されたサイトです。<br>
+        このサイトは、アプリ「Link！Like！ラブライブ！」(通称リンクラ)をもっと楽しく！もっと深く！もっと便利に！をモットーに作成された非公式のサイトです。<br>
         ただ眺めるだけでも良いですが、ぜひご自身のデータを入力して使い倒してください。<br>
-        <br>
-        現在はアーリーアクセス版として、MUSIC LIST(楽曲一覧&楽曲マスタリーレベル設定ページ)とITEM LIST(スキルアップ素材獲得ステージリスト)を公開中です。<br>
-        詳細は該当ページをご覧ください。<br>
-        <br>
-        今後のアップデートで、FORMATION(編成ページ), CARD LIST(カード一覧)を実装予定です。<br>
-        また、MUSIC LISTも絞り込み機能の拡充やソート機能の実装も予定しています(正式リリース後の実装予定です)。
       </v-col>
     </v-row>
     <v-row>
       <v-col>
         <h2>Attention</h2>
-        このサイトはPCからの利用を想定しています。<br>
-        レスポンシブ化(スマートフォン対応)の本格対応は、機能が一通り実装し終えた後の対応となります。<br>
+        このサイトは、PCからの利用を想定しています。<br>
+        スマートフォン用対応は、機能が一通り実装し終えた後の対応となります。<br>
         <br>
         バックアップや同期機能は現在ありませんので、別ブラウザからアクセスする場合は一からデータ入力をやり直す必要があります。<br>
         バックアップ機能の対応を正式リリース後に予定しています。<br>
         <br>
         完全個人制作のため、一部デザインが崩れていたり、動かない場合があります。<br>
-        順次対応していきますので、大目に見てください…
+        順次対応していきますので、大目に見てください…<br>
+        (あと、教えてもらえると助かります…)
       </v-col>
     </v-row>
     <!--<v-row>
@@ -96,33 +91,29 @@
     </v-row>-->
     <v-row>
       <v-col>
-        <h2>Release Schedule</h2>
-        以下の順でリリースを予定しています。<br>
+        <h2>Page Introduction</h2>
+        各ページを簡単に紹介します。<br>
         <br>
-        1. CARD LIST(カード一覧)<br>
-        リンクラ内に実装されているカードの一覧と、カードごとのカードレベル、スペシャルアピールレベル、スキルレベルが設定できる予定です。<br>
+        SIMULATION(獲得グランプリPt.計算ツール)<br>
+        獲得グランプリPt.を計算できます。<br>
+        なお、簡単な編成シミュレーションと編成情報の保存機能を搭載し、リニューアルする予定です。<br>
         <br>
-        2. FORMATION(編成ページ)<br>
-        簡単な編成シミュレーションと編成情報の保存ができる予定です。<br>
+        CARD LIST(カード一覧)<br>
+        リンクラ内に実装されているカードの一覧と、カードの属性/スペシャルアピール/スキルレベルでの絞り込みができます。<br>
         <br>
-        3. ITEM LIST(アイテム一覧)<br>
-        Quest Liveの各ステージで獲得できるアイテムの一覧と検索ができるようになる予定です。<br>
-        →<b>仮対応ですが公開しました！</b><br>
+        ITEM LIST(アイテム一覧)<br>
+        Quest Liveの各ステージで獲得できるアイテムの一覧と検索ができます。<br>
         <br>
-        FORMATIONのリリースをもって正式版となる予定です。<br>
-        その後は各機能の拡充・調整・バグ修正を行っていきます。<br>
-        ※リリース時期は未定です。<br>
-        ※リリース順は前後する可能性があります。<br>
         ※機能は変更になる可能性があります。
       </v-col>
     </v-row>
-    <V-row>
+    <v-row>
       <v-col>
         <h2>Update Information</h2>
         下記ページにて更新情報をお知らせしています(別タブで開きます)。<br>
         <a href="https://github.com/taira-no-atsumori/llllMgr/releases" target="_blank">Update Information</a>
       </v-col>
-    </V-row>
+    </v-row>
   </v-container>
 </template>
 
@@ -133,14 +124,14 @@ export default {
   data() {
     return {
       eventList: {
-        '1stLive_tokyo': {
-          title: '「ラブライブ！蓮ノ空女学院スクールアイドルクラブ 1st Live Tour ～RUN！CAN！FUN！～」',
-          text: '東京公演',
-          type: 'live',
-          firstDay: [2023, 11, 18, 0, 0],
-          lastDay: [2023, 11, 19, 0, 0],
-          url: 'https://www.lovelive-anime.jp/hasunosora/live-event/live_detail.php?p=RCF',
-          img: 'RUN_CAN_FUN_logo.png'
+        'liveGP': {
+          title: '103期11月度サークル対抗戦',
+          text: '',
+          type: 'liveGP',
+          firstDay: [2023, 11, 20, 10, 0],
+          lastDay: [2023, 11, 27, 4, 0],
+          url: 'https://www.lovelive-anime.jp/hasunosora/appnews/detail/?p=2023-11-20-30-blt2fqd1hq',
+          img: '103期11月度サークル対抗戦_logo.jpg'
         },
         '1stLive_aichi': {
           title: '「ラブライブ！蓮ノ空女学院スクールアイドルクラブ 1st Live Tour ～RUN！CAN！FUN！～」',

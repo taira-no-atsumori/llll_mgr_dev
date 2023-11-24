@@ -6,8 +6,17 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-sm-and-up"></v-app-bar-nav-icon>
       <v-toolbar-title>リンクラ管理ツール</v-toolbar-title>
       <v-spacer></v-spacer>
+      <a
+        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+        class="twitter-share-button"
+        data-url="https://onl.sc/W6WLB1Y"
+        data-hashtags="リンマネ"
+        data-show-count="false"
+      >
+        Share
+      </a>
       <v-btn class="d-none d-sm-block" text @click="pageMove('/llll_mgr_dev/')">Home</v-btn>
-      <v-btn class="d-none d-sm-block" text @click="pageMove('formation')" disabled>Formation</v-btn>
+      <v-btn class="d-none d-sm-block" text @click="pageMove('simulation')">Simulation</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('cardlist')">Card List</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('musiclist')">Music List</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('itemlist')">Item List</v-btn>
@@ -26,13 +35,13 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <!--<v-list-item @click="pageMove('/')">
+          <v-list-item @click="pageMove('/llll_mgr_dev/')">
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
-          <v-list-item @click="pageMove('formation')">
-            <v-list-item-title>Formation</v-list-item-title>
-          </v-list-item>-->
+          <v-list-item @click="pageMove('simulation')">
+            <v-list-item-title>Simulation</v-list-item-title>
+          </v-list-item>
 
           <v-list-item @click="pageMove('cardlist')">
             <v-list-item-title>Card List</v-list-item-title>
@@ -68,8 +77,7 @@
           cols="12"
         >
           <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('/llll_mgr_dev/')">HOME</a>
-          <!--<a href="javascript:void(0)" class="mx-3 mb-2 footer-link" disabled>FORMATION</a>-->
-          FORMATION
+          <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('simulation')">SIMULATION</a>
           <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('cardlist')">CARD LIST</a>
           <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('musiclist')">MUSIC LIST</a>
           <a href="javascript:void(0)" class="mx-3 mb-2 footer-link" @click="pageMove('itemlist')">ITEM LIST</a>
@@ -118,6 +126,7 @@ export default {
   import { useStoreCounter } from './stores/counter';
   const store = useStoreCounter();
   store.getLocalStorage();
+  store.fitst();
 </script>
 
 <style lang="scss" scoped>
@@ -193,12 +202,6 @@ a {
 main {
   width: 1600px;
   margin: 0 auto;
-}
-
-select,
-input {
-  border: 1px solid #000;
-  border-radius: 5px;
 }
 
 .charactorArea {

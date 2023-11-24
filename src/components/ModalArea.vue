@@ -57,6 +57,7 @@ export default {
         selectCard: 1600,
         setCardData: 900,
         possessionCardSetting: 'auto',
+        CardListFilter: 1600,
         setLeaningLevel: 600,
         settings: 600
       }

@@ -20,6 +20,7 @@
       color="pink"
     ><v-icon class="mr-2">mdi-filter</v-icon>絞り込み</v-btn>
     絞り込み結果：{{ store.outputCardList.length }}枚
+
     <hr class="my-3">
 
     <div id="cardListArea">
@@ -72,8 +73,7 @@ export default {
   props: [],
   data() {
     return {
-      selectTab: 'kaho',
-      range: [0, 120]
+      selectTab: 'kaho'
     }
   },
   created() {},
@@ -82,12 +82,6 @@ export default {
   methods: {
     changeTab(selectCharactor) {
       this.selectTab = selectCharactor;
-    },
-    submitCardData(charactorName, style) {
-      return {
-        charactorName: charactorName,
-        style: style
-      };
     }
   }
 }
@@ -132,6 +126,7 @@ $melow: #A1BAFA;
   .cardName {
     width: 188px;
     font-weight: bold;
+    font-size: 15px;
   }
 
   img {
@@ -194,6 +189,9 @@ $melow: #A1BAFA;
   #cardListArea {
     .card {
       width: calc(50% - 8px);
+    }
+    .cardName {
+      width: 100%;
     }
 
     img {
