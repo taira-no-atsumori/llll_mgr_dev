@@ -2297,7 +2297,67 @@ export default {
   },
   methods: {
     changeItem() {
-      const _this = this;
+      let obj = [];
+      let obj2 = [];
+      let obj3 = [];
+      let obj4 = [];
+
+      for (const season in this.list) {
+        for (const area in this.list[season]) {
+          obj = obj.concat(this.list[season][area]);
+        }
+      }
+
+      /*for (let i = 0; i < obj.length; i++) {
+        if (this.select.item1.value.length > 0 && this.select.item1.value.length < this.select.item1.item.length) {
+          for (const selectItem1 of this.select.item1.value) {
+            for (let i = 0; i < obj.length; i++) {
+              if (obj[i]['獲得可能アイテム1'] === selectItem1) {
+                obj2.push(obj[i]);
+              }
+            }
+          }
+        }
+        
+      }*/
+
+      if (this.select.item1.value.length === 0 || this.select.item1.value.length === this.select.item1.item.length) {
+        obj2 = obj;
+      } else {
+        for (const selectItem1 of this.select.item1.value) {
+          for (let i = 0; i < obj.length; i++) {
+            if (obj[i]['獲得可能アイテム1'] === selectItem1) {
+              obj2.push(obj[i]);
+            }
+          }
+        }
+      }
+
+      if (this.select.item2.value.length === 0 || this.select.item2.value.length === this.select.item2.item.length) {
+        obj3 = obj2;
+      } else {
+        for (const selectItem2 of this.select.item2.value) {
+          for (let i = 0; i < obj2.length; i++) {
+            if (obj2[i]['獲得可能アイテム2'] === selectItem2) {
+              obj3.push(obj2[i]);
+            }
+          }
+        }
+      }
+
+      if (this.select.item3.value.length === 0 || this.select.item3.value.length === this.select.item3.item.length) {
+        obj4 = obj3;
+      } else {
+        for (const selectItem3 of this.select.item3.value) {
+          for (let i = 0; i < obj3.length; i++) {
+            if (obj3[i]['獲得可能アイテム3'] === selectItem3) {
+              obj4.push(obj3[i]);
+            }
+          }
+        }
+      }
+
+      /*const _this = this;
       this.filterItem = this.allItemList;
 
       for (let i = 1; i <= 3; i++) {
@@ -2309,7 +2369,7 @@ export default {
             return _this.filterItem;
           }
         })(i);
-      }
+      }*/
 
       /*this.filterItem.sort((a, b) => {
         return a.area < b.area ? -1: 1;
@@ -2324,6 +2384,7 @@ export default {
         obj = obj.concat(this.list[this.select.item1.value[i]]);
       }*/
 
+      this.filterItem = obj4;
       this.setLocalStrage();
     },
     setLocalStrage() {
