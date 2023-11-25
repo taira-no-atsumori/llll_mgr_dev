@@ -8238,6 +8238,7 @@ export const useStoreCounter = defineStore('store', {
         singingMembers: ['rurino', 'megumi']
       }
     },
+    defaultCardList: []
   }),
   getters: {
     specialAppealNameList(store) {
@@ -8257,6 +8258,26 @@ export const useStoreCounter = defineStore('store', {
       }*/
 
       return store.makeSkillFilterList('skill');
+    },
+    makeCardList(store) {
+      let result = [];
+
+      for (const memberName in store.card) {
+        if (memberName !== 'default') {
+          for (const rare in store.card[memberName]) {
+            for (const cardName in store.card[memberName][rare]) {
+              if (cardName !== 'default') {
+                store.card[memberName][rare][cardName].cardName = cardName;
+                store.card[memberName][rare][cardName].rare = rare;
+                store.card[memberName][rare][cardName].memberName = memberName;
+                result.push(store.card[memberName][rare][cardName]);
+              }
+            }
+          }
+        }
+      }
+
+      return result;
     },
     setSelectCard() {
       console.log(this.card[this.abc.name][this.abc.style])
@@ -8487,22 +8508,7 @@ export const useStoreCounter = defineStore('store', {
       return selectCard.uniqueStatus.mental + Math.ceil((selectCard.fluctuationStatus.cardLevel - 1) / 2) * 2  + Math.floor((selectCard.fluctuationStatus.cardLevel - 1) / 2) * 3;
     },
     setOutputCardList() {
-      let result = [];
-
-      for (const memberName in this.card) {
-        if (memberName !== 'default') {
-          for (const rare in this.card[memberName]) {
-            for (const cardName in this.card[memberName][rare]) {
-              if (cardName !== 'default') {
-                this.card[memberName][rare][cardName].cardName = cardName;
-                this.card[memberName][rare][cardName].rare = rare;
-                this.card[memberName][rare][cardName].memberName = memberName;
-                result.push(this.card[memberName][rare][cardName]);
-              }
-            }
-          }
-        }
-      }
+      let result = this.makeCardList;
 
       for (const searchKey in this.search.cardList) {
         if (result.length === 0) {

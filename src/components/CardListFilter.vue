@@ -236,7 +236,7 @@
           <v-select
             v-model="store.search.skillList.specialAppeal"
             :items="store.specialAppealNameList"
-            :change="store.setOutputCardList()"
+            :change="store.setOutputCardList"
             label="スペシャルアピール"
             clearable
             color="pink"
@@ -253,7 +253,7 @@
           <v-select
             v-model="store.search.skillList.skill"
             :items="store.skillNameList"
-            :change="store.setOutputCardList()"
+            :change="store.setOutputCardList"
             label="スキル"
             clearable
             color="pink"
