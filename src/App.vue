@@ -4,7 +4,8 @@
       color="pink"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-sm-and-up"></v-app-bar-nav-icon>
-      <v-toolbar-title>リンクラ管理ツール</v-toolbar-title>
+      <v-toolbar-title class="d-none d-sm-block">Link！Like！マネージャー！</v-toolbar-title>
+      <v-toolbar-title class="hidden-sm-and-up">リンマネ！</v-toolbar-title>
       <v-spacer></v-spacer>
       <a
         href="https://twitter.com/share?ref_src=twsrc%5Etfw"
@@ -15,12 +16,12 @@
       >
         Share
       </a>
+      <span class="ml-3"></span>
       <v-btn class="d-none d-sm-block" text @click="pageMove('/llll_mgr_dev/')">Home</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('simulation')">Simulation</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('cardlist')">Card List</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('musiclist')">Music List</v-btn>
       <v-btn class="d-none d-sm-block" text @click="pageMove('itemlist')">Item List</v-btn>
-      <v-icon @click="pageMove('/llll_mgr_dev/')" class="hidden-sm-and-up" style="margin-right: 10px;">mdi-home</v-icon>
       <!--<v-icon @click="store.showModalEvent('settings');" style="margin-right: 10px;">mdi-cog</v-icon>-->
     </v-app-bar>
     <v-navigation-drawer
@@ -156,10 +157,6 @@ $hasunosora: #ffc0cb;
 
 h1 {
   font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
 }
 
 a {

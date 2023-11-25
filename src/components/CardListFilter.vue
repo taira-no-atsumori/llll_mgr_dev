@@ -235,7 +235,7 @@
         <v-col cols="12" class="mb-5">
           <v-select
             v-model="store.search.skillList.specialAppeal"
-            :items="skillNameList"
+            :items="store.specialAppealNameList"
             :change="store.setOutputCardList()"
             label="スペシャルアピール"
             clearable
@@ -252,7 +252,7 @@
         <v-col cols="12">
           <v-select
             v-model="store.search.skillList.skill"
-            :items="skillNameList"
+            :items="store.skillNameList"
             :change="store.setOutputCardList()"
             label="スキル"
             clearable
@@ -266,7 +266,7 @@
             persistent-hint
           ></v-select>
         </v-col>
-        <v-col cols="12" v-if="false">
+        <!--<v-col cols="12" v-if="false">
           <v-autocomplete
             v-model="store.search.skillList.skill"
             :items="skillNameList"
@@ -300,7 +300,7 @@
               </template>
             </template>
           </v-autocomplete>
-        </v-col>
+        </v-col>-->
       </v-row>
     </v-window-item>
   </v-window>
@@ -321,7 +321,7 @@ export default {
 <script setup>
   import { useStoreCounter } from '../stores/counter';
   const store = useStoreCounter();
-  const skillNameList = ((arr) => {
+  /*const skillNameList = ((arr) => {
       const result = [];
 
       for (const key in arr) {
@@ -330,6 +330,7 @@ export default {
 
       return result;
   })(store.skillList);
+  const skillNameList = store.skillNameList;*/
 </script>
 
 <style lang="scss" scoped>

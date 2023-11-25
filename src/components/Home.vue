@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col>
-        <h1>Link！Like！ラブライブ！ 管理ツール</h1>
+        <h1>Link！Like！マネージャー！</h1>
         Ver.ε.01(アーリーアクセス)
       </v-col>
     </v-row>

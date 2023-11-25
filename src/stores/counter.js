@@ -8240,6 +8240,24 @@ export const useStoreCounter = defineStore('store', {
     },
   }),
   getters: {
+    specialAppealNameList(store) {
+      /*const result = [];
+
+      for (const key in store.skillList) {
+        result.push(key);
+      }*/
+
+      return store.makeSkillFilterList('specialAppeal');
+    },
+    skillNameList(store) {
+      /*const result = [];
+
+      for (const key in store.skillList) {
+        result.push(key);
+      }*/
+
+      return store.makeSkillFilterList('skill');
+    },
     setSelectCard() {
       console.log(this.card[this.abc.name][this.abc.style])
     },
@@ -8524,6 +8542,17 @@ export const useStoreCounter = defineStore('store', {
       this.setLocalStorage('llllMgr_cardListFilter', this.search.cardList);
 
       this.outputCardList = result;
+    },
+    makeSkillFilterList(target) {
+      const result = [];
+
+      for (const key of this.outputCardList) {
+        if (result.indexOf(key[target].name) === -1) {
+          result.push(key[target].name);
+        }
+      }
+
+      return result;
     },
     fitst() {
       console.log('OK');
