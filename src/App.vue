@@ -9,7 +9,7 @@
       <a
         href="https://twitter.com/share?ref_src=twsrc%5Etfw"
         class="twitter-share-button"
-        data-url="https://onl.sc/W6WLB1Y"
+        data-url="x.gd/VR5u2"
         data-hashtags="リンマネ"
         data-show-count="false"
       >
