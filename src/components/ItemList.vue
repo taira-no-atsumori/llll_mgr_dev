@@ -18,8 +18,8 @@
       <!--<v-col cols="6">
         <v-select
           v-model="select.season.value"
-          :change="changeItem()"
           :items="select.season.item"
+          :click="changeItem()"
           attach
           chips
           label="Select Season"
@@ -42,7 +42,7 @@
         <v-select
           v-model="select.item1.value"
           :items="select.item1.item"
-          :change="changeItem()"
+          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(技能書系)"
@@ -59,7 +59,7 @@
         <v-select
           v-model="select.item2.value"
           :items="select.item2.item"
-          :change="changeItem()"
+          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(ピース系)"
@@ -76,7 +76,7 @@
         <v-select
           v-model="select.item3.value"
           :items="select.item3.item"
-          :change="changeItem()"
+          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(チャーム系)"
@@ -2279,7 +2279,7 @@ export default {
     }
   },
   computed: {
-    filterItems() {
+    /*filterItems() {
       let obj = [];
       const _this = this;
 
@@ -2295,7 +2295,7 @@ export default {
       }
 
       return obj;
-    }
+    }*/
   },
   created() {
     for (const season in this.list) {
@@ -2314,10 +2314,16 @@ export default {
   },
   methods: {
     changeItem() {
-      let obj = this.allItemList;
+      let obj = [];
       let obj2 = [];
       let obj3 = [];
       let obj4 = [];
+
+      for (const season in this.list) {
+        for (const area in this.list[season]) {
+          obj = obj.concat(this.list[season][area]);
+        }
+      }
 
       /*for (let i = 0; i < obj.length; i++) {
         if (this.select.item1.value.length > 0 && this.select.item1.value.length < this.select.item1.item.length) {
@@ -2379,19 +2385,6 @@ export default {
             return _this.filterItem;
           }
         })(i);
-      }*/
-
-      /*this.filterItem.sort((a, b) => {
-        return a.area < b.area ? -1: 1;
-      });
-      
-      for (let i = 0; i < this.select.season.value.length; i++) {
-        //obj = Object.assign(obj, this.list[this.value[i]]);
-        obj = obj.concat(this.list[this.select.season.value[i]]);
-      }
-      
-      for (let i = 0; i < this.select.item1.value.length; i++) {
-        obj = obj.concat(this.list[this.select.item1.value[i]]);
       }*/
 
       this.filterItem = obj4;
