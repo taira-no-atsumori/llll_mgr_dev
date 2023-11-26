@@ -90,14 +90,14 @@
         ></v-select>
       </v-col>
     </v-row>
-    <!--<v-data-table
+    <v-data-table
       :headers="headers"
       :items="filterItem"
       :items-per-page="75"
       multi-sort
       class="elevation-1"
-    ></v-data-table>-->
-    <v-table>
+    ></v-data-table>
+    <!--<v-table>
       <thead>
         <tr>
           <th
@@ -121,7 +121,7 @@
           </td>
         </tr>
       </tbody>
-    </v-table>
+    </v-table>-->
   </v-container>
 </template>
 
@@ -133,11 +133,11 @@ export default {
       select: {
         season: {
           item: ['103期Spring', '103期Summer', '103期Autumn', '103期Winter'],
-          value: ['103期Spring', '103期Summer', '103期Autumn', '103期Winter']
+          value: []
         },
         area: {
           item: ['Area1', 'Area2', 'Area3', 'Area4', 'Area5'],
-          value: ['Area1', 'Area2', 'Area3', 'Area4', 'Area5']
+          value: []
         },
         item1: {
           item: ['技能書(初等)', '技能書(中等)', '技能書(高等)'],
@@ -197,17 +197,13 @@ export default {
       selectItemValue3: [],
       filterItem: [],
       headers: [
-        {
-          text: '期/季節',
-          sortable: false,
-          value: 'name',
-        },
-        { text: 'エリア', value: 'area' },
-        { text: 'ステージ', value: 'stage' },
-        { text: '獲得可能アイテム(技能書系)', value: '獲得可能アイテム(技能書系)' },
-        { text: '獲得可能アイテム(ピース系)', value: '獲得可能アイテム(ピース系)' },
-        { text: '獲得可能アイテム(チャーム系)', value: '獲得可能アイテム(チャーム系)' },
-        //{ text: '低確率獲得可能アイテム', value: '低確率獲得可能アイテム' },
+        { title: '期/季節', align: 'start', sortable: false, key: 'name' },
+        { title: 'エリア', key: 'area' },
+        { title: 'ステージ', key: 'stage' },
+        { title: '獲得可能アイテム(技能書系)', key: '獲得可能アイテム1' },
+        { title: '獲得可能アイテム(ピース系)', key: '獲得可能アイテム2' },
+        { title: '獲得可能アイテム(チャーム系)', key: '獲得可能アイテム3' },
+        //{ title: '低確率獲得可能アイテム', key: '低確率獲得可能アイテム' },
       ],
       list: {
         '103期Spring': {
