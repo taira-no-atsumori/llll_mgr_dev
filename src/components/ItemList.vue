@@ -1,8 +1,8 @@
 <template>
   <v-container fluid>
     <h1 class="mb10">ITEM LIST ～スキルアップ素材獲得ステージリスト～</h1>
-    <v-row>
-      <v-col cols="12">
+    <v-row no-gutters>
+      <v-col cols="12" class="mb-5">
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-title>ページ詳細</v-expansion-panel-title>
@@ -14,7 +14,7 @@
         </v-expansion-panels>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row no-gutters>
       <!--<v-col cols="6">
         <v-select
           v-model="select.season.value"
@@ -38,7 +38,7 @@
           clearable
         ></v-select>
       </v-col>-->
-      <v-col cols="12">
+      <v-col cols="12" class="mb-5">
         <v-select
           v-model="select.item1.value"
           :items="select.item1.item"
@@ -51,9 +51,11 @@
           color="pink"
           base-color="pink"
           dense
+          hint="絞り込みたい技能系アイテムを選んでください"
+          persistent-hint
         ></v-select>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" class="mb-5">
         <v-select
           v-model="select.item2.value"
           :items="select.item2.item"
@@ -66,9 +68,11 @@
           color="pink"
           base-color="pink"
           dense
+          hint="絞り込みたいピース系アイテムを選んでください"
+          persistent-hint
         ></v-select>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="12" class="mb-5">
         <v-select
           v-model="select.item3.value"
           :items="select.item3.item"
@@ -81,20 +85,23 @@
           color="pink"
           base-color="pink"
           dense
+          hint="絞り込みたいチャーム系アイテムを選んでください"
+          persistent-hint
         ></v-select>
       </v-col>
     </v-row>
-    <!--<v-data-table
+    <v-data-table
       :headers="headers"
       :items="filterItem"
-      :items-per-page="15"
+      :items-per-page="75"
+      multi-sort
       class="elevation-1"
-    ></v-data-table>-->
-    <v-table>
+    ></v-data-table>
+    <!--<v-table>
       <thead>
         <tr>
           <th
-            v-for="item in this.headers"
+            v-for="item in headers"
             :key="item.value"
           >
             {{ item.text }}
@@ -103,7 +110,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="items in this.filterItem"
+          v-for="items in filterItem"
           :key="items"
         >
           <td
@@ -114,7 +121,7 @@
           </td>
         </tr>
       </tbody>
-    </v-table>
+    </v-table>-->
   </v-container>
 </template>
 
@@ -126,11 +133,11 @@ export default {
       select: {
         season: {
           item: ['103期Spring', '103期Summer', '103期Autumn', '103期Winter'],
-          value: ['103期Spring', '103期Summer', '103期Autumn', '103期Winter']
+          value: []
         },
         area: {
           item: ['Area1', 'Area2', 'Area3', 'Area4', 'Area5'],
-          value: ['Area1', 'Area2', 'Area3', 'Area4', 'Area5']
+          value: []
         },
         item1: {
           item: ['技能書(初等)', '技能書(中等)', '技能書(高等)'],
@@ -174,7 +181,7 @@ export default {
           value: []
         },
         item3: {
-          item: ['-', 'エメラルドピース(R3)', 'ペリドットピース(R3)', 'ソルチャーム(R3)', 'ルナチャーム(R3)', 'ステラチャーム(R3)', 'ソルチャーム(R4)', 'ルナチャーム(R4)', 'ステラチャーム(R4)'],
+          item: ['-', 'エメラルドピース(R3)', 'ペリドットピース(R3)', 'ソルチャーム(R3)', 'ソルチャーム(R4)', 'ルナチャーム(R3)', 'ルナチャーム(R4)', 'ステラチャーム(R3)', 'ステラチャーム(R4)'],
           value: []
         }
       },
@@ -190,17 +197,13 @@ export default {
       selectItemValue3: [],
       filterItem: [],
       headers: [
-        {
-          text: '期/季節',
-          sortable: false,
-          value: 'name',
-        },
-        { text: 'エリア', value: 'area' },
-        { text: 'ステージ', value: 'stage' },
-        { text: '獲得可能アイテム(技能書系)', value: '獲得可能アイテム(技能書系)' },
-        { text: '獲得可能アイテム(ピース系)', value: '獲得可能アイテム(ピース系)' },
-        { text: '獲得可能アイテム(チャーム系)', value: '獲得可能アイテム(チャーム系)' },
-        //{ text: '低確率獲得可能アイテム', value: '低確率獲得可能アイテム' },
+        { title: '期/季節', align: 'start', sortable: false, key: 'name' },
+        { title: 'エリア', key: 'area' },
+        { title: 'ステージ', key: 'stage' },
+        { title: '獲得可能アイテム(技能書系)', key: '獲得可能アイテム1' },
+        { title: '獲得可能アイテム(ピース系)', key: '獲得可能アイテム2' },
+        { title: '獲得可能アイテム(チャーム系)', key: '獲得可能アイテム3' },
+        //{ title: '低確率獲得可能アイテム', key: '低確率獲得可能アイテム' },
       ],
       list: {
         '103期Spring': {
@@ -2276,15 +2279,23 @@ export default {
     }
   },
   computed: {
-    /* filterItems() {
-      let obj = {};
-      
-      for (let i = 0; i < this.value.length; i++) {
-        obj = Object.assign(obj, this.value[i]);
+    filterItems() {
+      let obj = [];
+      const _this = this;
+
+      for (let i = 1; i <= 3; i++) {
+        obj = ((i) => {
+          if (_this.select['item' + i].value.length > 0 && _this.select['item' + i].value.length < _this.select['item' + i].item.length) {
+            const regex = new RegExp(_this.select['item' + i].value.join('|').replace(/\(/g, '\\(').replace(/\)/g, '\\)'))
+            return _this.filterItem.filter(arr => regex.test(arr['獲得可能アイテム' + i]));
+          } else {
+            return _this.filterItem;
+          }
+        })(i);
       }
 
-      return [obj];
-    } */
+      return obj;
+    }
   },
   created() {
     for (const season in this.list) {
@@ -2303,7 +2314,7 @@ export default {
   },
   methods: {
     changeItem() {
-      let obj = [];
+      /*let obj = this.allItemList;
       let obj2 = [];
       let obj3 = [];
       let obj4 = [];
@@ -2314,7 +2325,7 @@ export default {
         }
       }
 
-      /*for (let i = 0; i < obj.length; i++) {
+      for (let i = 0; i < obj.length; i++) {
         if (this.select.item1.value.length > 0 && this.select.item1.value.length < this.select.item1.item.length) {
           for (const selectItem1 of this.select.item1.value) {
             for (let i = 0; i < obj.length; i++) {
@@ -2327,7 +2338,7 @@ export default {
         
       }*/
 
-      if (this.select.item1.value.length === 0 || this.select.item1.value.length === this.select.item1.item.length) {
+      /*if (this.select.item1.value.length === 0 || this.select.item1.value.length === this.select.item1.item.length) {
         obj2 = obj;
       } else {
         for (const selectItem1 of this.select.item1.value) {
@@ -2361,9 +2372,9 @@ export default {
             }
           }
         }
-      }
+      }*/
 
-      /*const _this = this;
+      const _this = this;
       this.filterItem = this.allItemList;
 
       for (let i = 1; i <= 3; i++) {
@@ -2375,7 +2386,7 @@ export default {
             return _this.filterItem;
           }
         })(i);
-      }*/
+      }
 
       /*this.filterItem.sort((a, b) => {
         return a.area < b.area ? -1: 1;
@@ -2388,9 +2399,9 @@ export default {
       
       for (let i = 0; i < this.select.item1.value.length; i++) {
         obj = obj.concat(this.list[this.select.item1.value[i]]);
-      }*/
+      }
 
-      this.filterItem = obj4;
+      this.filterItem = obj4;*/
       this.setLocalStrage();
     },
     setLocalStrage() {
