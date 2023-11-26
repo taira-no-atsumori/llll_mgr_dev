@@ -2274,7 +2274,9 @@ export default {
           Area4: [],
           Area5: []
         }
-      }
+      },
+      allItemList: [],
+      c: 0
     }
   },
   computed: {
@@ -2373,6 +2375,8 @@ export default {
       }*/
 
       this.filterItem = obj4;
+      this.c++;
+      console.log(this.c);
       this.setLocalStrage();
     },
     setLocalStrage() {
