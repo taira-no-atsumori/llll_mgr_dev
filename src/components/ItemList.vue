@@ -2392,9 +2392,9 @@ export default {
       
       for (let i = 0; i < this.select.item1.value.length; i++) {
         obj = obj.concat(this.list[this.select.item1.value[i]]);
-      }
+      }*/
 
-      this.filterItem = obj4;*/
+      this.filterItem = obj4;
       this.setLocalStrage();
     },
     setLocalStrage() {
