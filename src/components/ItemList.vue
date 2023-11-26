@@ -42,7 +42,7 @@
         <v-select
           v-model="select.item1.value"
           :items="select.item1.item"
-          :change="changeItem()"
+          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(技能書系)"
@@ -59,7 +59,7 @@
         <v-select
           v-model="select.item2.value"
           :items="select.item2.item"
-          :change="changeItem()"
+          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(ピース系)"
@@ -76,7 +76,7 @@
         <v-select
           v-model="select.item3.value"
           :items="select.item3.item"
-          :change="changeItem()"
+          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(チャーム系)"
@@ -90,18 +90,18 @@
         ></v-select>
       </v-col>
     </v-row>
-    <v-data-table
+    <!--<v-data-table
       :headers="headers"
       :items="filterItem"
       :items-per-page="75"
       multi-sort
       class="elevation-1"
-    ></v-data-table>
-    <!--<v-table>
+    ></v-data-table>-->
+    <v-table>
       <thead>
         <tr>
           <th
-            v-for="item in this.headers"
+            v-for="item in headers"
             :key="item.value"
           >
             {{ item.text }}
@@ -110,7 +110,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="items in this.filterItem"
+          v-for="items in filterItem"
           :key="items"
         >
           <td
@@ -121,7 +121,7 @@
           </td>
         </tr>
       </tbody>
-    </v-table>-->
+    </v-table>
   </v-container>
 </template>
 
@@ -197,13 +197,17 @@ export default {
       selectItemValue3: [],
       filterItem: [],
       headers: [
-        { title: '期/季節', align: 'start', sortable: false, key: 'name' },
-        { title: 'エリア', key: 'area' },
-        { title: 'ステージ', key: 'stage' },
-        { title: '獲得可能アイテム(技能書系)', key: '獲得可能アイテム1' },
-        { title: '獲得可能アイテム(ピース系)', key: '獲得可能アイテム2' },
-        { title: '獲得可能アイテム(チャーム系)', key: '獲得可能アイテム3' },
-        //{ title: '低確率獲得可能アイテム', key: '低確率獲得可能アイテム' },
+        {
+          text: '期/季節',
+          sortable: false,
+          value: 'name',
+        },
+        { text: 'エリア', value: 'area' },
+        { text: 'ステージ', value: 'stage' },
+        { text: '獲得可能アイテム(技能書系)', value: '獲得可能アイテム(技能書系)' },
+        { text: '獲得可能アイテム(ピース系)', value: '獲得可能アイテム(ピース系)' },
+        { text: '獲得可能アイテム(チャーム系)', value: '獲得可能アイテム(チャーム系)' },
+        //{ text: '低確率獲得可能アイテム', value: '低確率獲得可能アイテム' },
       ],
       list: {
         '103期Spring': {
@@ -2274,8 +2278,7 @@ export default {
           Area4: [],
           Area5: []
         }
-      },
-      allItemList: []
+      }
     }
   },
   computed: {
@@ -2290,12 +2293,6 @@ export default {
     } */
   },
   created() {
-    for (const season in this.list) {
-      for (const area in this.list[season]) {
-        this.allItemList = this.allItemList.concat(this.list[season][area]);
-      }
-    }
-
     if (localStorage.llllMgr_selectItemList !== undefined) {
       const getSelectItemList = JSON.parse(localStorage.llllMgr_selectItemList);
 
