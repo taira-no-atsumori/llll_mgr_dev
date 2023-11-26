@@ -2314,18 +2314,12 @@ export default {
   },
   methods: {
     changeItem() {
-      /*let obj = this.allItemList;
+      let obj = this.allItemList;
       let obj2 = [];
       let obj3 = [];
       let obj4 = [];
 
-      for (const season in this.list) {
-        for (const area in this.list[season]) {
-          obj = obj.concat(this.list[season][area]);
-        }
-      }
-
-      for (let i = 0; i < obj.length; i++) {
+      /*for (let i = 0; i < obj.length; i++) {
         if (this.select.item1.value.length > 0 && this.select.item1.value.length < this.select.item1.item.length) {
           for (const selectItem1 of this.select.item1.value) {
             for (let i = 0; i < obj.length; i++) {
@@ -2335,10 +2329,9 @@ export default {
             }
           }
         }
-        
       }*/
 
-      /*if (this.select.item1.value.length === 0 || this.select.item1.value.length === this.select.item1.item.length) {
+      if (this.select.item1.value.length === 0 || this.select.item1.value.length === this.select.item1.item.length) {
         obj2 = obj;
       } else {
         for (const selectItem1 of this.select.item1.value) {
@@ -2372,9 +2365,9 @@ export default {
             }
           }
         }
-      }*/
+      }
 
-      const _this = this;
+      /*const _this = this;
       this.filterItem = this.allItemList;
 
       for (let i = 1; i <= 3; i++) {
@@ -2386,7 +2379,7 @@ export default {
             return _this.filterItem;
           }
         })(i);
-      }
+      }*/
 
       /*this.filterItem.sort((a, b) => {
         return a.area < b.area ? -1: 1;
