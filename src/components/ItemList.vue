@@ -42,7 +42,6 @@
         <v-select
           v-model="select.item1.value"
           :items="select.item1.item"
-          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(技能書系)"
@@ -59,7 +58,6 @@
         <v-select
           v-model="select.item2.value"
           :items="select.item2.item"
-          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(ピース系)"
@@ -76,7 +74,6 @@
         <v-select
           v-model="select.item3.value"
           :items="select.item3.item"
-          :click="changeItem()"
           attach
           chips
           label="獲得可能アイテム(チャーム系)"
