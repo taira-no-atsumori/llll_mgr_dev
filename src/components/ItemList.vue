@@ -89,7 +89,7 @@
     </v-row>
     <v-data-table
       :headers="headers"
-      :items="filterItem"
+      :items="filterItems"
       :items-per-page="75"
       multi-sort
       class="elevation-1"
@@ -2277,17 +2277,32 @@ export default {
     }
   },
   computed: {
-    /* filterItems() {
-      let obj = {};
-      
-      for (let i = 0; i < this.value.length; i++) {
-        obj = Object.assign(obj, this.value[i]);
+    filterItems() {
+      const _this = this;
+      let result = _this.allItemList;
+
+      for (let i = 1; i <= 3; i++) {
+        result = ((i) => {
+          if (_this.select['item' + i].value.length > 0 && _this.select['item' + i].value.length < _this.select['item' + i].item.length) {
+            const regex = new RegExp(_this.select['item' + i].value.join('|').replace(/\(/g, '\\(').replace(/\)/g, '\\)'))
+            return result.filter(arr => regex.test(arr['獲得可能アイテム' + i]));
+          } else {
+            return result;
+          }
+        })(i);
       }
 
-      return [obj];
-    } */
+      _this.setLocalStrage();
+      return result;
+    }
   },
   created() {
+    for (const season in this.list) {
+      for (const area in this.list[season]) {
+        this.allItemList = this.allItemList.concat(this.list[season][area]);
+      }
+    }
+
     if (localStorage.llllMgr_selectItemList !== undefined) {
       const getSelectItemList = JSON.parse(localStorage.llllMgr_selectItemList);
 
