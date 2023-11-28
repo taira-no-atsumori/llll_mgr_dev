@@ -1,10 +1,11 @@
 <template>
   <v-tabs v-model="tab" grow class="mb-3" slider-color="pink">
-    <v-tab value="1">ステータス絞り込み</v-tab>
-    <v-tab value="2">スキル名絞り込み</v-tab>
+    <v-tab value="filter_status">ステータス絞り込み</v-tab>
+    <v-tab value="filter_skill">スキル名絞り込み</v-tab>
+    <v-tab value="filter_cardSeries" v-if="false">シリーズ絞り込み</v-tab>
   </v-tabs>
   <v-window v-model="tab">
-    <v-window-item value="1">
+    <v-window-item value="filter_status">
       <v-container fluid class="pa-0">
         <v-row no-gutters>
           <v-col cols="12" class="pa-0">
@@ -230,7 +231,7 @@
         </v-row>
       </v-container>
     </v-window-item>
-    <v-window-item value="2">
+    <v-window-item value="filter_skill">
       <v-row no-gutters>
         <v-col cols="12" class="mb-5">
           <v-select
@@ -301,6 +302,27 @@
             </template>
           </v-autocomplete>
         </v-col>-->
+      </v-row>
+    </v-window-item>
+    <v-window-item value="filter_cardSeries" v-if="false">
+      <v-row no-gutters>
+        <v-col cols="12">
+          <v-select
+            v-model="store.search.cardSeries"
+            :items="store.cardSeriesList"
+            :change="store.setOutputCardList"
+            label="カードシリーズ"
+            clearable
+            color="pink"
+            base-color="pink"
+            multiple
+            chips
+            deletable-chips
+            dense
+            hint="絞り込みたいカードシリーズを選んでください"
+            persistent-hint
+          ></v-select>
+        </v-col>
       </v-row>
     </v-window-item>
   </v-window>

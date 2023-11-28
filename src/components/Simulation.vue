@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="pa-2">
     <v-row>
       <v-col cols="12" class="pb-3">
         <h1>SIMULATION ～ 獲得グランプリPt.計算ツール ～</h1>

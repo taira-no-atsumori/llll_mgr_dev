@@ -55,7 +55,8 @@ export const useStoreCounter = defineStore('store', {
         specialAppeal: [],
         skill: [],
         //characteristic: []
-      }
+      },
+      cardSeries: []
     },
     outputCardList: {},
     styleHeadline: {
@@ -7427,7 +7428,7 @@ export const useStoreCounter = defineStore('store', {
         bonusSkill: 'LOVEボーナス',
         singingMembers: ['kaho', 'kozue']
       },
-      'Mix shake！！': {
+      'Mix shake!!': {
         musicData: {
           singer: 'スリーズブーケ',
           releaseDate: {
@@ -8241,24 +8242,6 @@ export const useStoreCounter = defineStore('store', {
     defaultCardList: []
   }),
   getters: {
-    specialAppealNameList(store) {
-      /*const result = [];
-
-      for (const key in store.skillList) {
-        result.push(key);
-      }*/
-
-      return store.makeSkillFilterList('specialAppeal');
-    },
-    skillNameList(store) {
-      /*const result = [];
-
-      for (const key in store.skillList) {
-        result.push(key);
-      }*/
-
-      return store.makeSkillFilterList('skill');
-    },
     makeCardList(store) {
       let result = [];
 
@@ -8279,12 +8262,26 @@ export const useStoreCounter = defineStore('store', {
 
       return result;
     },
+    specialAppealNameList(store) {
+      return store.makeSkillFilterList('specialAppeal');
+    },
+    skillNameList(store) {
+      return store.makeSkillFilterList('skill');
+    },
+    cardSeriesList(store) {
+      const result = [];
+
+      for (const key of store.makeCardList) {
+        if (result.indexOf(key.series) === -1) {
+          result.push(key.series);
+        }
+      }
+
+      return result;
+    },
     setSelectCard() {
       console.log(this.card[this.abc.name][this.abc.style])
     },
-    /*makeCardIllust(store) {
-      return (cardName) => {};
-    }, */
     makeSkillText() {
       return (target) => {
         let result = '';
@@ -8552,7 +8549,7 @@ export const useStoreCounter = defineStore('store', {
     makeSkillFilterList(target) {
       const result = [];
 
-      for (const key of this.outputCardList) {
+      for (const key of this.makeCardList) {
         if (result.indexOf(key[target].name) === -1) {
           result.push(key[target].name);
         }
