@@ -1,19 +1,17 @@
 <template>
   <v-container fluid class="pa-2">
     <v-row>
-      <v-col cols="12" class="pb-3">
+      <v-col cols="12" class="pb-2">
         <h1>SIMULATION ～ 獲得グランプリPt.計算ツール ～</h1>
       </v-col>
-      <v-col cols="12" class="pt-0 pb-3">
+      <v-col cols="12" class="pt-0 pb-2">
         <v-expansion-panels>
           <v-expansion-panel>
             <v-expansion-panel-title>ページ詳細</v-expansion-panel-title>
             <v-expansion-panel-text>
-              <ul>
-                <li>ライブグランプリの獲得グランプリPt.の計算ツールです。</li>
-                <li>各項目を入力すると、獲得グランプリPt.を算出します。</li>
-                <li>解放Lv.は、歌唱メンバー(名前の横にチェックが入っているメンバー)のメインスタイルに設定しているカードのレア度を設定すると変更できるようになります。</li>
-              </ul>
+              ライブグランプリの獲得グランプリPt.の計算ツールです。<br>
+              各項目を入力すると、獲得グランプリPt.を算出します。<br>
+              解放Lv.は、歌唱メンバー(名前の横にチェックが入っているメンバー)のメインスタイルに設定しているカードのレア度を設定すると変更できるようになります。<br>
               <br>
               <b>注意事項</b><br>
               ※突貫で作ったため、スマホでの表示を考慮していません。横画面にするか、PCからアクセスしてください。<br>
@@ -36,18 +34,20 @@
           <v-card-text>
             <v-row>
               <v-col cols="12">
-                <h2>予想獲得グランプリPt. {{ GPpt[i - 1] }}</h2>
+                <h2>予想獲得グランプリPt. {{ GPpt(i - 1) }}</h2>
               </v-col>
 
               <v-col cols="12">
                 <v-select
-                  v-model="this.selectMusic[i - 1]"
+                  :value="selectMusic[i - 1]"
                   :items="musicTitleList"
                   label="課題曲"
-                  :hint="this.makeText(i - 1, store)"
-                  :change="changePerformance(i - 1, musicDataList)"
+                  :hint="makeText(i - 1, store)"
+                  @change="(v) => changePerformance(v, musicDataList)"
                   persistent-hint
                   clearable
+                  color="pink"
+                  base-color="pink"
                 ></v-select>
               </v-col>
 
@@ -63,8 +63,9 @@
                   label="スコア"
                   hint="スコアを入力してください"
                   :rules="rules"
-                  :change="makeGPpt(i - 1)"
                   persistent-hint
+                  color="pink"
+                  base-color="pink"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -81,6 +82,8 @@
                   label="ステージ"
                   hint="ステージを選択してください"
                   persistent-hint
+                  color="pink"
+                  base-color="pink"
                 ></v-select>
               </v-col>
             </v-row>
@@ -90,7 +93,7 @@
               :key="memberName"
             >
               <v-checkbox
-                v-model="performance[i - 1]"
+                v-model="this.performance[i - 1]"
                 :label="arr.last"
                 :value="memberName"
                 hide-details
@@ -105,7 +108,9 @@
                   <v-select
                     v-model="bonus.rare[i - 1][memberName]"
                     :items="['UR', 'SR', 'R']"
-                    hint="メインスタイルに設定している花帆のカードのレア度を選択してください"
+                    :hint="`メインスタイルに設定している${arr.last}のカードのレア度を選択してください`"
+                    color="pink"
+                    base-color="pink"
                   ></v-select>
                 </v-col>
                 <v-col cols="5">
@@ -321,7 +326,6 @@ export default {
   data() {
     return {
       score: [0, 0],
-      GPpt: [0, 0],
       clearStage: [1, 1],
       performance: [[], []],
       selectMusic: [null, null],
@@ -440,7 +444,60 @@ export default {
   computed: {
     setCard() {
       return this.updateData.selectCard;
+    },
+    GPpt() {
+      return (target) => {
+        let releaseLv = 0;
+        let seasonFanLv = 0;
+
+        for (const memberName in this.bonus.seasonFan[target]) {
+          if (this.performance[target].indexOf(memberName) >= 0) {
+            seasonFanLv += this.seasonFanLv[this.bonus.seasonFan[target][memberName] - 1];
+
+            if (this.bonus.rare[target][memberName] !== undefined) {
+              releaseLv += this.releaseLv[this.bonus.rare[target][memberName]][this.bonus.release[target][memberName] - 1];
+            }
+          }
+        }
+
+        return Math.ceil(this.score[target] * this.clearRank[this.clearStage[target] - 1] * (1 + releaseLv) * (1 + seasonFanLv)).toLocaleString();
+      }
+    },
+    makeText() {
+      return (i, store) => {
+        if (this.selectMusic[i] === null) {
+          return '課題曲を選択してください';
+        } else {
+          let list = [];
+
+          for (const memberName of store.musicList[this.selectMusic[i]].singingMembers) {
+            list.push(store.charactorName[memberName].last);
+          }
+          
+          return `センター：${store.charactorName[store.musicList[this.selectMusic[i]].center].last} / 歌唱メンバー：${list.join('、')}`;
+        }
+      }
+    },
+    /*tst: {
+      get() {
+        return 
+      },
+      set() {
+        //this.performance[0] = musicDataList[value].singingMembers;
+        this.performance[0] = ['kaho'];
+      }
     }
+    changePerformance() {
+      return (musicDataList) => {
+        for (let i = 0; i < this.selectMusic.length; i++) {
+          if (this.selectMusic[i] === null) {
+            this.performance[i] = [];
+          } else {
+            this.performance[i] = musicDataList[this.selectMusic[i]].singingMembers;
+          }
+        }
+      }
+    }*/
   },
   methods: {
     possessionCardLoadAction() {
@@ -454,7 +511,7 @@ export default {
     },
     setIcon(name_en) {
       return {
-        'background-image':'url(' + require(`@/assets/member_icon/icon_${name_en}.png`) + ')',
+        'background-image': `url(${require(`@/assets/member_icon/icon_${name_en}.png`)})`,
         'background-position': 'center'
       };
     },
@@ -481,7 +538,7 @@ export default {
       } else {
         this.performance[i] = musicDataList[this.selectMusic[i]].singingMembers;
       }
-    },
+    /*},
     makeText(i, store) {
       if (this.selectMusic[i] === null) {
         return '課題曲を選択してください';
@@ -493,7 +550,7 @@ export default {
         }
         
         return 'センター：' + store.charactorName[store.musicList[this.selectMusic[i]].center].last + ' / 歌唱メンバー：' + list.join('、');
-      }
+      }*/
     }
   },
   watch: {
