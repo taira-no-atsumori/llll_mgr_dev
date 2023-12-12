@@ -117,7 +117,7 @@ export default {
     if (localStorage.inflow !== undefined) {
       const pageName = localStorage.inflow;
       localStorage.removeItem('inflow');
-      this.pageMove(`llll_mgr_dev/${pageName}`);
+      this.pageMove(`/llll_mgr_dev/${pageName}`);
     }
   },
   methods: {
