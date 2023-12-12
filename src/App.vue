@@ -6,7 +6,7 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-sm-and-up"></v-app-bar-nav-icon>
       <v-toolbar-title class="d-none d-sm-block">リンクラ マネージャー！</v-toolbar-title>
-      <v-toolbar-title class="hidden-sm-and-up">リンマネ！</v-toolbar-title>
+      <v-toolbar-title class="hidden-sm-and-up">リンマネ</v-toolbar-title>
       <v-spacer></v-spacer>
       <a
         href="https://twitter.com/share?ref_src=twsrc%5Etfw"
@@ -18,13 +18,17 @@
         Share
       </a>
       <span class="ml-3"></span>
-      <v-btn
+      <span
         v-for="(arr, pageTitle) of pageList"
         :key="arr"
-        class="d-none d-sm-block"
-        text
-        @click="pageMove(arr.url)"
-      >{{ pageTitle }}</v-btn>
+      >
+        <v-btn
+          v-if="pageTitle !== 'License'"
+          class="d-none d-sm-block"
+          text
+          @click="pageMove(arr.url)"
+        >{{ pageTitle }}</v-btn>
+      </span>
       <!--<v-icon @click="store.showModalEvent('settings');" style="margin-right: 10px;">mdi-cog</v-icon>-->
     </v-app-bar>
     <v-navigation-drawer
@@ -37,7 +41,7 @@
         v-for="(arr, pageTitle) of pageList"
         :key="arr"
         @click="pageMove(arr.url)"
-      >{{ pageTitle }}</v-list>
+      >{{ pageTitle.toUpperCase() }}</v-list>
     </v-navigation-drawer>
     <v-main>
       <router-view/>
@@ -291,18 +295,5 @@ main {
       border-bottom: 1px solid #000;
     }
   }
-}
-
-.modalCloseButtonArea {
-  text-align: center;
-}
-
-.sliderArea {
-  display: grid;
-  grid-template-columns: 50px 65px 1fr 65px;
-}
-
-.sliderPadding {
-  padding: 0 10px;
 }
 </style>

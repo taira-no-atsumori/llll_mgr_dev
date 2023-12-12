@@ -2284,8 +2284,7 @@ export default {
           Area5: []
         }
       },
-      allItemList: [],
-      c: 0
+      allItemList: []
     }
   },
   computed: {

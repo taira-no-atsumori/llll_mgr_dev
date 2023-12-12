@@ -2,7 +2,7 @@
   <v-tabs v-model="tab" grow class="mb-3" slider-color="pink">
     <v-tab value="filter_status">ステータス絞り込み</v-tab>
     <v-tab value="filter_skill">スキル名絞り込み</v-tab>
-    <v-tab value="filter_cardSeries" v-if="false">シリーズ絞り込み</v-tab>
+    <v-tab value="filter_cardSeries">シリーズ絞り込み</v-tab>
   </v-tabs>
   <v-window v-model="tab">
     <v-window-item value="filter_status">
@@ -208,6 +208,52 @@
             </v-row>
           </v-col>
         </v-row>
+        <hr class="my-3">
+        <v-row no-gutters>
+          <v-col cols="12" sm="6" class="pr-sm-5 pr-md-5 pr-lg-5 pr-xl-5">
+            <v-row no-gutters>
+              <v-col cols="12" class="pa-0 mb-8">
+                消費AP(スペシャルアピール)
+              </v-col>
+              <v-col cols="12" class="px-1">
+                <v-range-slider
+                  hide-details
+                  v-model="store.search.cardList['SAAP']"
+                  max="10"
+                  min="0"
+                  thumb-label="always"
+                  step="1"
+                  color="pink"
+                  thumb-color="pink"
+                  class="px-2"
+                ></v-range-slider>
+              </v-col>
+            </v-row>
+          </v-col>
+          <v-col cols="12" class="hidden-sm-and-up">
+            <hr class="my-3">
+          </v-col>
+          <v-col cols="12" sm="6" class="prl-sm-5 pl-md-5 pl-lg-5 pl-xl-5">
+            <v-row no-gutters>
+              <v-col cols="12" class="pa-0 mb-8">
+                消費AP(スキル)
+              </v-col>
+              <v-col cols="12" class="px-1">
+                <v-range-slider
+                  hide-details
+                  v-model="store.search.cardList['SAP']"
+                  max="10"
+                  min="0"
+                  thumb-label="always"
+                  step="1"
+                  color="pink"
+                  thumb-color="pink"
+                  class="px-2"
+                ></v-range-slider>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
         <hr class="mb-3" v-if="false">
         <v-row no-gutters v-if="false">
           <v-col cols="12" class="pa-0">
@@ -304,7 +350,7 @@
         </v-col>-->
       </v-row>
     </v-window-item>
-    <v-window-item value="filter_cardSeries" v-if="false">
+    <v-window-item value="filter_cardSeries">
       <v-row no-gutters>
         <v-col cols="12">
           <v-select
@@ -336,6 +382,9 @@ export default {
       tab: null
     }
   },
+  created() {
+    console.log(this.tab);
+  },
   methods: {}
 }
 </script>
@@ -343,16 +392,6 @@ export default {
 <script setup>
   import { useStoreCounter } from '../stores/counter';
   const store = useStoreCounter();
-  /*const skillNameList = ((arr) => {
-      const result = [];
-
-      for (const key in arr) {
-        result.push(key);
-      }
-
-      return result;
-  })(store.skillList);
-  const skillNameList = store.skillNameList;*/
 </script>
 
 <style lang="scss" scoped>
