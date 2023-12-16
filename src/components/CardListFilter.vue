@@ -382,9 +382,7 @@ export default {
       tab: null
     }
   },
-  created() {
-    console.log(this.tab);
-  },
+  created() {},
   methods: {}
 }
 </script>

@@ -3,7 +3,7 @@
     <v-row no-gutters>
       <v-col cols="12">
         <h1>リンクラ マネージャー！</h1>
-        Ver.ε.06(アーリーアクセス)
+        Ver.ε.07(アーリーアクセス)
       </v-col>
     </v-row>
     <v-row v-if="Object.keys(outputEventList).length > 0">
@@ -20,7 +20,7 @@
             :key="eventName"
             class="text-center"
           >
-            <v-card tile>
+            <v-card>
               <a :href="event.url" target="_blank" class="mainVisual">
                 <v-img
                   class="white--text align-end text-center"
@@ -63,7 +63,7 @@
     <v-row>
       <v-col>
         <h2>About</h2>
-        このサイトは、アプリ「Link！Like！ラブライブ！」(通称リンクラ)をもっと楽しく！もっと深く！もっと便利に！をモットーに作成された非公式のサイトです。<br>
+        このサイトは、アプリ「Link！Like！ラブライブ！」(通称リンクラ)のゲームパートである「スクールアイドルステージ」(通称スクステ)をもっと楽しく！もっと深く！もっと便利に！をモットーに作成された非公式のサイトです。<br>
         ただ眺めるだけでも良いですが、ぜひご自身のデータを入力して使い倒してください。<br>
       </v-col>
     </v-row>
@@ -71,9 +71,12 @@
       <v-col>
         <h2>Attention</h2>
         このサイトは、PCからの利用を想定しています。<br>
-        スマートフォン用対応は、機能が一通り実装し終えた後の対応となります。<br>
+        本格的なスマートフォン用対応は、機能が一通り実装し終えた後の対応となります。<br>
         <br>
-        バックアップや同期機能は現在ありませんので、別ブラウザからアクセスする場合は一からデータ入力をやり直す必要があります。<br>
+        このサイトは、スクステをある程度理解している(ライブグランプリに参加するような)方に向けたサイトになります。<br>
+        「スクステってなに？」という方は、公式のチュートリアル動画やSNSなどで解説してくださっている方がいるので、そちらをご覧ください。<br>
+        <br>
+        バックアップや同期機能は現在ありませんので、別ブラウザ・別端末からアクセスする場合は一からデータ入力をやり直す必要があります。<br>
         バックアップ機能の対応を正式リリース後に予定しています。<br>
         <br>
         完全個人制作のため、一部デザインが崩れていたり、動かない場合があります。<br>
@@ -99,7 +102,7 @@
         なお、簡単な編成シミュレーションと編成情報の保存機能を搭載し、リニューアルする予定です。<br>
         <br>
         <b>CARD LIST(カード一覧)</b><br>
-        リンクラ内に実装されているカードの一覧と、カードの属性/スペシャルアピール/スキルレベルでの絞り込みができます。<br>
+        リンクラ内に実装されているカードの一覧と、カードの属性/スペシャルアピール/スキルレベル/カードシリーズでの絞り込みができます。<br>
         <br>
         <b>ITEM LIST(アイテム一覧)</b><br>
         Quest Liveの各ステージで獲得できるアイテムの一覧と検索ができます。<br>
@@ -124,16 +127,7 @@ export default {
   data() {
     return {
       eventList: {
-        'ijigenFes': {
-          title: '異次元フェス アイドルマスター★♥︎ラブライブ！歌合戦',
-          firstDay: [2023, 12, 9, 0, 0],
-          lastDay: [2023, 12, 10, 0, 0],
-          url: 'https://ijigen-fes.jp/utagassen/',
-          text: '',
-          type: 'live',
-          img: 'ijigenFes_logo.png'
-        },
-        'liveGP': {
+        /*'liveGP': {
           title: 'ライブグランプリ 103期第6回個人戦',
           text: '',
           type: 'liveGP',
@@ -141,7 +135,7 @@ export default {
           lastDay: [2023, 12, 15, 3, 59],
           url: 'https://www.lovelive-anime.jp/hasunosora/appnews/detail/?p=2023-12-08-20-m3zvdynhph',
           img: '103期第6回個人戦_logo.png'
-        },
+        },*/
         'unitKoushien': {
           title: 'LoveLive! Series Presents ユニット甲子園 2024',
           firstDay: [2024, 3, 9, 0, 0],

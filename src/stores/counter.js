@@ -237,7 +237,11 @@ export const useStoreCounter = defineStore('store', {
       'ハイボルテージ': {
         highVoltage: [
           'ボルテージPt.を+',
-          'する。使用時のボルテージLv.が6以上だった場合、さらにAPを1回復する。'
+          'する。使用時のボルテージLv.が6以上だった時、さらにAPを1回復する。'
+        ],
+        highVoltage_ver2: [
+          'ボルテージPt.を+',
+          'する。さらにボルテージLv.が6以上の時APを1回復する。'
         ],
         highVoltage_heartCaptcha: [
           'ボルテージPt.を+',
@@ -481,7 +485,11 @@ export const useStoreCounter = defineStore('store', {
         ]
       },
       'エクステアトラクト': {
-        extensionsAttract_section: [
+        extensionsAttract_section3: [
+          'このセクション中、手札の上限枚数を3枚増加する。さらにこのステージ中、獲得するLOVEを+',
+          '%する。'
+        ],
+        extensionsAttract_section2: [
           'このセクション中、手札の上限枚数を2枚増加する。さらにこのステージ中、獲得するLOVEを+',
           '%する。'
         ],
@@ -608,14 +616,47 @@ export const useStoreCounter = defineStore('store', {
           '%分のメンタルダメージを無効にする。'
         ]
       },
-      'リカバーアトラクション' :{
+      'リカバーアトラクション': {
         recoverAttraction_section: [
           'メンタルを最大値の',
           '%回復させる。さらに、ビートハート',
           '回分のスキルハートを獲得し、このセクション中、獲得するLOVEを+',
           '%する。'
         ]
-      }
+      },
+      'チルアトラクト': {
+        chillAttract_stage: [
+          'このステージ中、獲得するLOVEを+',
+          '%する。さらにボルテージLv.が3以下の時このステージ中、獲得するLOVEを+',
+          '%する。'
+        ]
+      },
+      'グルーヴィアトラクト': {
+        groovyAttract_section: [
+          'このステージ中、獲得するLOVEを+',
+          '%する。さらにボルテージLv.が8以上の時このセクション中、獲得するLOVEを+',
+          '%する。'
+        ]
+      },
+      'グルーヴィハート': {
+        groovyHeart8: [
+          'ビートハート',
+          '回分のスキルハートを獲得する。さらにボルテージLv.が8以上の時メンタルを最大値の',
+          '%回復させる。'
+        ]
+      },
+      'エクステハート': {
+        extensionsHeart_section3: [
+          'このセクション中、手札の上限枚数を3枚増加する。さらにビートハート',
+          '回分のスキルハートを獲得する。'
+        ]
+      },
+      'ハイアトラクト': {
+        highAttract_stage: [
+          'このステージ中、獲得するLOVEを+',
+          '%する。さらにボルテージLv.が6以上の時APを1回復する。'
+        ]
+      },
     },
     card: {
       'default': {
@@ -1337,6 +1378,49 @@ export const useStoreCounter = defineStore('store', {
           },
         },
         SR: {
+          '冬のおくりもの': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: '冬のおくりもの',
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 2230,
+              pure: 1730,
+              cool: 1430,
+              mental: 193,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'highAttract_stage',
+              name: 'ハイアトラクト',
+              AP: 4,
+              detail: [
+                [2.6, 2.9, 3.1, 3.4, 3.6, 3.9, 4.2, 4.4, 4.7, 5.2, '5.5?', '5.7?', '6?', 6.4]
+              ],
+              type: ['high', 'attract']
+            },
+            skill: {
+              ID: 'groovyAttract_section',
+              name: 'グルーヴィアトラクト',
+              AP: 3,
+              detail: [
+                [1.9, 2.1, 2.3, 2.5, 2.7, 2.9, 3, 3.2, 3.4, 3.8, '4?', '4.2?', '4.4?', 4.8],
+                [3, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 6, '6.3?', '6.6?', '6.9?', 7.5]
+              ],
+              type: ['groovy', 'attract']
+            },
+            characteristic: {
+              name: 'フェイバリット：1',
+              detail: 'フィーバーセクションを除いた1セクション目でドローされる確率が大幅に増加する。',
+              type: ['favorite']
+            }
+          },
           'ツバサ・ラ・リベルテ': {
             styleType: 'moodMaker',
             mood: 'neutral',
@@ -3402,6 +3486,48 @@ export const useStoreCounter = defineStore('store', {
           }
         },
         UR: {
+          'プチパティシエール': {
+            styleType: 'trickStar',
+            mood: 'happy',
+            series: 'プチパティシエール',
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 2430,
+              pure: 1930,
+              cool: 1330,
+              mental: 163,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'refreshMind',
+              name: 'リフレッシュマインド',
+              AP: 6,
+              detail: [
+                [10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, '22?', '23?', '25?']
+              ],
+              type: ['reflesh', 'mentalRecover']
+            },
+            skill: {
+              ID: 'refreshHeart',
+              name: 'リフレッシュハート',
+              AP: 4,
+              detail: [
+                [3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, '7?', '7?', '8?']
+              ],
+              type: ['reflesh', 'heartCaptcha']
+            },
+            characteristic: {
+              name: 'ドロー：ラブアトラクト',
+              detail: 'ドローした時、このステージ中、獲得するLOVEを+4%する。',
+              type: ['drow', 'loveAttract_stage']
+            }
+          },
           'コットン=ユートピア': {
             styleType: 'trickStar',
             mood: 'melow',
@@ -3464,7 +3590,7 @@ export const useStoreCounter = defineStore('store', {
               BP: 100
             },
             specialAppeal: {
-              ID: 'extensionsAttract_section',
+              ID: 'extensionsAttract_section2',
               name: 'エクステアトラクト',
               AP: 7,
               detail: [
@@ -3703,6 +3829,48 @@ export const useStoreCounter = defineStore('store', {
           }
         },
         SR: {
+          '冬のおくりもの': {
+            styleType: 'trickStar',
+            mood: 'neutral',
+            series: '冬のおくりもの',
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1830,
+              pure: 2230,
+              cool: 1330,
+              mental: 193,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'highVoltage_ver2',
+              name: 'ハイボルテージ',
+              AP: 4,
+              detail: [
+                [13, 14, 16, 17, 18, 20, 21, 22, 23, 26, '27?', '29?', '30?', 32]
+              ],
+              type: ['high', 'voltage']
+            },
+            skill: {
+              ID: 'regainVoltage',
+              name: 'リゲインボルテージ',
+              AP: 4,
+              detail: [
+                [10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24]
+              ],
+              type: ['regain', 'voltage']
+            },
+            characteristic: {
+              name: 'フェイバリット：1 & APレデュース：チル',
+              detail: 'フィーバーセクションを除いた1セクション目でドローされる確率が増加する。さらにドローした時ボルテージLv.が3以下のとき、手札のこのスキルの消費AP-1。',
+              type: ['favorite', 'APreduce', 'chill']
+            }
+          },
           'ツバサ・ラ・リベルテ': {
             styleType: 'moodMaker',
             mood: 'neutral',
@@ -3726,7 +3894,7 @@ export const useStoreCounter = defineStore('store', {
               name: 'リゲインボルテージ',
               AP: 6,
               detail: [
-                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, '40?']
+                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, 40]
               ],
               type: ['regainVoltage']
             },
@@ -3735,8 +3903,8 @@ export const useStoreCounter = defineStore('store', {
               name: 'チアフルボルテージ',
               AP: 4,
               detail: [
-                [20, 22, 24, 26, 28, 30, 32, 34, 36, 40, 42, 44, 46, '50?'],
-                [10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, '24?']
+                [20, 22, 24, 26, 28, 30, 32, 34, 36, 40, 42, 44, 46, 50],
+                [10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 25]
               ],
               type: ['cheerful', 'voltageGain']
             },
@@ -4205,6 +4373,49 @@ export const useStoreCounter = defineStore('store', {
           }
         },
         UR: {
+          '冬のおくりもの': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: '冬のおくりもの',
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1730,
+              pure: 2130,
+              cool: 1630,
+              mental: 183,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'extensionsAttract_section3',
+              name: 'エクステアトラクト',
+              AP: 5,
+              detail: [
+                ['3.2?', '3.5?', '3.8?', '4.2?', '4.5?', '4.8?', '5.1?', '5.4?', '5.8?', '6.4?', '6.7?', '7?', '7.4?', 8]
+              ],
+              type: ['extensions', 'attract']
+            },
+            skill: {
+              ID: 'chillAttract_stage',
+              name: 'チルアトラクト',
+              AP: 3,
+              detail: [
+                ['2.6?', '2.9?', '3.1?', '3.4?', '3.6?', '3.9?', '4.2?', '4.4?', '4.7?', '5.2?', '5.5?', '5.7?', '6?', 6.4],
+                ['4.8?', '5.3?', '5.8?', '6.2?', '6.7?', '7.2?', '7.7?', '8.2?', '8.6?', '9.6?', '10.1?', '10.6?', '11.1?', 12]
+              ],
+              type: ['chill', 'attract']
+            },
+            characteristic: {
+              name: 'フェイバリット：1',
+              detail: 'フィーバーセクションを除いた1セクション目でドローされる確率が大幅に増加する。',
+              type: ['favorite', 'mental']
+            }
+          },
           'ツバサ・ラ・リベルテ': {
             styleType: 'cheerLeader',
             mood: 'neutral',
@@ -6874,6 +7085,49 @@ export const useStoreCounter = defineStore('store', {
           }
         },
         UR: {
+          '冬のおくりもの': {
+            styleType: 'performer',
+            mood: 'neutral',
+            series: '冬のおくりもの',
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 2530,
+              pure: 1830,
+              cool: 730,
+              mental: 223,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'extensionsHeart_section3',
+              name: 'エクステハート',
+              AP: 6,
+              detail: [
+                [5, '6?', '6?', '7?', '7?', '8?', '8?', '9?', '9?', '10?', '11?', '11?', '12?', 13]
+              ],
+              type: ['extensions', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'groovyHeart8',
+              name: 'グルーヴィハート',
+              AP: 5,
+              detail: [
+                [5, '6?', '6?', '7?', '7?', '8?', '8?', '9?', '9?', '10?', '11?', '11?', '12?', 13],
+                [5.2, '5.72?', '6.24?', '6.76?', '7.28?', '7.8?', '8.32?', '8.84?', '9.36?', '10.4?', '10.92?', '11.44?', '11.96?', 13]
+              ],
+              type: ['groovy', 'heartCaptcha']
+            },
+            characteristic: {
+              name: 'フェイバリット：フィーバー&APレデュース：グルーヴィ',
+              detail: 'フィーバーセクションでどろーされる確率が増加する。さらにドローした時ボルテージLv.が8以上のとき、手札のこのスキルの消費AP-3。',
+              type: ['favorite', 'mental']
+            }
+          },
           'ツバサ・ラ・リベルテ': {
             styleType: 'performer',
             mood: 'neutral',
@@ -7176,6 +7430,50 @@ export const useStoreCounter = defineStore('store', {
           }
         },
         SR: {
+          'プチパティシエール': {
+            styleType: 'cheerLeader',
+            mood: 'happy',
+            series: 'プチパティシエール',
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 2130,
+              pure: 1930,
+              cool: 1030,
+              mental: 223,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'healingHeart',
+              name: 'ヒーリングハート',
+              AP: 6,
+              detail: [
+                [8, 8.8, 9.6, 10.4, 11.2, 12, 12.8, 13.6, 14.4, 16, 16.8, 17.6, '18.4?', '20?'],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, '5?', '6?']
+              ],
+              type: ['mentalRecover', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'supportedFeel',
+              name: 'サポーテッドフィール',
+              AP: 4,
+              detail: [
+                [5.2, 5.72, 6.24, 6.76, 7.28, 7.8, 8.32, 8.84, 9.36, 10.4, 10.92, 11.44, '11.96?', '13?'],
+                [1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 2, 2.1, 2.2, 2.3, 2.5]
+              ],
+              type: ['mentalRecover', 'loveAttract']
+            },
+            characteristic: {
+              name: 'ドロー：メンタルリカバー',
+              detail: 'ドローした時、メンタルの最大値の6%回復させる。',
+              type: ['drow', 'mentalRecover']
+            }
+          },
           'コットン=ユートピア': {
             styleType: 'cheerLeader',
             mood: 'melow',
@@ -7289,7 +7587,7 @@ export const useStoreCounter = defineStore('store', {
               type: ['refresh', 'mind']
             },
             skill: {
-              ID: 'extensionsAttract_section',
+              ID: 'extensionsAttract_section2',
               name: 'エクステアトラクト',
               AP: 3,
               detail: [
@@ -8360,7 +8658,7 @@ export const useStoreCounter = defineStore('store', {
             month: 3,
             date: 29
           },
-          numbering: 'デビューミニアルバム',
+          numbering: '',
           BPM: 210,
           cover: true
         },
@@ -8693,6 +8991,24 @@ export const useStoreCounter = defineStore('store', {
         center: 'rurino',
         bonusSkill: 'メンタルリカバー',
         singingMembers: ['rurino', 'megumi']
+      },
+      'CHANGE!!!!': {
+        musicData: {
+          singer: '蓮ノ空女学院スクールアイドルクラブ',
+          releaseDate: {
+            year: 2011,
+            month: 11,
+            date: 9
+          },
+          numbering: '',
+          BPM: 170,
+          cover: true
+        },
+        level: 0,
+        term: 103,
+        center: 'rurino',
+        bonusSkill: 'ビートハートアップ',
+        singingMembers: ['kaho', 'sayaka', 'rurino', 'kozue', 'tsuzuri', 'megumi']
       }
     },
     defaultCardList: []

@@ -66,7 +66,7 @@
                   v-model="clearStage[i - 1]"
                   :items="[1, 2, 3, 4]"
                   label="ステージ"
-                  hint="クリアしたステージを選択してください"
+                  hint="ステージを選択してください"
                   persistent-hint
                   color="pink"
                   base-color="pink"
@@ -83,6 +83,7 @@
                 :label="arr.last"
                 :value="memberName"
                 hide-details
+                color="pink"
               ></v-checkbox>
 
               <v-row no-gutters>
@@ -471,7 +472,7 @@ export default {
     },
     setIcon(name_en) {
       return {
-        'background-image':'url(' + require(`@/assets/member_icon/icon_${name_en}.png`) + ')',
+        'background-image': `url(${require(`@/assets/member_icon/icon_${name_en}.png`)})`,
         'background-position': 'center'
       };
     },
