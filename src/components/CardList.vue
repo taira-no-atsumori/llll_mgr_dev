@@ -27,7 +27,7 @@
       <v-tab value="1">画像あり一覧</v-tab>
       <v-tab value="2">画像なし一覧</v-tab>
     </v-tabs>
-    <v-window v-model="tab" touch="false">
+    <v-window v-model="tab">
       <v-window-item value="1">
         <div id="cardListArea">
           <div v-if="store.outputCardList.length === 0">
@@ -40,16 +40,62 @@
             :class="`ma-1 card ${key.mood}`"
             @click="store.showModalEvent('setCardData'); store.cardSelect(key.memberName, key.rare, key.cardName)"
           >
-            <img
-              :src="require(`@/assets/card_illust/${store.conversion(key.cardName)}_${store.charactorName[key.memberName].last}_覚醒後.png`)"
+            <v-tooltip
+              location="bottom"
+              open-delay="250"
             >
-            <div class="px-2 pb-1 cardName">
-              <v-img
-                :src="require(`@/assets/styleType_icon/icon_${key.styleType}.png`)"
-                class="icon type"
-              ></v-img>
-              {{ key.cardName }}
-            </div>
+              <template v-slot:activator="{ props }">
+                <div
+                  v-bind="props"
+                >
+                  <img
+                    :src="require(`@/assets/card_illust/${store.conversion(key.cardName)}_${store.charactorName[key.memberName].last}_覚醒後.png`)"
+                  >
+                  <div class="px-2 pb-1 cardName">
+                    <v-img
+                      :src="require(`@/assets/styleType_icon/icon_${key.styleType}.png`)"
+                      class="icon type"
+                    ></v-img>
+                    {{ key.cardName }}
+                  </div>
+                </div>
+              </template>
+
+              <div>
+                <p class="mb-2">{{ key.rare }}{{ ['', '+', '++'][store.card[key.memberName][key.rare][key.cardName].fluctuationStatus.trainingLevel] }} [{{ key.cardName }}] {{ store.makeFullName(key.memberName) }} (Lv. {{ store.card[key.memberName][key.rare][key.cardName].fluctuationStatus.cardLevel }})</p>
+                <v-container fluid class="mb-2 pa-0">
+                  <v-row no-gutters>
+                    <v-col cols="6" class="pa-0">
+                      <v-row no-gutters>
+                        <v-col class="pa-0">スマイル</v-col>
+                        <v-col class="pa-0">{{ store.cardParam('smile', {memberName: key.memberName, rare: key.rare, cardName: key.cardName}) }}</v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col class="pa-0">ピュア</v-col>
+                        <v-col class="pa-0">{{ store.cardParam('pure', {memberName: key.memberName, rare: key.rare, cardName: key.cardName}) }}</v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col class="pa-0">クール</v-col>
+                        <v-col class="pa-0">{{ store.cardParam('cool', {memberName: key.memberName, rare: key.rare, cardName: key.cardName}) }}</v-col>
+                      </v-row>
+                    </v-col>
+                    <v-col cols="6" class="pa-0">
+                      <v-row no-gutters>
+                        <v-col class="pa-0">メンタル</v-col>
+                        <v-col class="pa-0">{{ store.mentalCul({memberName: key.memberName, rare: key.rare, cardName: key.cardName}) }}</v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col class="pa-0">BP</v-col>
+                        <v-col class="pa-0">{{ store.card[key.memberName][key.rare][key.cardName].uniqueStatus.BP }}</v-col>
+                      </v-row>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <p><span class="mr-3">スペシャルアピール</span>{{ store.card[key.memberName][key.rare][key.cardName].specialAppeal.name }} (Lv. {{ store.card[key.memberName][key.rare][key.cardName].fluctuationStatus.SALevel }})</p>
+                <p><span class="mr-3">スキル</span>{{ store.card[key.memberName][key.rare][key.cardName].skill.name }} (Lv. {{ store.card[key.memberName][key.rare][key.cardName].fluctuationStatus.SLevel }})</p>
+                <!--<p><span class="mr-3">特性</span>{{ store.card[key.memberName][key.rare][key.cardName].characteristic.name }}</p>-->
+              </div>
+            </v-tooltip>
           </div>
         </div>
       </v-window-item>
@@ -104,6 +150,11 @@
   </v-container>
 </template>
 
+<script setup>
+  import { useStoreCounter } from '../stores/counter';
+  const store = useStoreCounter();
+</script>
+
 <script>
 export default {
   name: 'CardList',
@@ -120,16 +171,7 @@ export default {
         { title: '特訓度', value: 'fluctuationStatus.trainingLevel' },
         { title: 'スペシャルアピールLv.', value: 'fluctuationStatus.SALevel' },
         { title: 'スキルLv.', value: 'fluctuationStatus.SLevel' },
-        { title: '解放Lv.', value: 'fluctuationStatus.releaseLevel' },
-        /*{
-          title: '獲得可能アイテム',
-          children: [
-            { title: '技能書系', value: '獲得可能アイテム1' },
-            { title: 'ピース系', value: '獲得可能アイテム2' },
-            { title: 'チャーム系', value: '獲得可能アイテム3' }
-          ]
-        },*/
-        //{ title: '低確率獲得可能アイテム', value: '低確率獲得可能アイテム' },
+        { title: '解放Lv.', value: 'fluctuationStatus.releaseLevel' }
       ]
     }
   },
@@ -142,12 +184,6 @@ export default {
     }
   }
 }
-</script>
-
-<script setup>
-  import { useStoreCounter } from '../stores/counter';
-  const store = useStoreCounter();
-  store.setOutputCardList();
 </script>
 
 <style lang="scss" scoped>

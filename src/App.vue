@@ -131,8 +131,8 @@ export default {
 <script setup>
   import { useStoreCounter } from './stores/counter';
   const store = useStoreCounter();
-  store.getLocalStorage();
-  //store.fitst();
+  //store.getLocalStorage();
+  store.init();
 </script>
 
 <style lang="scss" scoped>
