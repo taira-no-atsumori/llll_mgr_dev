@@ -9310,15 +9310,21 @@ export const useStoreCounter = defineStore('store', {
       if (localStorage.llllMgr_cardListFilter !== undefined) {
         this.localStorageData.cardList.cardListFilter = JSON.parse(localStorage.llllMgr_cardListFilter);
 
-        for (const filterName in this.search.cardList) {
-          this.search.cardList[filterName] = this.localStorageData.cardList.cardListFilter.cardList[filterName];
-        }
+        if (this.localStorageData.cardList.cardListFilter.cardList === undefined) {
+          for (const filterName in this.search.cardList) {
+            this.search.cardList[filterName] = this.localStorageData.cardList.cardListFilter[filterName];
+          }
+        } else {
+          for (const filterName in this.search.cardList) {
+            this.search.cardList[filterName] = this.localStorageData.cardList.cardListFilter.cardList[filterName];
+          }
 
-        for (const filterName in this.search.skillList) {
-          this.search.skillList[filterName] = this.localStorageData.cardList.cardListFilter.skillList[filterName];
-        }
+          for (const filterName in this.search.skillList) {
+            this.search.skillList[filterName] = this.localStorageData.cardList.cardListFilter.skillList[filterName];
+          }
 
-        this.search.cardSeries = this.localStorageData.cardList.cardListFilter.cardSeries;
+          this.search.cardSeries = this.localStorageData.cardList.cardListFilter.cardSeries;
+        }
       }
     },
     deleteLocalStorage() {},
