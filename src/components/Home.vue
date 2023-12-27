@@ -3,7 +3,7 @@
     <v-row no-gutters>
       <v-col cols="12">
         <h1>リンクラ マネージャー！</h1>
-        Ver.ε.09(アーリーアクセス)
+        Ver.ε.10(アーリーアクセス)
       </v-col>
     </v-row>
     <v-row v-if="Object.keys(outputEventList).length > 0">
@@ -13,14 +13,14 @@
           cycle
           hide-delimiters
           :show-arrows="false"
-          style="max-width: 900px; height: auto; margin: 0 auto;"
+          style="max-width: 800px; height: auto; margin: 0 auto;"
         >
           <v-carousel-item
             v-for="(event, eventName) in outputEventList"
             :key="eventName"
             class="text-center"
           >
-            <v-card>
+            <v-card variant="flat">
               <a :href="event.url" target="_blank" class="mainVisual">
                 <v-img
                   class="white--text align-end text-center"
@@ -128,7 +128,7 @@ export default {
     return {
       eventList: {
         'liveGP': {
-          title: '「ライブグランプリ 103期12月度サークル対抗戦」',
+          title: 'ライブグランプリ「103期12月度サークル対抗戦」',
           text: '',
           type: 'liveGP',
           firstDay: [2023, 12, 20, 10, 0],
@@ -136,8 +136,17 @@ export default {
           url: 'https://www.lovelive-anime.jp/hasunosora/appnews/detail/?p=2023-12-18-20-ds0qd9bpqa',
           img: '103期12月度サークル対抗戦_logo.png'
         },
+        'storyEvent': {
+          title: 'ストーリーイベント「Link to Us! Link with Yours!!」',
+          text: '',
+          type: 'liveGP',
+          firstDay: [2023, 12, 23, 10, 0],
+          lastDay: [2023, 12, 28, 19, 59],
+          url: 'https://www.lovelive-anime.jp/hasunosora/appnews/detail/?p=2023-12-23-20-r2xp4pdu4k',
+          img: 'LtULwy_logo.png'
+        },
         'unitKoushien': {
-          title: '「LoveLive! Series Presents ユニット甲子園 2024」',
+          title: 'ライブ「LoveLive! Series Presents ユニット甲子園 2024」',
           firstDay: [2024, 3, 9, 0, 0],
           lastDay: [2024, 3, 10, 0, 0],
           url: 'https://lovelive-anime.jp/special/live/live_detail.php?p=unitlive2024',
@@ -146,21 +155,21 @@ export default {
           img: 'unitKoushien_logo.png'
         },
         '2ndLive_chiba': {
-          title: '「ラブライブ！蓮ノ空女学院スクールアイドルクラブ 2nd Live Tour ～Blooming with ◯◯◯～」',
+          title: 'ライブ「ラブライブ！ 蓮ノ空女学院スクールアイドルクラブ 2nd Live Tour ～Blooming with ◯◯◯～」',
           text: '千葉公演',
           type: 'live',
           firstDay: [2024, 4, 20, 0, 0],
           lastDay: [2024, 4, 21, 0, 0],
-          url: 'https://www.lovelive-anime.jp/hasunosora/',
+          url: 'https://www.lovelive-anime.jp/hasunosora/live-event/live_detail.php?p=BLW',
           img: '2ndLIVE_logo.png'
         },
         '2ndLive_hyougo': {
-          title: '「ラブライブ！蓮ノ空女学院スクールアイドルクラブ 2nd Live Tour ～Blooming with ◯◯◯～」',
+          title: 'ライブ「ラブライブ！ 蓮ノ空女学院スクールアイドルクラブ 2nd Live Tour ～Blooming with ◯◯◯～」',
           text: '兵庫公演',
           type: 'live',
           firstDay: [2024, 5, 18, 0, 0],
           lastDay: [2024, 5, 19, 0, 0],
-          url: 'https://www.lovelive-anime.jp/hasunosora/',
+          url: 'https://www.lovelive-anime.jp/hasunosora/live-event/live_detail.php?p=BLW',
           img: '2ndLIVE_logo.png'
         }
       }
