@@ -101,27 +101,27 @@ export default {
       pageList: {
         'Home': {
           url: '/llll_mgr_dev/',
-          name: 'ホーム',
+          name: 'ホーム'
         },
         'Simulation': {
           url: 'simulation',
-          name: '獲得グランプリPt.計算ツール',
+          name: '獲得グランプリPt.計算ツール'
         },
         'Card List': {
           url: 'cardlist',
-          name: 'カード一覧 / 所持カード設定',
+          name: 'カード一覧 / 所持カード設定'
         },
         'Music List': {
           url: 'musiclist',
-          name: '楽曲一覧 / 楽曲マスタリーレベル設定',
+          name: '楽曲一覧 / 楽曲マスタリーレベル設定'
         },
         'Item List': {
           url: 'Itemlist',
-          name: 'スキルアップ素材獲得ステージリスト',
+          name: 'スキルアップ素材獲得ステージリスト'
         },
         'License': {
           url: 'license',
-          name: 'ライセンス',
+          name: 'ライセンス'
         }
       }
     }
