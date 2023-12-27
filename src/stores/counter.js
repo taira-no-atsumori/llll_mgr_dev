@@ -509,7 +509,10 @@ export const useStoreCounter = defineStore('store', {
           for (const rare in this.card[memberName]) {
             for (const cardName in this.localStorageData.cardList.card[memberName][rare]) {
               this.card[memberName][rare][cardName].fluctuationStatus = this.localStorageData.cardList.card[memberName][rare][cardName].fluctuationStatus;
-              this.card[memberName][rare][cardName].favorite = this.localStorageData.cardList.card[memberName][rare][cardName].favorite;
+
+              if (this.localStorageData.cardList.card[memberName][rare][cardName].favorite !== undefined) {
+                this.card[memberName][rare][cardName].favorite = this.localStorageData.cardList.card[memberName][rare][cardName].favorite;
+              }
             }
           }
         }
