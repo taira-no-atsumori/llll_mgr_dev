@@ -24,7 +24,7 @@ export const useStoreCounter = defineStore('store', {
         SAP: [0, 10],
         releaseLevel: [1, 5],
         memberName: ['kaho', 'sayaka', 'rurino', 'kozue', 'tsuzuri', 'megumi'],
-        favorite: ['heart', 'circle', 'triangle', 'square', 'rhombus', 'star']
+        favorite: []
       },
       skillList: {
         specialAppeal: [],
