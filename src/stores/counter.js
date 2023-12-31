@@ -5,6 +5,7 @@ import { useMusicStore } from './musicList';
 
 export const useStoreCounter = defineStore('store', {
   state: () => ({
+    version: 'ε.12(アーリーアクセス)',
     dialog: false,
     showModalName: false,
     updateData: false,
@@ -262,8 +263,7 @@ export const useStoreCounter = defineStore('store', {
               const AP = cardData.specialAppeal.AP - cardData.fluctuationStatus.trainingLevel;
               return filterList[0] <= AP && AP <= filterList[1];
             } else if (searchKey === 'SAP') {
-              const AP = cardData.skill.AP - cardData.fluctuationStatus.trainingLevel;
-              return filterList[0] <= AP && AP <= filterList[1];
+              return filterList[0] <= cardData.skill.AP && cardData.skill.AP <= filterList[1];
             } else if (searchKey === 'favorite') {
               if (this.search.cardList.favorite.length === 0) {
                 return true;
@@ -527,7 +527,9 @@ export const useStoreCounter = defineStore('store', {
           }
         } else {
           for (const filterName in this.search.cardList) {
-            this.search.cardList[filterName] = this.localStorageData.cardList.cardListFilter.cardList[filterName];
+            if (this.localStorageData.cardList.cardListFilter.cardList[filterName] !== undefined) {
+              this.search.cardList[filterName] = this.localStorageData.cardList.cardListFilter.cardList[filterName];
+            }
           }
 
           for (const filterName in this.search.skillList) {
@@ -604,7 +606,7 @@ export const useStoreCounter = defineStore('store', {
     },
     valueChange(target, val) {
       if (target === 'musicLevel') {
-        this.musicList[this.selectMusicTitle].level = val;
+        this.musicList[this.selectMusicTitle].level = Number(val);
 
         for (const musicTitle in this.musicList) {
           this.localStorageData.musicData.musicLevel[musicTitle] = this.musicList[musicTitle].level;

@@ -24,13 +24,13 @@
       >
         <v-tooltip location="bottom">
           <template v-slot:activator="{ props }">
-        <v-btn
+            <v-btn
               v-bind="props"
-          v-if="pageTitle !== 'License'"
-          class="d-none d-sm-block"
-          text
-          @click="pageMove(arr.url)"
-        >{{ pageTitle }}</v-btn>
+              v-if="pageTitle !== 'License'"
+              class="d-none d-sm-block"
+              text
+              @click="pageMove(arr.url)"
+            >{{ pageTitle }}</v-btn>
           </template>
           {{ arr.name }}
         </v-tooltip>
@@ -315,5 +315,11 @@ main {
       border-bottom: 1px solid #000;
     }
   }
+}
+
+.hamidashi {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
