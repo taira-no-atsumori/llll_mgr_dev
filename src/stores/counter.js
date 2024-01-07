@@ -5,7 +5,7 @@ import { useMusicStore } from './musicList';
 
 export const useStoreCounter = defineStore('store', {
   state: () => ({
-    version: 'ε.12(アーリーアクセス)',
+    version: 'ε.13(アーリーアクセス)',
     dialog: false,
     showModalName: false,
     updateData: false,
@@ -33,11 +33,6 @@ export const useStoreCounter = defineStore('store', {
         //characteristic: []
       },
       cardSeries: []
-    },
-    styleHeadline: {
-      main: 'MAIN STYLE',
-      side1: 'SIDE STYLE 1',
-      side2: 'SIDE STYLE 2'
     },
     styleType: {
       performer: 'パフォーマー',
@@ -184,16 +179,16 @@ export const useStoreCounter = defineStore('store', {
         main: 'default',
         side1: 'default',
         side2: 'default'
-      },
+      }
     },
-    settingCard: { // 何故か分からないがここを設定しないとエラーが出るため設定
-      rare: 'DR',
-      name: 'kaho',
-      card: 'Prism Echo'
+    settingCard: {
+      rare: '',
+      name: '',
+      card: ''
     },
-    abc: {
-      name: 'kaho',
-      style: 'main'
+    openCard: {
+      name: '',
+      style: ''
     },
     localStorageData: {
       musicData: {
@@ -324,9 +319,6 @@ export const useStoreCounter = defineStore('store', {
     cardSeriesList() {
       return this.makeSkillFilterList('series');
     },
-    setSelectCard() {
-      console.log(this.card[this.abc.name][this.abc.style])
-    },
     makeFullName() {
       return (name) => {
         return `${this.charactorName[name].first} ${this.charactorName[name].last}`;
@@ -433,7 +425,7 @@ export const useStoreCounter = defineStore('store', {
       return `${date.year}年${date.month}月${date.date}日(${(['日', '月', '火', '水', '木', '金', '土'][new Date(date.year, date.month - 1, date.date).getDay()])})`;
     },
     setCardIllust() {
-      return `${this.settingCard.card}${this.charactorName[this.settingCard.name].last}_覚醒`;
+      return `${this.conversion(this.settingCard.card)}_${this.charactorName[this.settingCard.name].last}_覚醒後`;
     },
     /*makeMusicList() {
       return (selectSkillList) => {
@@ -560,14 +552,14 @@ export const useStoreCounter = defineStore('store', {
         return name;
       }
     },
-    openCard(name, style) {
-      this.abc.name = name;
-      this.abc.style = style;
+    setOpenCard(name, style) {
+      this.openCard.name = name;
+      this.openCard.style = style;
     },
     aaa() {
       for (const rare of this.rarity) {
-        if (this.selectCard[this.abc.name][this.abc.style] in this.card[this.abc.name][rare]) {
-          this.selectCard[this.abc.name][this.abc.style] = this.card[this.abc.name][rare][this.selectCard[this.abc.name][this.abc.style]];
+        if (this.selectCard[this.openCard.name][this.openCard.style] in this.card[this.openCard.name][rare]) {
+          this.selectCard[this.openCard.name][this.openCard.style] = this.card[this.openCard.name][rare][this.selectCard[this.openCard.name][this.openCard.style]];
           break;
         }
       }
@@ -606,7 +598,7 @@ export const useStoreCounter = defineStore('store', {
     },
     valueChange(target, val) {
       if (target === 'musicLevel') {
-        this.musicList[this.selectMusicTitle].level = Number(val);
+        this.musicList[this.selectMusicTitle].level = val;
 
         for (const musicTitle in this.musicList) {
           this.localStorageData.musicData.musicLevel[musicTitle] = this.musicList[musicTitle].level;
@@ -686,6 +678,9 @@ export const useStoreCounter = defineStore('store', {
       }
 
       return result;
+    },
+    setSelectCard(cardName) {
+      this.selectCard[this.openCard.name][this.openCard.style] = cardName;
     },
     fitst() {
       console.log('OK');

@@ -54,6 +54,7 @@ export default {
   name: 'ModalArea',
   components: {
     SetCardData,
+    SelectCard,
     CardList,
     CardListFilter,
     MusicListFilter,

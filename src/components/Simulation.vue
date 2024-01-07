@@ -1,308 +1,400 @@
 <template>
-  <v-container fluid class="pa-2">
-    <v-row>
-      <v-col cols="12" class="pb-3">
-        <h1>SIMULATION ～ 獲得グランプリPt.計算ツール ～</h1>
-      </v-col>
-      <v-col cols="12" class="pt-0 pb-3">
-        <v-expansion-panels>
-          <v-expansion-panel>
-            <v-expansion-panel-title>ページ詳細</v-expansion-panel-title>
-            <v-expansion-panel-text>
-              ライブグランプリの獲得グランプリPt.の計算ツールです。<br>
-              <br>
-              <b>使い方</b><br>
-              Season Fan Lv.は全員分入力してください。<br>
-              (アプリ内上部のユーザーネームをタップして、Fan Lv.の右にあるアイコンをタップすると確認できます)<br>
-              解放Lv.は、その楽曲の歌唱メンバー(リーダーを含む)のみ入力してください。<br>
-              解放Lv.の変更方法は、<br>
-              ・名前の横にあるチェックマークにチェックを入れる<br>
-              ・歌唱メンバーのメインスタイルに設定しているカードのレア度を設定<br>
-              で該当メンバーの解放Lv.を変更できるようになります。<br>
-              <br>
-              <b>注意事項</b><br>
-              ※突貫で作ったため、スマホでの表示を考慮していません。横画面にするか、PCからアクセスしてください。<br>
-              ※この機能は暫定機能です。今後のアップデートでリニューアルします。
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-col>
+<div id="otherArea" v-if="false">
+  <div id="textOutputArea">
+    <label for="textOutput" class="mb-2">出力テキスト</label>
+    <textarea name="textOutput" id="textOutput" class="mb-2"></textarea>
+    <p id="textLength"></p>
+  </div>
+  <!--<div id="possessionCardSettingArea">
+    <p class="mb-2">所持カード設定</p>
+    <ul id="possessionCard_header">
+      <li v-for="(name_ja, name_en) in charactorName" :key="name_ja" :data-charactor="name_en" :data-selected="selectTab === name_en" @click="changeTab(name_en)">
+        {{ name_ja.last }}
+      </li>
+    </ul>
+    <ul id="possessionCard_container">
+      <li v-for="(name_ja, name_en) in charactorName" :key="name_en" :data-charactor="name_en" v-show="selectTab === name_en">
+        <dl v-for="rare in store.rarity" :key="rare" :data-rare="rare">
+          <dt>
+            {{ rare }}
+          </dt>
+          <dd>
+            <button v-for="(ary, cardName) in card[name_en][rare]" :key="ary" :data-mood="ary.mood" @click="showModalEvent('possessionCardSetting'); store.submitCardData({charactorName: name_en, rare: rare, selectedCard: cardName})">{{ cardName }}</button>
+          </dd>
+        </dl>
+      </li>
+    </ul>
+  </div>-->
+</div>
+
+<v-container fluid class="px-1 py-2">
+<v-row no-gutters class="mb-5">
+  <v-col cols="12" class="px-1">
+    <h1>FORMATION</h1>
+  </v-col>
+  <v-col cols="12" class="pt-0 pb-2 px-1">
+    <v-expansion-panels>
+      <v-expansion-panel>
+        <v-expansion-panel-title>ページ詳細</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          ライブグランプリの獲得グランプリPt.の計算ツールです。<br>
+          <br>
+          <b>使い方</b><br>
+          Season Fan Lv.は全員分入力してください。<br>
+          (アプリ内上部のユーザーネームをタップして、Fan Lv.の右にあるアイコンをタップすると確認できます)<br>
+          解放Lv.は、その楽曲の歌唱メンバー(リーダーを含む)のみ入力してください。<br>
+          解放Lv.の変更方法は、<br>
+          ・名前の横にあるチェックマークにチェックを入れる<br>
+          ・歌唱メンバーのメインスタイルに設定しているカードのレア度を設定<br>
+          で該当メンバーの解放Lv.を変更できるようになります。<br>
+          <br>
+          <b>注意事項</b><br>
+          ※突貫で作ったため、スマホでの表示を考慮していません。横画面にするか、PCからアクセスしてください。<br>
+          ※この機能は暫定機能です。今後のアップデートでリニューアルします。
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </v-col>
+  <v-col cols="12" class="pa-0">
+    <v-row no-gutters>
+      <v-col cols="2">総スマイル：10,000</v-col>
+      <v-col cols="2">総クール：10,000</v-col>
+      <v-col cols="2">総ピュア：10,000</v-col>
+      <v-col cols="2">総メンタル：10,000</v-col>
+      <v-col cols="2"></v-col>
+      <v-col cols="2"></v-col>
+    </v-row>
+    <v-row no-gutters>
       <v-col
-        v-for="i in 2"
-        :key="i"
         cols="12"
-        sm="6"
-        :class="['py-2 prr-sm-2 pr-md-2 pr-lg-2 pr-xl-2', 'py-2 prl-sm-2 pl-md-2 pl-lg-2 pl-xl-2'][i - 1]"
+        sm="4"
+        v-for="(name_ja, name_en) in store.charactorName"
+        :key="name_ja"
+        class="pa-1"
       >
         <v-card elevation="2">
-          <v-card-title>楽曲{{ i }}</v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col cols="12">
-                <h2>予想獲得グランプリPt. {{ GPpt(i - 1) }}</h2>
-              </v-col>
+          <v-row
+            no-gutters
+            class="charactorArea"
+            :data-charactorName="name_en"
+          >
+            <v-col cols="12" class="charactorDetailArea pa-1">
+              <h2 class="text-center">
+                <span
+                  @click="store.showModalEvent('charactorSetting')"
+                  class="text-justify"
+                  style="display: inline-block;"
+                >
+                  <img
+                    :src="require(`@/assets/member_icon/icon_illust_${name_en}.png`)"
+                    style="width: 35px;"
+                  >
+                  {{ store.makeFullName(name_en) }}
+                </span>
+                <v-icon color="yellow">mdi-crown</v-icon>
+              </h2>
+              <v-row no-gutters>
+                <v-col cols="4">
+                  <dl>
+                    <dt>合計マスタリーLv. </dt>
+                    <dd>{{ store.makeTotalMastaryLv(name_en) }}</dd>
+                  </dl>
+                </v-col>
+                <v-col cols="5">
+                  <h3>ボーナススキル</h3>
+                  <span
+                    v-for="skillName in bonusSkillList"
+                    :key="skillName"
+                    class="mr-1"
+                  >
+                    <img
+                      :src="require(`@/assets/${skillName}.png`)"
+                      style="width: 25px;"
+                    >×{{ store.memberData.centerList[name_en].bonusSkill[skillName] }}
+                  </span>
+                </v-col>
+                <v-col cols="3">
+                  <h3>Season Fan Lv. </h3>
+                  <p>7 / 10</p>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col
+              cols="12"
+              v-for="(ary, styleName) in styleHeadline"
+              :key="styleName"
+              :data-style="styleName"
+            >
+              <v-row no-gutters>
+                <v-col
+                  cols="4"
+                  class="px-1 pt-1"
+                >
+                  <v-card
+                    elevation="2"
+                    hover
+                    @click="store.showModalEvent('selectCard'); store.setOpenCard(name_en, styleName)"
+                  >
+                    <v-img
+                      :src="require(`@/assets/card_illust/${makeIllustCard(store, store.selectCard[name_en][styleName], name_en)}.png`)"
+                    ></v-img>
+                  </v-card>
+                </v-col>
+                <v-col
+                  cols="8"
+                  class="px-1 pt-1"
+                  style="font-size: 15px;"
+                >
+                  <h3>{{ ary }}</h3>
+                  <dl class="mb-1">
+                    <dt>カード名</dt>
+                    <dd>{{ makeCardName(store, store.selectCard[name_en][styleName], name_en) }}</dd>
+                  </dl>
+                  <v-row no-gutters class="pb-1">
+                    <v-col cols="3">
+                      <dl>
+                        <dt>レベル</dt>
+                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.cardLevel }}</dd>
+                      </dl>
+                    </v-col>
+                    <v-col cols="3">
+                      <dl>
+                        <dt>SA</dt>
+                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.SALevel }}</dd>
+                      </dl>
+                    </v-col>
+                    <v-col cols="3">
+                      <dl>
+                        <dt>S</dt>
+                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.SLevel }}</dd>
+                      </dl>
+                    </v-col>
+                    <v-col cols="3">
+                      <dl>
+                        <dt>解放Lv.</dt>
+                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.releaseLevel }}</dd>
+                      </dl>
+                    </v-col>
+                    <v-col cols="3">
+                      <dl>
+                        <dt>スマイル</dt>
+                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].uniqueStatus.smile }}</dd>
+                      </dl>
+                    </v-col>
+                    <v-col cols="3">
+                      <dl>
+                        <dt>クール</dt>
+                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].uniqueStatus.cool }}</dd>
+                      </dl>
+                    </v-col>
+                    <v-col cols="3">
+                      <dl>
+                        <dt>ピュア</dt>
+                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].uniqueStatus.pure }}</dd>
+                      </dl>
+                    </v-col>
+                    <v-col cols="3">
+                      <dl>
+                        <dt>メンタル</dt>
+                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].uniqueStatus.mental }}</dd>
+                      </dl>
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </v-row>
+              <v-divider class="mx-1"></v-divider>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-col>
+</v-row>
 
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-text-field
-                  v-model="score[i - 1]"
-                  label="スコア"
-                  hint="スコアを入力してください"
-                  :rules="rules"
-                  persistent-hint
-                  color="pink"
-                  base-color="pink"
-                ></v-text-field>
-              </v-col>
+<v-row no-gutters>
+  <v-col cols="12">
+    <h1>SIMULATION</h1>
+  </v-col>
+</v-row>
+</v-container>
 
-              <v-col
-                cols="12"
-                sm="6"
-                class="mb-5"
-              >
+<v-container fluid class="pa-2">
+  <v-row>
+    <v-col cols="12" class="pb-3">
+      <h1>SIMULATION ～ 獲得グランプリPt.計算ツール ～</h1>
+    </v-col>
+    <v-col cols="12" class="pt-0 pb-3">
+      <v-expansion-panels>
+        <v-expansion-panel>
+          <v-expansion-panel-title>ページ詳細</v-expansion-panel-title>
+          <v-expansion-panel-text>
+            ライブグランプリの獲得グランプリPt.の計算ツールです。<br>
+            <br>
+            <b>使い方</b><br>
+            Season Fan Lv.は全員分入力してください。<br>
+            (アプリ内上部のユーザーネームをタップして、Fan Lv.の右にあるアイコンをタップすると確認できます)<br>
+            解放Lv.は、その楽曲の歌唱メンバー(リーダーを含む)のみ入力してください。<br>
+            解放Lv.の変更方法は、<br>
+            ・名前の横にあるチェックマークにチェックを入れる<br>
+            ・歌唱メンバーのメインスタイルに設定しているカードのレア度を設定<br>
+            で該当メンバーの解放Lv.を変更できるようになります。<br>
+            <br>
+            <b>注意事項</b><br>
+            ※突貫で作ったため、スマホでの表示を考慮していません。横画面にするか、PCからアクセスしてください。<br>
+            ※この機能は暫定機能です。今後のアップデートでリニューアルします。
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-col>
+    <v-col
+      v-for="i in 2"
+      :key="i"
+      cols="12"
+      sm="6"
+      :class="['py-2 prr-sm-2 pr-md-2 pr-lg-2 pr-xl-2', 'py-2 prl-sm-2 pl-md-2 pl-lg-2 pl-xl-2'][i - 1]"
+    >
+      <v-card elevation="2">
+        <v-card-title>楽曲{{ i }}</v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12">
+              <h2>予想獲得グランプリPt. {{ GPpt(i - 1) }}</h2>
+            </v-col>
+
+            <v-col
+              cols="12"
+              sm="6"
+            >
+              <v-text-field
+                v-model="score[i - 1]"
+                label="スコア"
+                hint="スコアを入力してください"
+                :rules="rules"
+                persistent-hint
+                color="pink"
+                base-color="pink"
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+              cols="12"
+              sm="6"
+              class="mb-5"
+            >
+              <v-select
+                v-model="clearStage[i - 1]"
+                :items="[1, 2, 3, 4]"
+                label="ステージ"
+                hint="ステージを選択してください"
+                persistent-hint
+                color="pink"
+                base-color="pink"
+              ></v-select>
+            </v-col>
+          </v-row>
+
+          <div
+            v-for="(arr, memberName) in store.charactorName"
+            :key="memberName"
+          >
+            <v-checkbox
+              v-model="performance[i - 1]"
+              :label="arr.last"
+              :value="memberName"
+              hide-details
+              color="pink"
+            ></v-checkbox>
+
+            <v-row no-gutters>
+              <v-col cols="2">レア度</v-col>
+              <v-col cols="5" class="text-center">Season Fan Lv.</v-col>
+              <v-col cols="5" class="text-center">解放Lv.</v-col>
+              <v-col cols="2">
                 <v-select
-                  v-model="clearStage[i - 1]"
-                  :items="[1, 2, 3, 4]"
-                  label="ステージ"
-                  hint="ステージを選択してください"
-                  persistent-hint
+                  v-model="bonus.rare[i - 1][memberName]"
+                  :items="['UR', 'SR', 'R']"
+                  :hint="`メインスタイルに設定している${arr.last}のカードのレア度を選択してください`"
                   color="pink"
                   base-color="pink"
                 ></v-select>
               </v-col>
-            </v-row>
-
-            <div
-              v-for="(arr, memberName) in store.charactorName"
-              :key="memberName"
-            >
-              <v-checkbox
-                v-model="performance[i - 1]"
-                :label="arr.last"
-                :value="memberName"
-                hide-details
-                color="pink"
-              ></v-checkbox>
-
-              <v-row no-gutters>
-                <v-col cols="2">レア度</v-col>
-                <v-col cols="5" class="text-center">Season Fan Lv.</v-col>
-                <v-col cols="5" class="text-center">解放Lv.</v-col>
-                <v-col cols="2">
-                  <v-select
-                    v-model="bonus.rare[i - 1][memberName]"
-                    :items="['UR', 'SR', 'R']"
-                    :hint="`メインスタイルに設定している${arr.last}のカードのレア度を選択してください`"
-                    color="pink"
-                    base-color="pink"
-                  ></v-select>
-                </v-col>
-                <v-col cols="5">
-                  <v-row no-gutters>
-                    <v-spacer></v-spacer>
-                    <v-col
-                      align="center"
-                      justify="center"
-                      class="pa-0"
-                    >
-                      <v-btn
-                        x-small
-                        :disabled="bonus.seasonFan[i - 1][memberName] === 1"
-                        @click="setValue(['seasonFan', i - 1, memberName], bonus.seasonFan[i - 1][memberName] - 1)">-1
-                      </v-btn>
-                    </v-col>
-                    <v-col
-                      align="center"
-                      justify="center"
-                      class="px-0 pt-1 pb-0"
-                    >
-                      {{ bonus.seasonFan[i - 1][memberName] }}
-                    </v-col>
-                    <v-col
-                      align="center"
-                      justify="center"
-                      class="pa-0"
-                    >
-                      <v-btn
-                        x-small
-                        :disabled="bonus.seasonFan[i - 1][memberName] === 10"
-                        @click="setValue(['seasonFan', i - 1, memberName], bonus.seasonFan[i - 1][memberName] + 1)">+1
-                      </v-btn>
-                    </v-col>
-                  </v-row>
+              <v-col cols="5">
+                <v-row no-gutters>
                   <v-spacer></v-spacer>
-                </v-col>
-                <v-col cols="5">
-                  <v-row no-gutters>
-                    <v-spacer></v-spacer>
-                    <v-col
-                      align="center"
-                      justify="center"
-                      class="pa-0"
-                    >
-                      <v-btn
-                        x-small
-                        :disabled="bonus.rare[i - 1][memberName] === undefined || bonus.release[i - 1][memberName] === 1"
-                        @click="setValue(['release', i - 1, memberName], bonus.release[i - 1][memberName] - 1)">-1
-                      </v-btn>
-                    </v-col>
-                    <v-col
-                      align="center"
-                      justify="center"
-                      class="px-0 pt-1 pb-0"
-                    >
-                      {{ bonus.release[i - 1][memberName] }}
-                    </v-col>
-                    <v-col
-                      align="center"
-                      justify="center"
-                      class="pa-0"
-                    >
-                      <v-btn
-                        x-small
-                        :disabled="bonus.rare[i - 1][memberName] === undefined || bonus.release[i - 1][memberName] === 5"
-                        @click="setValue(['release', i - 1, memberName], bonus.release[i - 1][memberName] + 1)">+1
-                      </v-btn>
-                    </v-col>
-                    <v-spacer></v-spacer>
-                  </v-row>
-                </v-col>
-              </v-row>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <!--<v-col
-        cols="12"
-        sm="6"
-        md="6"
-        lg="6"
-        xl="6"
-        class="py-2 prl-sm-2 pl-md-2 pl-lg-2 pl-xl-2"
-      >
-        <v-card elevation="2">
-          <v-card-title>Title</v-card-title>
-          <v-card-text>score</v-card-text>
-        </v-card>
-      </v-col>-->
-    </v-row>
-  </v-container>
-  <div v-if="false">
-  <h1>編成</h1>
-  <div id="gridArea">
-    <div v-for="(name_ja, name_en) in store.charactorName" :key="name_ja" :data-charactorName="name_en" class="charactorArea">
-      <div class="charactorDetailArea">
-        <h2 class="charactorName mb10">
-          <button name="characterSetting" data-show-modal-name="charactorSetting" @click="store.showModalEvent('charactorSetting')">{{ name_ja.first }} {{ name_ja.last }}</button>
-        </h2>
-        <img :src="require(`@/assets/${name_en}_winter.png`)" :alt="name_en" style="width: 100%;">
-        <!--<h2 class="mb10">ボーナス関連</h2>
-        <dl @click="store.showModalEvent('leaningLiveSetting')">
-          <dt class="mb10"><span class="left">合計楽曲マスタリー</span><span class="right">37</span></dt>
-          <dd></dd>
-        </dl>
-        <h3 class="mb10"><span class="left">ボーナススキル</span></h3>
-        <dl>
-          <dt><img src="" alt="test"></dt>
-          <dd>Lv.2</dd>
-        </dl>
-        <h3 class="mb10"><span class="left">Season Fan Lv.</span><span class="right">7 / 10</span></h3>-->
-      </div>
-      <div class="charactor_detail" :style="setIcon(name_en)">
-        <div v-for="(ary, styleName) in styleHeadline" :key="styleName" :data-style="styleName">
-          <h3>{{ ary }}</h3>
-          <div @click="store.showModalEvent('selectCard'); store.openCard(name_en, styleName)">
-            <dl class="mb10">
-              <dt>
-                カード名
-              </dt>
-              <dd>
-                {{ store.selectCard[name_en][styleName] }}
-              </dd>
-            </dl>
-            <div>
-              <dl>
-                <dt>
-                  特訓度
-                </dt>
-                <dd>
-                  <!--{{ store.card[name_en][rare][store.selectCard[name_en][styleName]].fluctuationStatus.trainingLevel }}-->
-                  {{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.trainingLevel }}
-                </dd>
-              </dl>
-              <dl>
-                <dt>
-                  レベル
-                </dt>
-                <dd>
-                  <!--{{ store.cardLevel }}-->
-                  {{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.cardLevel }}
-              </dd>
-              </dl>
-              <dl>
-                <dt>
-                  SA
-                </dt>
-                <dd>
-                  <!--{{ store.SALevel }}-->
-                  {{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.SALevel }}
-                </dd>
-              </dl>
-              <dl>
-                <dt>
-                  S
-                </dt>
-                <dd>
-                  <!--{{ store.SLevel }}-->
-                  {{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.SLevel }}
-                </dd>
-              </dl>
-              <dl>
-                <dt>
-                  解放Lv.
-                </dt>
-                <dd>
-                  <!--{{ store.releaseLevel }}-->
-                  {{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.releaseLevel }}
-                </dd>
-              </dl>
-            </div>
+                  <v-col
+                    align="center"
+                    justify="center"
+                    class="pa-0"
+                  >
+                    <v-btn
+                      x-small
+                      :disabled="bonus.seasonFan[i - 1][memberName] === 1"
+                      @click="setValue(['seasonFan', i - 1, memberName], bonus.seasonFan[i - 1][memberName] - 1)">-1
+                    </v-btn>
+                  </v-col>
+                  <v-col
+                    align="center"
+                    justify="center"
+                    class="px-0 pt-1 pb-0"
+                  >
+                    {{ bonus.seasonFan[i - 1][memberName] }}
+                  </v-col>
+                  <v-col
+                    align="center"
+                    justify="center"
+                    class="pa-0"
+                  >
+                    <v-btn
+                      x-small
+                      :disabled="bonus.seasonFan[i - 1][memberName] === 10"
+                      @click="setValue(['seasonFan', i - 1, memberName], bonus.seasonFan[i - 1][memberName] + 1)">+1
+                    </v-btn>
+                  </v-col>
+                </v-row>
+                <v-spacer></v-spacer>
+              </v-col>
+              <v-col cols="5">
+                <v-row no-gutters>
+                  <v-spacer></v-spacer>
+                  <v-col
+                    align="center"
+                    justify="center"
+                    class="pa-0"
+                  >
+                    <v-btn
+                      x-small
+                      :disabled="bonus.rare[i - 1][memberName] === undefined || bonus.release[i - 1][memberName] === 1"
+                      @click="setValue(['release', i - 1, memberName], bonus.release[i - 1][memberName] - 1)">-1
+                    </v-btn>
+                  </v-col>
+                  <v-col
+                    align="center"
+                    justify="center"
+                    class="px-0 pt-1 pb-0"
+                  >
+                    {{ bonus.release[i - 1][memberName] }}
+                  </v-col>
+                  <v-col
+                    align="center"
+                    justify="center"
+                    class="pa-0"
+                  >
+                    <v-btn
+                      x-small
+                      :disabled="bonus.rare[i - 1][memberName] === undefined || bonus.release[i - 1][memberName] === 5"
+                      @click="setValue(['release', i - 1, memberName], bonus.release[i - 1][memberName] + 1)">+1
+                    </v-btn>
+                  </v-col>
+                  <v-spacer></v-spacer>
+                </v-row>
+              </v-col>
+            </v-row>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="otherArea">
-    <div id="textOutputArea">
-      <label for="textOutput" class="mb10">出力テキスト</label>
-      <textarea name="textOutput" id="textOutput" class="mb10"></textarea>
-      <p id="textLength"></p>
-    </div>
-    <!--<div id="possessionCardSettingArea">
-      <p class="mb10">所持カード設定</p>
-      <ul id="possessionCard_header">
-        <li v-for="(name_ja, name_en) in charactorName" :key="name_ja" :data-charactor="name_en" :data-selected="selectTab === name_en" @click="changeTab(name_en)">
-          {{ name_ja.last }}
-        </li>
-      </ul>
-      <ul id="possessionCard_container">
-        <li v-for="(name_ja, name_en) in charactorName" :key="name_en" :data-charactor="name_en" v-show="selectTab === name_en">
-          <dl v-for="rare in rarity" :key="rare" :data-rare="rare">
-            <dt>
-              {{ rare }}
-            </dt>
-            <dd>
-              <button v-for="(ary, cardName) in card[name_en][rare]" :key="ary" :data-mood="ary.mood" @click="showModalEvent('possessionCardSetting'); store.submitCardData({charactorName: name_en, rare: rare, selectedCard: cardName})">{{ cardName }}</button>
-            </dd>
-          </dl>
-        </li>
-      </ul>
-    </div>-->
-  </div>
-  </div>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
+</v-container>
 </template>
 
 <script>
@@ -310,6 +402,7 @@ export default {
   name: 'FormationArea',
   data() {
     return {
+      bonusSkillList: ['ビートハートアップ', 'ボルテージアップ', 'メンタルリカバー', 'LOVEボーナス'],
       score: [0, 0],
       clearStage: [1, 1],
       performance: [[], []],
@@ -379,58 +472,10 @@ export default {
       rules: [
         value => !isNaN(value) || '半角数字で入力してください'
       ],
-      styleType: {
-        performer: 'パフォーマー',
-        moodMaker: 'ムードメーカー',
-        cheerLeader: 'チアリーダー',
-        trickStar: 'トリックスター'
-      },
-      mood: {
-        happy: 'ハッピー',
-        neutral: 'ニュートラル',
-        melow: 'メロウ'
-      },
-      rarity: ['DR', 'UR', 'SR', 'R'],
       styleHeadline: {
         main: 'MAIN STYLE',
         side1: 'SIDE STYLE 1',
         side2: 'SIDE STYLE 2'
-      },
-      selectCardList: {
-        stageA: {
-          kaho: {
-            main: '',
-            side1: '',
-            side2: ''
-          },
-          sayaka: {
-            main: '',
-            side1: '',
-            side2: ''
-          },
-          rurino: {
-            main: '',
-            side1: '',
-            side2: ''
-          },
-          kozue: {
-            main: '',
-            side1: '',
-            side2: ''
-          },
-          tsuzuri: {
-            main: '',
-            side1: '',
-            side2: ''
-          },
-          megumi: {
-            main: '',
-            side1: '',
-            side2: ''
-          }
-        },
-        stageB: {},
-        stageC: {}
       },
       selectTab: 'kaho'
     }
@@ -461,14 +506,8 @@ export default {
     }
   },
   methods: {
-    possessionCardLoadAction() {
-
-    },
     changeTab(selectCharactor) {
       this.selectTab = selectCharactor;
-    },
-    labelCaption(a, b) {
-      return a + '_' + b;
     },
     setIcon(name_en) {
       return {
@@ -485,17 +524,23 @@ export default {
       } else {
         this.performance[i] = musicDataList[this.selectMusic[i]].singingMembers;
       }
-    }
-  },
-  watch: {
-    selectCardList: {
-      deep: true,
-      handler(newVal, oldVal) {
-        console.log(oldVal);
-        console.log(newVal);
+    },
+    makeIllustCard(store, selectCardName, memberName) {
+      if (selectCardName === 'default') {
+        return 'NO IMAGE';
+      } else {
+        return `${store.conversion(selectCardName)}_${store.charactorName[memberName].last}_覚醒後`;
+      }
+    },
+    makeCardName(store, selectCardName, name_en) {
+      if (selectCardName === 'default') {
+        return 'unselected';
+      } else {
+        return `${store.searchRarity(name_en, selectCardName)}${['', '+', '++'][store.card[name_en][store.searchRarity(name_en, selectCardName)][selectCardName].fluctuationStatus.trainingLevel]} ${selectCardName}`;
       }
     }
-  }
+  },
+  watch: {}
 }
 </script>
 
@@ -503,56 +548,3 @@ export default {
   import { useStoreCounter } from '../stores/counter';
   const store = useStoreCounter();
 </script>
-
-<style lang="scss" scoped>
-#gridArea {
-  margin-bottom: 30px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-}
-
-.charactorArea {
-  display: grid;
-  grid-template-columns: 0.75fr 1fr;
-}
-
-.charactor_detail {
-  padding: 10px 10px 0 10px;
-
-  >div {
-    padding-bottom: 10px;
-    font-size: 15px;
-
-    >div >div {
-      display: grid;
-      grid-template-columns: 50px 50px 35px 35px 1fr;
-      grid-template-rows: 1fr;
-      grid-column-gap: 5px;
-
-      input {
-        width: 100%;
-      }
-    }
-  }
-}
-
-.charactorName {
-  text-align: center;
-  padding: 10px 0;
-  font-weight: bold;
-
-  button {
-    cursor: pointer;
-    padding-bottom: 1px;
-    
-    /* &:hover {
-      opacity: 0.7;
-      padding-bottom: 0;
-      border-bottom: 1px solid #000;
-    } */
-  }
-}
-</style>
