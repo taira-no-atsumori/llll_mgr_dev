@@ -5,7 +5,7 @@ import { useMusicStore } from './musicList';
 
 export const useStoreCounter = defineStore('store', {
   state: () => ({
-    version: 'ε.13(アーリーアクセス)',
+    version: 'ε.21(アーリーアクセス)',
     dialog: false,
     showModalName: false,
     updateData: false,
@@ -16,6 +16,7 @@ export const useStoreCounter = defineStore('store', {
     search: {
       cardList: {
         rare: ['DR', 'UR', 'SR', 'R'],
+        trainingLevel: [0, 1, 2],
         styleType: ['performer', 'moodMaker', 'cheerLeader', 'trickStar'],
         mood: ['happy', 'neutral', 'melow'],
         cardLevel: [0, 120],
@@ -90,6 +91,11 @@ export const useStoreCounter = defineStore('store', {
       CeriseBouquet: 'スリーズブーケ',
       DOLLCHESTRA: 'DOLLCHESTRA',
       miraCraPark: 'みらくらぱーく！'
+    },
+    styleHeadline: {
+      main: 'MAIN STYLE',
+      side1: 'SIDE STYLE 1',
+      side2: 'SIDE STYLE 2'
     },
     memberData: {
       centerList: {
@@ -199,6 +205,37 @@ export const useStoreCounter = defineStore('store', {
         cardListFilter: {}
       }
     },
+    grandprixBonus: {
+      clearRank: [1, 1.1, 1.2, 1.3],
+      seasonFanLv: [0, 0.2, 0.275, 0.35, 0.425, 0.5, 0.55, 0.6, 0.65, 0.7],
+      releaseLv: {
+        UR: [0, 0.2, 0.3, 0.35, 0.4],
+        SR: [0, 0.15, 0.25, 0.3, 0.35],
+        R: [0, 0.1, 0.15, 0.2, 0.25]
+      }
+    },
+    spTrainingItemList: {
+      'パフォーマーの証': {
+        '初等': 1000,
+        '中等': 2000,
+        '高等': 3000
+      },
+      'ムードメーカーの証': {
+        '初等': 4000,
+        '中等': 5000,
+        '高等': 6000
+      },
+      'チアリーダーの証': {
+        '初等': 7000,
+        '中等': 8000,
+        '高等': 9000
+      },
+      'トリックスターの証': {
+        '初等': 1000,
+        '中等': 1100,
+        '高等': 1200
+      },
+    },
     defaultCardList: []
   }),
   getters: {
@@ -259,6 +296,10 @@ export const useStoreCounter = defineStore('store', {
               return filterList[0] <= AP && AP <= filterList[1];
             } else if (searchKey === 'SAP') {
               return filterList[0] <= cardData.skill.AP && cardData.skill.AP <= filterList[1];
+            } else if (searchKey === 'trainingLevel') {
+              return filterList.some((val) => {
+                return cardData.fluctuationStatus.trainingLevel === val;
+              });
             } else if (searchKey === 'favorite') {
               if (this.search.cardList.favorite.length === 0) {
                 return true;
@@ -371,7 +412,26 @@ export const useStoreCounter = defineStore('store', {
         }
 
         const selectCard = this.card[target.memberName][target.rare][target.cardName];
-        return selectCard.uniqueStatus[style] + (selectCard.fluctuationStatus.cardLevel - 1) * (target.rare === 'R' ? 25 : 30);
+
+        if (style === 'mental') {
+          if (target.rare !== 'R') {
+            return selectCard.uniqueStatus.mental + (selectCard.fluctuationStatus.cardLevel - 1) * 3;
+          } else {
+            return selectCard.uniqueStatus.mental + Math.ceil((selectCard.fluctuationStatus.cardLevel - 1) / 2) * 2  + Math.floor((selectCard.fluctuationStatus.cardLevel - 1) / 2) * 3;
+          }
+        } else if (/smile|cool|pure/.test(style)) {
+          return selectCard.uniqueStatus[style] + (selectCard.fluctuationStatus.cardLevel - 1) * (target.rare === 'R' ? 25 : 30);
+        } else if (style === 'BP') {
+          return selectCard.uniqueStatus.BP;
+        } else if (style === 'unique') {
+          return selectCard.uniqueStatus;
+        } else if (style === 'fluctuation') {
+          return selectCard.uniqueStatus;
+        } else if (style === 'all') {
+          return selectCard;
+        } else {
+          return selectCard.fluctuationStatus[style];
+        }
       }
     },
     mentalCul() {
@@ -677,7 +737,7 @@ export const useStoreCounter = defineStore('store', {
         }
       }
 
-      return result;
+      return result.sort();
     },
     setSelectCard(cardName) {
       this.selectCard[this.openCard.name][this.openCard.style] = cardName;

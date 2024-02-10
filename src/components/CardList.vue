@@ -21,7 +21,41 @@
     ><v-icon class="mr-2">mdi-filter</v-icon>絞り込み</v-btn>
     絞り込み結果：{{ store.outputCardList.length }}枚
 
-    <hr class="my-3">
+    <v-divider class="my-3"></v-divider>
+
+    <h3 class="mb-1">必要な証</h3>
+
+    <v-row no-gutters>
+      <v-col
+        cols="12"
+        sm="3"
+        v-for="(v, k) in store.spTrainingItemList"
+        :key="k"
+        class="text-center mb-3"
+      >
+        <p class="mb-1">{{ k }}</p>
+        <v-row no-gutters>
+          <v-col
+            v-for="(vv, kk) in v"
+            :key="kk"
+            class="d-flex flex-row justify-center align-center"
+          >
+            <v-spacer></v-spacer>
+            <img
+              :src="require(`@/assets/trainingItem_icon/${k}(${kk}).png`)"
+              style="width: 40px;"
+            >
+            <span class="mx-2">×</span>{{ vv }}
+            <v-spacer></v-spacer>
+          </v-col>
+          <v-divider vertical class="hidden-sm-and-up" v-if="k !== 'トリックスターの証'"></v-divider>
+        </v-row>
+      </v-col>
+    </v-row>
+
+    <h3>必要なスタイルPt.：100,000</h3>
+
+    <v-divider class="my-3"></v-divider>
 
     <v-tabs v-model="tab" class="mb-3" slider-color="pink">
       <v-tab value="1">画像あり一覧</v-tab>
@@ -45,24 +79,23 @@
               open-delay="250"
             >
               <template v-slot:activator="{ props }">
-                <div
-                  v-bind="props"
-                >
+                <div v-bind="props">
                   <img
                     :src="require(`@/assets/card_illust/${store.conversion(key.cardName)}_${store.charactorName[key.memberName].last}_覚醒後.png`)"
                   >
-                  <div class="px-2 pb-1 cardName hamidashi">
-                    <v-img
+                  <div class="d-flex flex-row align-center px-1 pb-1 cardName">
+                    <img
                       :src="require(`@/assets/styleType_icon/icon_${key.styleType}.png`)"
-                      class="icon type"
-                    ></v-img>
-                    {{ key.cardName }}
+                      class="icon type mr-1"
+                      style="width: 20px;"
+                    >
+                    <span class="hamidashi" style="padding-top: 2px;">{{ key.cardName }}</span>
                   </div>
                 </div>
               </template>
 
               <div>
-                <p class="mb-2">{{ key.rare }}{{ ['', '+', '++'][store.card[key.memberName][key.rare][key.cardName].fluctuationStatus.trainingLevel] }} [{{ key.cardName }}] {{ store.makeFullName(key.memberName) }} (Lv. {{ store.card[key.memberName][key.rare][key.cardName].fluctuationStatus.cardLevel }})</p>
+                <p class="mb-2">{{ key.rare }}{{ ['', '+', '++'][store.cardParam('trainingLevel', {memberName: key.memberName, rare: key.rare, cardName: key.cardName})] }} [{{ key.cardName }}] {{ store.makeFullName(key.memberName) }} (Lv. {{ store.cardParam('cardLevel', {memberName: key.memberName, rare: key.rare, cardName: key.cardName}) }})</p>
                 <v-container fluid class="mb-2 pa-0">
                   <v-row no-gutters>
                     <v-col cols="6" class="pa-0">
@@ -82,11 +115,11 @@
                     <v-col cols="6" class="pa-0">
                       <v-row no-gutters>
                         <v-col class="pa-0">メンタル</v-col>
-                        <v-col class="pa-0">{{ store.mentalCul({memberName: key.memberName, rare: key.rare, cardName: key.cardName}) }}</v-col>
+                        <v-col class="pa-0">{{ store.cardParam('mental', {memberName: key.memberName, rare: key.rare, cardName: key.cardName}) }}</v-col>
                       </v-row>
                       <v-row no-gutters>
                         <v-col class="pa-0">BP</v-col>
-                        <v-col class="pa-0">{{ store.card[key.memberName][key.rare][key.cardName].uniqueStatus.BP }}</v-col>
+                        <v-col class="pa-0">{{ store.cardParam('BP', {memberName: key.memberName, rare: key.rare, cardName: key.cardName}) }}</v-col>
                       </v-row>
                     </v-col>
                   </v-row>

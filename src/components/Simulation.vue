@@ -29,7 +29,7 @@
 
 <v-container fluid class="px-1 py-2">
 <v-row no-gutters class="mb-5">
-  <v-col cols="12" class="px-1">
+  <v-col cols="12" class="px-1 pb-2">
     <h1>FORMATION</h1>
   </v-col>
   <v-col cols="12" class="pt-0 pb-2 px-1">
@@ -55,16 +55,84 @@
       </v-expansion-panel>
     </v-expansion-panels>
   </v-col>
+  <v-col cols="12">
+    <v-btn
+      color="light-blue"
+      prepend-icon="mdi-content-save"
+      @click="snackbar.save = true"
+    >
+      保存
+    </v-btn>
+    <v-btn
+      color="green"
+      prepend-icon="mdi-content-save-edit"
+      @click="snackbar.nameSave = true"
+    >
+      名前をつけて保存
+    </v-btn>
+    <v-btn
+      prepend-icon="mdi-folder-open"
+      color="indigo"
+    >
+      編成を開く
+    </v-btn>
+    <v-btn
+      prepend-icon="mdi-trash-can"
+      color="red"
+    >
+      編成リセット
+    </v-btn>
+    <v-btn
+      prepend-icon="mdi-crown"
+      color="yellow"
+      :disabled="countDefaultCard(store).main + countDefaultCard(store).leaves === 18"
+    >
+      エースカード設定
+    </v-btn>
+  </v-col>
   <v-col cols="12" class="pa-0">
     <v-row no-gutters>
-      <v-col cols="2">総スマイル：10,000</v-col>
-      <v-col cols="2">総クール：10,000</v-col>
-      <v-col cols="2">総ピュア：10,000</v-col>
-      <v-col cols="2">総メンタル：10,000</v-col>
-      <v-col cols="2"></v-col>
-      <v-col cols="2"></v-col>
+      <v-col
+        v-for="(v, k) in attrName"
+        :key="v"
+      >
+        総{{ v }}：{{ totalParam(store, k) }}
+      </v-col>
     </v-row>
     <v-row no-gutters>
+      <v-col cols="12">
+        <v-alert
+          v-if="countDefaultCard(store).main > 0"
+          type="error"
+          variant="outlined"
+          class="mb-2"
+        >
+          MAIN STYLEを設定してください
+        </v-alert>
+        <v-alert
+          type="warning"
+          variant="outlined"
+          class="mb-2"
+        >
+          SIDE STYLEに未設定カードがあるため、AP回復速度が{{ countDefaultCard(store).result }}%低下します
+        </v-alert>
+        <v-alert
+          v-if="countDefaultCard(store).main + countDefaultCard(store).leaves < 18"
+          type="warning"
+          variant="outlined"
+          class="mb-2"
+        >
+          エースカードが未設定です
+        </v-alert>
+        <v-alert
+          v-if="false"
+          type="info"
+          variant="outlined"
+          class="mb-2"
+        >
+          エースカードを設定してください
+        </v-alert>
+      </v-col>
       <v-col
         cols="12"
         sm="4"
@@ -79,19 +147,20 @@
             :data-charactorName="name_en"
           >
             <v-col cols="12" class="charactorDetailArea pa-1">
-              <h2 class="text-center">
+              <h2>
                 <span
                   @click="store.showModalEvent('charactorSetting')"
-                  class="text-justify"
-                  style="display: inline-block;"
+                  class="d-flex flex-row justify-center align-center"
                 >
                   <img
                     :src="require(`@/assets/member_icon/icon_illust_${name_en}.png`)"
+                    class="mr-1"
                     style="width: 35px;"
                   >
-                  {{ store.makeFullName(name_en) }}
+                  <span style="margin-top: 2px;">{{ store.makeFullName(name_en) }}</span>
+                  <v-icon color="indigo">mdi-microphone-variant</v-icon>
+                  <v-icon color="yellow-accent-1">mdi-star</v-icon>
                 </span>
-                <v-icon color="yellow">mdi-crown</v-icon>
               </h2>
               <v-row no-gutters>
                 <v-col cols="4">
@@ -121,7 +190,7 @@
             </v-col>
             <v-col
               cols="12"
-              v-for="(ary, styleName) in styleHeadline"
+              v-for="(ary, styleName) in store.styleHeadline"
               :key="styleName"
               :data-style="styleName"
             >
@@ -131,8 +200,6 @@
                   class="px-1 pt-1"
                 >
                   <v-card
-                    elevation="2"
-                    hover
                     @click="store.showModalEvent('selectCard'); store.setOpenCard(name_en, styleName)"
                   >
                     <v-img
@@ -145,61 +212,127 @@
                   class="px-1 pt-1"
                   style="font-size: 15px;"
                 >
-                  <h3>{{ ary }}</h3>
-                  <dl class="mb-1">
-                    <dt>カード名</dt>
-                    <dd>{{ makeCardName(store, store.selectCard[name_en][styleName], name_en) }}</dd>
-                  </dl>
-                  <v-row no-gutters class="pb-1">
-                    <v-col cols="3">
-                      <dl>
-                        <dt>レベル</dt>
-                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.cardLevel }}</dd>
-                      </dl>
+                  <v-row no-gutters>
+                    <v-col cols="11">
+                      <h3>{{ ary }}<v-icon color="yellow-accent-4">mdi-crown</v-icon></h3>
                     </v-col>
-                    <v-col cols="3">
-                      <dl>
-                        <dt>SA</dt>
-                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.SALevel }}</dd>
-                      </dl>
-                    </v-col>
-                    <v-col cols="3">
-                      <dl>
-                        <dt>S</dt>
-                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.SLevel }}</dd>
-                      </dl>
-                    </v-col>
-                    <v-col cols="3">
-                      <dl>
-                        <dt>解放Lv.</dt>
-                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].fluctuationStatus.releaseLevel }}</dd>
-                      </dl>
-                    </v-col>
-                    <v-col cols="3">
-                      <dl>
-                        <dt>スマイル</dt>
-                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].uniqueStatus.smile }}</dd>
-                      </dl>
-                    </v-col>
-                    <v-col cols="3">
-                      <dl>
-                        <dt>クール</dt>
-                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].uniqueStatus.cool }}</dd>
-                      </dl>
-                    </v-col>
-                    <v-col cols="3">
-                      <dl>
-                        <dt>ピュア</dt>
-                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].uniqueStatus.pure }}</dd>
-                      </dl>
-                    </v-col>
-                    <v-col cols="3">
-                      <dl>
-                        <dt>メンタル</dt>
-                        <dd>{{ store.card[name_en][store.searchRarity(name_en, store.selectCard[name_en][styleName])][store.selectCard[name_en][styleName]].uniqueStatus.mental }}</dd>
-                      </dl>
+                    <v-col cols="1">
+                      <v-btn
+                        density="compact"
+                        icon="mdi-close"
+                        variant="flat"
+                        @click="reset()"
+                      ></v-btn>
                     </v-col>
                   </v-row>
+                  <dl class="mb-1">
+                    <dt>カード名</dt>
+                    <dd>{{ makeCardName(store, store.selectCard[name_en][styleName], name_en, styleName) }}</dd>
+                  </dl>
+                  <v-card variant="flat" @click="dialog.paramSet = true;" :disabled="store.selectCard[name_en][styleName] === 'default'">
+                    <v-row no-gutters class="pb-1">
+                      <v-col cols="3">
+                        <dl>
+                          <dt>レベル</dt>
+                          <dd>{{ this.formation[this.selectFormation][name_en][styleName].cardLevel }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>SA</dt>
+                          <dd>{{ this.formation[this.selectFormation][name_en][styleName].SALevel }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>スキル</dt>
+                          <dd>{{ this.formation[this.selectFormation][name_en][styleName].SLevel }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>解放Lv.</dt>
+                          <dd>{{ this.formation[this.selectFormation][name_en][styleName].releaseLevel }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>スマイル</dt>
+                          <dd>{{ this.formation[this.selectFormation][name_en][styleName].smile }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>クール</dt>
+                          <dd>{{ this.formation[this.selectFormation][name_en][styleName].cool }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>ピュア</dt>
+                          <dd>{{ this.formation[this.selectFormation][name_en][styleName].pure }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>メンタル</dt>
+                          <dd>{{ this.formation[this.selectFormation][name_en][styleName].mental }}</dd>
+                        </dl>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                  <!--<v-card variant="flat" @click="dialog.paramSet = true;" :disabled="store.selectCard[name_en][styleName] === 'default'" v-if="false">
+                    <v-row no-gutters class="pb-1">
+                      <v-col cols="3">
+                        <dl>
+                          <dt>レベル</dt>
+                          <dd>{{ makeParam(store, name_en, styleName, 'cardLevel') }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>SA</dt>
+                          <dd>{{ makeParam(store, name_en, styleName, 'SALevel') }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>スキル</dt>
+                          <dd>{{ makeParam(store, name_en, styleName, 'SLevel') }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>解放Lv.</dt>
+                          <dd>{{ makeParam(store, name_en, styleName, 'releaseLevel') }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>スマイル</dt>
+                          <dd>{{ makeParam(store, name_en, styleName, 'smile') }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>クール</dt>
+                          <dd>{{ makeParam(store, name_en, styleName, 'cool') }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>ピュア</dt>
+                          <dd>{{ makeParam(store, name_en, styleName, 'pure') }}</dd>
+                        </dl>
+                      </v-col>
+                      <v-col cols="3">
+                        <dl>
+                          <dt>メンタル</dt>
+                          <dd>{{ makeParam(store, name_en, styleName, 'mental') }}</dd>
+                        </dl>
+                      </v-col>
+                    </v-row>
+                  </v-card>-->
                 </v-col>
               </v-row>
               <v-divider class="mx-1"></v-divider>
@@ -215,8 +348,87 @@
   <v-col cols="12">
     <h1>SIMULATION</h1>
   </v-col>
+  <v-col cols="3">
+    <v-card class="pa-2">
+      <h3>センターカード</h3>
+      <v-card>
+        <v-img
+          :src="require(`@/assets/card_illust/NO IMAGE.png`)"
+        ></v-img>
+      </v-card>
+      <div>NO IMAGE</div>
+      <div>属性：クール</div>
+      <div></div>
+    </v-card>
+  </v-col>
+  <v-col cols="3">
+    <v-card class="pa-2">
+      <h3>想定楽曲</h3>
+      <v-card>
+        <v-img
+          :src="require(`@/assets/CD_jacket/NO IMAGE.png`)"
+        ></v-img>
+      </v-card>
+      <div>NO IMAGE</div>
+      <div>属性：クール</div>
+      <div></div>
+    </v-card>
+  </v-col>
+  <v-col cols="6">
+    <v-card class="pa-2">
+      <h3>シミュレーション結果</h3>
+      <p>ハート1個あたりのLOVE値：{{ Math.ceil(120 * totalParam(store, 'smile') * 1.5 / 6 / 90) }}</p>
+    </v-card>
+  </v-col>
 </v-row>
+
+<v-snackbar
+  v-model="snackbar.save"
+  timeout="5000"
+  color="blue-lighten-1"
+>
+  保存しました
+</v-snackbar>
 </v-container>
+
+<v-dialog v-model="dialog.paramSet" max-width="600">
+<v-sheet class="pa-2">
+  <v-row no-gutters>
+    <v-col></v-col>
+  </v-row>
+  <div class="mt-3 text-center">
+    <v-btn @click="dialog.paramSet = false" class="mr-4">CANCEL</v-btn>
+    <v-btn color="light-blue" @click="dialog.paramSet = false;">
+      <v-icon class="mr-1">mdi-content-save</v-icon>保存
+    </v-btn>
+  </div>
+</v-sheet>
+</v-dialog>
+
+<v-dialog v-model="snackbar.nameSave" max-width="600">
+<v-sheet class="pa-2">
+  <v-row no-gutters>
+    <v-col cols="12" class="mb-2">
+      <h3>名前をつけて保存する</h3>
+    </v-col>
+    <v-col cols="12">
+      <v-text-field label="編成名" counter color="pink" hint="編成名を入力してください" maxlength="30" persistent-counter persistent-hint></v-text-field>
+    </v-col>
+  </v-row>
+  <div class="mt-3 text-center">
+    <v-btn @click="snackbar.nameSave = false" class="mr-4">CANCEL</v-btn>
+    <v-btn color="light-blue" @click="snackbar.save = true; snackbar.nameSave = false">
+      <v-icon class="mr-1">mdi-content-save</v-icon>保存
+    </v-btn>
+  </div>
+</v-sheet>
+</v-dialog>
+
+<v-dialog max-width="1600">
+<v-sheet class="pa-2">
+
+</v-sheet>
+</v-dialog>
 
 <v-container fluid class="pa-2">
   <v-row>
@@ -402,6 +614,13 @@ export default {
   name: 'FormationArea',
   data() {
     return {
+      attrName: {
+        smile: 'スマイル',
+        cool: 'クール',
+        pure: 'ピュア',
+        mental: 'メンタル',
+        releaseLevel: '解放Lv.'
+      },
       bonusSkillList: ['ビートハートアップ', 'ボルテージアップ', 'メンタルリカバー', 'LOVEボーナス'],
       score: [0, 0],
       clearStage: [1, 1],
@@ -472,15 +691,56 @@ export default {
       rules: [
         value => !isNaN(value) || '半角数字で入力してください'
       ],
-      styleHeadline: {
-        main: 'MAIN STYLE',
-        side1: 'SIDE STYLE 1',
-        side2: 'SIDE STYLE 2'
+      selectTab: 'kaho',
+      snackbar: {
+        save: false,
+        nameSave: false
       },
-      selectTab: 'kaho'
+      dialog: {
+        paramSet: false
+      },
+      attr: ['cardLevel', 'SALevel', 'SLevel', 'releaseLevel', 'smile', 'cool', 'pure', 'mental'],
+      selectFormation: '新規デッキ1',
+      formation: {},
+      formation_default: {
+        kaho: {
+          main: 'default',
+          side1: 'default',
+          side2: 'default'
+        },
+        sayaka: {
+          main: 'default',
+          side1: 'default',
+          side2: 'default'
+        },
+        rurino: {
+          main: 'default',
+          side1: 'default',
+          side2: 'default'
+        },
+        kozue: {
+          main: 'default',
+          side1: 'default',
+          side2: 'default'
+        },
+        tsuzuri: {
+          main: 'default',
+          side1: 'default',
+          side2: 'default'
+        },
+        megumi: {
+          main: 'default',
+          side1: 'default',
+          side2: 'default'
+        }
+      }
     }
   },
-  created() {},
+  created() {
+    if (Object.keys(this.formation).length === 0) {
+      this.formation['新規デッキ1'] = this.makeDefaultFormation();
+    }
+  },
   mounted() {},
   computed: {
     setCard() {
@@ -502,6 +762,47 @@ export default {
         }
 
         return Math.ceil(this.score[target] * this.clearRank[this.clearStage[target] - 1] * (1 + releaseLv) * (1 + seasonFanLv)).toLocaleString();
+      }
+    },
+    totalParam() {
+      return (store, attr) => {
+        let result = 0;
+
+        for (const memberName in store.selectCard) {
+          for (const style in store.selectCard[memberName]) {
+            if (attr) {
+            //if (store.selectCard[memberName][style] === 'default') {
+              continue;
+            }
+
+            result += this.makeParam(store, memberName, style, attr);
+          }
+          
+        }
+
+        return result;
+      }
+    },
+    countDefaultCard() {
+      return (store) => {
+        let result = {
+          main: 0,
+          side: 0
+        };
+
+        for (const charactorName in store.charactorName) {
+          for (const style in store.selectCard[charactorName]) {
+            if (store.selectCard[charactorName][style] === 'default') {
+              result[style === 'main' ? 'main' : 'side']++;
+            }
+          }
+        }
+
+        return {
+          main: result.main,
+          leaves: result.side,
+          result: result.side > 9 ? 95 : result.side * 10
+        };
       }
     }
   },
@@ -532,13 +833,68 @@ export default {
         return `${store.conversion(selectCardName)}_${store.charactorName[memberName].last}_覚醒後`;
       }
     },
-    makeCardName(store, selectCardName, name_en) {
+    makeCardName(store, selectCardName, name_en, style) {
+      this.makeParam(store, name_en, style, this.attr);
+
       if (selectCardName === 'default') {
-        return 'unselected';
+        return 'カードを選択してください';
       } else {
-        return `${store.searchRarity(name_en, selectCardName)}${['', '+', '++'][store.card[name_en][store.searchRarity(name_en, selectCardName)][selectCardName].fluctuationStatus.trainingLevel]} ${selectCardName}`;
+        return `[${store.searchRarity(name_en, selectCardName)}${['', '+', '++'][store.cardParam('trainingLevel', {memberName: name_en, rare: store.searchRarity(name_en, selectCardName), cardName: selectCardName})]}] ${selectCardName}`;
       }
-    }
+    },
+    makeParam(store, name, style, attr) {
+      //return store.cardParam(attr, {memberName: name, rare: store.searchRarity(name, store.selectCard[name][style]), cardName: store.selectCard[name][style]});
+      const list = {};
+      let rare;
+
+      for (const key of attr) {
+        rare = store.searchRarity(name, store.selectCard[name][style]);
+        list[key] = store.cardParam(key, {memberName: name, rare: rare, cardName: store.selectCard[name][style]});
+      }
+
+      list.cardName = store.selectCard[name][style];
+      list.rare = rare;
+
+      this.formation[this.selectFormation][name][style] = Object.create(list);
+      console.log(this.formation[this.selectFormation]);
+    },
+    getParamList(store, name, style) {
+      return store.card[name][store.searchRarity(name, store.selectCard[name][style])][store.selectCard[name][style]];
+    },
+    reset() {},
+    makeDefaultFormation() {
+      const list = {};
+      let list2 = {}
+
+      for (const charactorName of ['kaho', 'sayaka', 'rurino', 'kozue', 'tsuzuri', 'megumi']) {
+        for (const style of ['main', 'side1', 'side2']) {
+          list2[style] = 'default';
+          list[charactorName] = list2;
+        }
+      }
+
+      return list;
+    },
+    /*countDefaultCard(store) {
+      let result = {
+        main: 0,
+        side: 0
+      };
+
+      for (const charactorName in store.charactorName) {
+        for (const style in store.selectCard[charactorName]) {
+          if (store.selectCard[charactorName][style] === 'default') {
+            result[style === 'main' ? 'main' : 'side']++;
+          }
+        }
+      }
+
+      return {
+        main: result.main,
+        leaves: result.side,
+        result: result.side > 9 ? 95 : result.side * 10
+      };
+    }*/
   },
   watch: {}
 }

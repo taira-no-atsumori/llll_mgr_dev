@@ -8,29 +8,55 @@
     <v-window-item value="filter_status">
       <v-container fluid class="pa-0">
         <v-row no-gutters>
-          <v-col cols="12" class="pa-0">
-            レアリティ
+          <v-col cols="12" sm="4">
+            <v-row no-gutters>
+              <v-col cols="12">
+                レアリティ
+              </v-col>
+              <v-col
+                cols="3"
+                v-for="rare in store.rarity"
+                :key="rare"
+              >
+                <v-checkbox
+                  v-model="store.search.cardList.rare"
+                  :label="rare"
+                  :value="rare"
+                  color="pink"
+                  hide-details
+                  density="comfortable"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
           </v-col>
-          <v-col
-            cols="3"
-            sm="1"
-            v-for="rare in store.rarity"
-            :key="rare"
-            class="pa-0"
-          >
-            <v-checkbox
-              v-model="store.search.cardList.rare"
-              :label="rare"
-              :value="rare"
-              color="pink"
-              hide-details
-              density="comfortable"
-            ></v-checkbox>
+          <v-col cols="12" class="hidden-sm-and-up">
+            <v-divider class="my-3"></v-divider>
+          </v-col>
+          <v-col cols="12" sm="3">
+            <v-row no-gutters>
+              <v-col cols="12">
+                特訓度
+              </v-col>
+              <v-col
+                cols="3"
+                v-for="(v, i) in ['none', '+', '++']"
+                :key="i"
+              >
+                <v-checkbox
+                  v-model="store.search.cardList.trainingLevel"
+                  :label="v"
+                  :value="i"
+                  color="pink"
+                  hide-details
+                  density="comfortable"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
-        <hr class="mb-2">
+        <v-divider class="mb-2"></v-divider>
         <v-row no-gutters>
-          <v-col cols="12" class="pa-0">
+          <v-col cols="12">
             ムード
           </v-col>
           <v-col
@@ -38,7 +64,6 @@
             sm="2"
             v-for="(moodName_ja, moodName_en) in store.mood"
             :key="moodName_ja"
-            class="pa-0"
           >
             <v-checkbox
               v-model="store.search.cardList.mood"
@@ -56,20 +81,17 @@
             </v-checkbox>
           </v-col>
         </v-row>
-        <hr class="mb-2">
+        <v-divider class="mb-2"></v-divider>
         <v-row no-gutters>
-          <v-col cols="12" class="pa-0">
+          <v-col cols="12">
             タイプ
           </v-col>
           <v-col
             cols="12"
             sm="3"
-            md="3"
             lg="2"
-            xl="2"
             v-for="(styleTypeName_ja, styleTypeName_en) in store.styleType"
             :key="styleTypeName_ja"
-            class="pa-0"
           >
             <v-checkbox
               v-model="store.search.cardList.styleType"
@@ -87,9 +109,9 @@
             </v-checkbox>
           </v-col>
         </v-row>
-        <hr class="mb-2">
+        <v-divider class="mb-2"></v-divider>
         <v-row no-gutters>
-          <v-col cols="12" class="pa-0">
+          <v-col cols="12">
             メンバー
           </v-col>
           <v-col
@@ -99,7 +121,6 @@
             lg="2"
             v-for="(name_ja, name_en) in store.charactorName"
             :key="name_ja"
-            class="pa-0"
           >
             <v-checkbox
               v-model="store.search.cardList.memberName"
@@ -117,9 +138,9 @@
             </v-checkbox>
           </v-col>
         </v-row>
-        <hr class="mb-2">
+        <v-divider class="mb-2"></v-divider>
         <v-row no-gutters>
-          <v-col cols="12" class="pa-0">
+          <v-col cols="12">
             お気に入り
           </v-col>
           <v-col
@@ -127,7 +148,6 @@
             sm="1"
             v-for="favorite in store.favorite"
             :key="favorite"
-            class="pa-0"
           >
             <v-checkbox
               v-model="store.search.cardList.favorite"
@@ -144,7 +164,7 @@
             </v-checkbox>
           </v-col>
         </v-row>
-        <hr class="mb-2">
+        <v-divider class="mb-2"></v-divider>
         <v-row no-gutters>
           <v-col cols="12" sm="6" class="pr-sm-5 pr-md-5 pr-lg-5 pr-xl-5">
             <v-row no-gutters>
@@ -167,7 +187,7 @@
             </v-row>
           </v-col>
           <v-col cols="12" class="hidden-sm-and-up">
-            <hr class="my-3">
+            <v-divider class="my-3"></v-divider>
           </v-col>
           <v-col cols="12" sm="6" class="prl-sm-5 pl-md-5 pl-lg-5 pl-xl-5">
             <v-row no-gutters>
@@ -190,7 +210,7 @@
             </v-row>
           </v-col>
         </v-row>
-        <hr class="my-2">
+        <v-divider class="my-2"></v-divider>
         <v-row no-gutters>
           <v-col cols="12" sm="6" class="pr-sm-5 pr-md-5 pr-lg-5 pr-xl-5">
             <v-row no-gutters>
@@ -213,7 +233,7 @@
             </v-row>
           </v-col>
           <v-col cols="12" class="hidden-sm-and-up">
-            <hr class="my-3">
+            <v-divider class="my-3"></v-divider>
           </v-col>
           <v-col cols="12" sm="6" class="prl-sm-5 pl-md-5 pl-lg-5 pl-xl-5">
             <v-row no-gutters>
@@ -236,7 +256,7 @@
             </v-row>
           </v-col>
         </v-row>
-        <hr class="my-2">
+        <v-divider class="my-2"></v-divider>
         <v-row no-gutters>
           <v-col cols="12" sm="6" class="pr-sm-5 pr-md-5 pr-lg-5 pr-xl-5">
             <v-row no-gutters>
@@ -259,7 +279,7 @@
             </v-row>
           </v-col>
           <v-col cols="12" class="hidden-sm-and-up">
-            <hr class="my-3">
+            <v-divider class="my-3"></v-divider>
           </v-col>
           <v-col cols="12" sm="6" class="prl-sm-5 pl-md-5 pl-lg-5 pl-xl-5">
             <v-row no-gutters>

@@ -14,6 +14,7 @@
         data-url="x.gd/VR5u2"
         data-hashtags="リンマネ"
         data-show-count="false"
+        v-if="false"
       >
         Share
       </a>
@@ -35,7 +36,11 @@
           {{ arr.name }}
         </v-tooltip>
       </span>
-      <!--<v-icon @click="store.showModalEvent('settings');" style="margin-right: 10px;">mdi-cog</v-icon>-->
+      <v-icon
+        @click="store.showModalEvent('settings');"
+        class="mr-2"
+        v-if="false"
+      >mdi-cog</v-icon>
     </v-app-bar>
     <v-navigation-drawer
       v-model="drawer"
@@ -43,12 +48,20 @@
       class="py-2"
       active-class="deep-purple--text text--accent-4"
     >
-      <div
-        v-for="(arr, pageTitle) of pageList"
-        :key="arr"
-      >
-        <v-list-item :title="pageTitle.toUpperCase()" :subtitle="arr.name" @click="pageMove(arr.url)"></v-list-item>
-      </div>
+        <v-list-item
+        class="px-2 pt-0 pb-2"
+        title="リンクラ マネージャー！"
+        :subtitle="`Ver. ${store.version}`"
+      ></v-list-item>
+      <v-divider class="pb-1"></v-divider>
+      <v-list-item
+          v-for="(arr, pageTitle) of pageList"
+          :key="arr"
+          :title="pageTitle.toUpperCase()"
+          :subtitle="arr.name"
+          class="px-2"
+          @click="pageMove(arr.url)">
+        </v-list-item>
     </v-navigation-drawer>
     <v-main>
       <router-view/>
@@ -97,6 +110,10 @@ export default {
   },
   data() {
     return {
+      windowSize: {
+        w: 0,
+        h: 0
+      },
       drawer: false,
       pageList: {
         'Home': {
@@ -133,9 +150,18 @@ export default {
       this.pageMove(`/llll_mgr_dev/${pageName}`);
     }
   },
+  mounted() {
+    this.onResize();
+  },
   methods: {
     pageMove(movePageName) {
       this.$router.replace(movePageName);
+    },
+    onResize () {
+      this.windowSize = {
+        w: window.innerWidth,
+        h: window.innerHeight
+      };
     }
   }
 }
@@ -184,6 +210,14 @@ a {
   &:hover {
     text-decoration: none;
   }
+}
+
+.pc {
+  display: block;
+}
+
+.sp {
+  display: none;
 }
 
 .pb10 {
@@ -321,5 +355,15 @@ main {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 600px) {
+  .pc {
+    display: none;
+  }
+
+  .sp {
+    display: block;
+  }
 }
 </style>

@@ -23,10 +23,10 @@ export const useCardStore = defineStore('cardList', {
               releaseLevel: 1
             },
             uniqueStatus: {
-              smile: 0,
-              pure: 0,
-              cool: 0,
-              mental: 0,
+              smile: 30,
+              pure: 30,
+              cool: 30,
+              mental: 3,
               BP: 100
             },
             specialAppeal: {
@@ -68,10 +68,10 @@ export const useCardStore = defineStore('cardList', {
               releaseLevel: 1
             },
             uniqueStatus: {
-              smile: 0,
-              pure: 0,
-              cool: 0,
-              mental: 0,
+              smile: 30,
+              pure: 30,
+              cool: 30,
+              mental: 3,
               BP: 100
             },
             specialAppeal: {
@@ -144,6 +144,55 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         UR: {
+          'Special Thanks': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: 'Special Thanks',
+            kana: 'すぺしゃるさんくす',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION Vol.6',
+              period: '冬限定'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1830,
+              pure: 2530,
+              cool: 1030,
+              mental: 193,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'extensionsHeart_section3',
+              name: 'エクステハート',
+              AP: 5,
+              detail: [
+                [4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 8, 9, 9, 10]
+              ],
+              type: ['extensions', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'chillVoltage1',
+              name: 'チルボルテージ',
+              AP: 2,
+              detail: [
+                [5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 11, 11, 12, 12],
+                [120, 132, 144, 156, 168, 180, 192, 204, 216, 240, 252, 264, 276, 300],
+              ],
+              type: ['chill', 'voltageGain']
+            },
+            characteristic: {
+              name: 'ハートアトラクション：梢',
+              detail: '手札にある状態で梢のスキルを使用するたび、ビートハート4回分のスキルハートを獲得し、このセクション中、獲得するLOVEを+8%する。',
+              type: ['heartCaptcha', 'loveActraction', 'kozue']
+            }
+          },
           'Link to the FUTURE': {
             styleType: 'performer',
             mood: 'happy',
@@ -219,7 +268,7 @@ export const useCardStore = defineStore('cardList', {
               BP: 100
             },
             specialAppeal: {
-              ID: 'healingHeart',
+              ID: 'healingHeart_recover_heart',
               name: 'ヒーリングハート',
               AP: 6,
               detail: [
@@ -380,12 +429,12 @@ export const useCardStore = defineStore('cardList', {
               name: 'ハートブースト',
               AP: 5,
               detail: [
-                [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, '110?', 125]
+                [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 125]
               ],
               type: ['heartBoost']
             },
             characteristic: {
-              name: 'APレデュース : ラブアトラクト',
+              name: 'APレデュース：ラブアトラクト',
               detail: '手札にあるメイン効果に獲得LOVE増加効果を持つスキル1枚につき、手札のこのスキルの消費AP-2。',
               type: ['APReduce', 'loveActract']
             }
@@ -875,6 +924,56 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         SR: {
+          '迎春 -食-': {
+            styleType: 'cheerLeader',
+            mood: 'neutral',
+            series: '迎春',
+            kana: 'げいしゅん',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.4',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1630,
+              pure: 1730,
+              cool: 2230,
+              mental: 173,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyHeart8_heart',
+              name: 'グルーヴィハート',
+              AP: 4,
+              detail: [
+                [3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 8],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5]
+              ],
+              type: ['groovy', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'chillEndurance_vol5',
+              name: 'チルエンデュランス',
+              AP: 4,
+              detail: [
+                [6, 6.6, 7.2, 7.8, 8.4, 9, 9.6, 10.2, 10.8, 12, 12.6, 13.2, 13.8, 15],
+                [17, 19, 20, 22, 24, 26, 27, 29, 31, 34, 36, 37, 39, 42]
+              ],
+              type: ['chill', 'mentalRecover', 'voltageGain']
+            },
+            characteristic: {
+              name: 'オーバーセクション：APゲイン',
+              detail: '手札にある状態でセクションが変わるたび、APを2回復する。',
+              type: ['overSection', 'APGain']
+            }
+          },
           '冬のおくりもの': {
             styleType: 'moodMaker',
             mood: 'neutral',
@@ -953,7 +1052,7 @@ export const useCardStore = defineStore('cardList', {
               name: 'ハートキャプチャ',
               AP: 4,
               detail: [
-                [3, 3, 4, 4, 4, 5, 5, 5, 5, 6, '6?', '7?', '7?', 8]
+                [3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 8],
               ],
               type: ['heartCaptcha']
             },
@@ -1713,10 +1812,10 @@ export const useCardStore = defineStore('cardList', {
               releaseLevel: 1
             },
             uniqueStatus: {
-              smile: 0,
-              pure: 0,
-              cool: 0,
-              mental: 0,
+              smile: 30,
+              pure: 30,
+              cool: 30,
+              mental: 3,
               BP: 100
             },
             specialAppeal: {
@@ -1789,6 +1888,105 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         UR: {
+          '蓮ノ空歌留多': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: '蓮ノ空歌留多',
+            kana: 'はすのそらかるた',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.7',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 930,
+              pure: 1830,
+              cool: 2630,
+              mental: 193,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyInitiative',
+              name: 'グルーヴィイニシアチブ',
+              AP: 4,
+              detail: [
+                [14, 16, 17, 19, 20, 22, 23, 24, 26, 29, 30, 32, 33, 36],
+                ['2.4?', '2.6?', '2.9?', '3.1?', '3.4?', '3.6?', '3.8?', '4.1?', '4.3?', '4.8?', '5?', '5.3?', '5.5?', 6]
+              ],
+              type: ['groovy', 'voltageGain', 'protect']
+            },
+            skill: {
+              ID: 'voltageHeart',
+              name: 'ボルテージハート',
+              AP: 5,
+              detail: [
+                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, 40],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 6]
+              ],
+              type: ['voltageGain', 'heartCaptcha']
+            },
+            characteristic: {
+              name: 'オーバーセクション：ボルテージゲイン & APレデュース：さやか',
+              detail: '手札にある状態でセクションが変わるたび、ボルテージPt.を+20する。さらにさやかのスキルを使用するたび、手札のこのスキルの消費AP-2。',
+              type: ['overSection', 'voltageGain', 'APreduce' ,'sayaka']
+            }
+          },
+          '青とシャボン': {
+            styleType: 'moodMaker',
+            mood: 'melow',
+            series: '青とシャボン',
+            kana: 'あおとしゃぼん',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION Vol.6',
+              period: '冬限定'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1030,
+              pure: 1630,
+              cool: 2730,
+              mental: 193,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'extensionsVoltage_section',
+              name: 'エクステボルテージ',
+              AP: 5,
+              detail: [
+                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, 40]
+              ],
+              type: ['extensions', 'voltageGain']
+            },
+            skill: {
+              ID: 'groovyAttraction_section10',
+              name: 'グルーヴィアトラクション',
+              AP: 5,
+              detail: [
+                [8.4, '9.2?', '10.1?', '11?', '11.8?', 12.6, '13.4?', '14.3?', '15.1?', 16.8, '17.6?', '18.5?', '19.3?', 21],
+                [10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 25]
+              ],
+              type: ['groovy', 'loveAttraction', 'heartBoost']
+            },
+            characteristic: {
+              name: 'APレデュース：綴理 & ボルテージゲイン：綴理',
+              detail: '綴理のスキルを使用するたび、手札のこのスキルの消費AP-1し、ボルテージPt.を+10する。',
+              type: ['APreduce', 'voltageGain', 'tsuzuri']
+            }
+          },
           'Link to the FUTURE': {
             styleType: 'moodMaker',
             mood: 'happy',
@@ -1825,7 +2023,7 @@ export const useCardStore = defineStore('cardList', {
               type: ['heartCaptcha', 'loveAttract', 'voltageGain']
             },
             skill: {
-              ID: 'chillFascinate_stage',
+              ID: 'chillFascinate_stage_APgain',
               name: 'チルファッシネイト',
               AP: 5,
               detail: [
@@ -1872,7 +2070,7 @@ export const useCardStore = defineStore('cardList', {
                 [20, 22, 24, 26, 28, 30, 32, 34, 36, 40, 42, 44, 46, 50],
                 [34, 37, 41, 44, 48, 51, 54, 58, 61, 68, 71, 74, 78, 84]
               ],
-              type: ['chill', 'voltage']
+              type: ['chill', 'voltageGain']
             },
             skill: {
               ID: 'groovyVoltage',
@@ -2522,6 +2720,105 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         SR: {
+          'Eisprinzessin': {
+            styleType: 'moodMaker',
+            mood: 'melow',
+            series: 'Eisprinzessin / Eisritter',
+            kana: '',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.5',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1330,
+              pure: 1430,
+              cool: 2530,
+              mental: 203,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'chillFascinate_stage_voltage',
+              name: 'チルファッシネイト',
+              AP: 7,
+              detail: [
+                [4.3, 4.7, 5.2, 5.6, 6, 6.5, 6.9, 7.3, 7.7, 8.6, 9, 9.5, 9.9, 10.8],
+                [31, 34, 37, 40, 43, 47, 50, 53, 56, 62, 65, 68, 71, 78]
+              ],
+              type: ['chill', 'loveAttract', 'voltageGain']
+            },
+            skill: {
+              ID: 'calmAttract_section_minus30',
+              name: 'カームアトラクト',
+              AP: 3,
+              detail: [
+                [12, 13.2, 14.4, 15.6, 16.8, 18, 19.2, 20.4, 21.6, 24, 25.2, 26.4, 27.6, 30]
+              ],
+              type: ['calm', 'heartCaptcha', 'loveAttract']
+            },
+            characteristic: {
+              name: 'インタープリテーション＆サーチ：綴理',
+              detail: 'このスキルのムードによる効果増加量を増加させる。さらにスキル使用後、綴理のカードをドローする確率大幅アップ。',
+              type: ['interPretation', 'search', 'tsuzuri']
+            }
+          },
+          '迎春 -舞-': {
+            styleType: 'performer',
+            mood: 'neutral',
+            series: '迎春',
+            kana: 'げいしゅん',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.4',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1530,
+              pure: 1630,
+              cool: 2230,
+              mental: 193,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyAttract_section_section',
+              name: 'グルーヴィアトラクト',
+              AP: 4,
+              detail: [
+                [7.2, 7.9, 8.6, 9.4, 10.1, 10.8, 11.5, 12.2, 13, 14.4, 15.1, 15.8, 16.6, 18],
+                [4.8, 5.3, 5.8, 6.2, 6.7, 7.2, 7.7, 8.2, 8.6, 9.6, 10.1, 10.6, 11.1, 12]
+              ],
+              type: ['groovy', 'loveAttraction']
+            },
+            skill: {
+              ID: 'chillVoltage5_heart_vol',
+              name: 'チルボルテージ',
+              AP: 4,
+              detail: [
+                [3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 8],
+                [17, 19, 20, 22, 24, 26, 27, 29, 31, 34, 36, 37, 39, 42]
+              ],
+              type: ['chill', 'mentalRecover', 'voltageGain']
+            },
+            characteristic: {
+              name: 'オーバーセクション：メンタルリカバー',
+              detail: '手札にある状態でセクションが変わるたび、メンタルを最大値の8%回復させる。',
+              type: ['overSection', 'mentalRecover']
+            }
+          },
           'ツバサ・ラ・リベルテ': {
             styleType: 'moodMaker',
             mood: 'neutral',
@@ -3094,7 +3391,7 @@ export const useCardStore = defineStore('cardList', {
                 [10, 11, 12, 13, 14, 15, 16, 17, 18, 20, '21?', '22?', '23?', '25?'],
                 [2.8, 3.08, 3.36, 3.64, 3.92, 4.2, 4.48, 4.76, 5.04, 5.6, '5.88?', '6.16?', '6.44?', '7?']
               ],
-              type: ['endurance']
+              type: ['voltageGain', 'mentalRecover']
             },
             characteristic: {
               name: 'フェイバリット : 2',
@@ -3308,10 +3605,10 @@ export const useCardStore = defineStore('cardList', {
               releaseLevel: 1
             },
             uniqueStatus: {
-              smile: 0,
-              pure: 0,
-              cool: 0,
-              mental: 0,
+              smile: 30,
+              pure: 30,
+              cool: 30,
+              mental: 3,
               BP: 100
             },
             specialAppeal: {
@@ -3384,6 +3681,154 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         UR: {
+          '蓮ノ空歌留多': {
+            styleType: 'performer',
+            mood: 'neutral',
+            series: '蓮ノ空歌留多',
+            kana: 'はすのそらかるた',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.7',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 880,
+              pure: 1730,
+              cool: 2580,
+              mental: 213,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyHeart8_heart',
+              name: 'グルーヴィハート',
+              AP: 4,
+              detail: [
+                [4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 8, 9, 9, 9],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 6]
+              ],
+              type: ['groovy', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'healingHeart_heart_recover',
+              name: 'ヒーリングハート',
+              AP: 5,
+              detail: [
+                [4, 4, 5, 5, 6, 6, 6, 7, 7, 8, 8, 9, '10?', 11],
+                [4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 8, 8.4, 8.8, 9.2, 10]
+              ],
+              type: ['voltageGain', 'mentalRecover']
+            },
+            characteristic: {
+              name: 'オーバーセクション：ボルテージゲイン & APレデュース：瑠璃乃',
+              detail: '手札にある状態でセクションが変わるたび、ボルテージPt.を+20する。さらに瑠璃乃のスキルを使用するたび、手札のこのスキルの消費AP-2。',
+              type: ['overSection', 'voltageGain', 'APreduce' ,'rurino']
+            }
+          },
+          'ミルク': {
+            styleType: 'trickStar',
+            mood: 'happy',
+            series: 'ミルク',
+            kana: 'みるく',
+            gacha: {
+              addSeason: 'サークル対抗戦 -Exhibition- (2024年1月度)',
+              period: '配布'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1730,
+              pure: 2430,
+              cool: 1030,
+              mental: 213,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'extensionsVoltage_section',
+              name: 'エクステボルテージ',
+              AP: 5,
+              detail: [
+                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, 40]
+              ],
+              type: ['extensions', 'voltageGain']
+            },
+            skill: {
+              ID: 'switchAttraction_stage_heart_section_5',
+              name: 'スイッチアトラクション',
+              AP: 4,
+              detail: [
+                [3.2, 3.5, 3.8, 4.2, 4.5, 4.8, 5.1, 5.4, 5.8, 6.4, 6.7, 7, 7.4, 8],
+                [3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 8],
+                [4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 8, 8.4, 8.8, 9.2, 10]
+              ],
+              type: ['switch', 'loveAttract', 'heartCaptcha']
+            },
+            characteristic: {
+              name: 'APレデュース：慈 & メンタルリカバー：慈',
+              detail: '慈のスキルを使用するたび、手札のこのスキルの消費AP-1し、メンタルを最大値の6%回復させる。',
+              type: ['APreduce', 'mentalRecover', 'megumi']
+            }
+          },
+          'ハクチューアラモード': {
+            styleType: 'trickStar',
+            mood: 'happy',
+            series: 'ハクチューアラモード',
+            kana: 'はくちゅーあらもーど',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.5',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 2630,
+              pure: 1530,
+              cool: 930,
+              mental: 223,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'extensionsVoltage_stage',
+              name: 'エクステボルテージ',
+              AP: 6,
+              detail: [
+                [20, 22, 24, 26, 28, 30, 32, 34, 36, 40, 42, 44, 46, 50]
+              ],
+              type: ['extensions', 'voltageGain']
+            },
+            skill: {
+              ID: 'aggressiveRegain_stage',
+              name: 'アグレッシブリゲイン',
+              AP: 5,
+              detail: [
+                [2.6, 2.9, 3.1, 3.4, 3.6, 3.9, 4.2, 4.4, 4.7, 5.2, 5.5, 5.7, 6, 6.4]
+              ],
+              type: ['aggressive', 'regain', 'loveAttract']
+            },
+            characteristic: {
+              name: 'ドロー：ハートキャプチャ',
+              detail: 'ドローした時、ビートハート5回分のスキルハートを獲得する。',
+              type: ['draw', 'heartCaptcha']
+            }
+          },
           'Link to the FUTURE': {
             styleType: 'trickStar',
             mood: 'happy',
@@ -3824,6 +4269,56 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         SR: {
+          '迎春 -楽-': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: '迎春',
+            kana: 'げいしゅん',
+            gacha: {
+              addSeason: 'ライブグランプリ「103期 第7回個人戦」報酬',
+              period: '配布'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1530,
+              pure: 1830,
+              cool: 2130,
+              mental: 183,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyRecover',
+              name: 'グルーヴィリカバー',
+              AP: 4,
+              detail: [
+                [6, 6.6, 7.2, 7.8, 8.4, 9, 9.6, 10.2, 10.8, 12, 12.6, 13.2, 13.8, 15],
+                [4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 8, 8.4, 8.8, 9.2, 10]
+              ],
+              type: ['groovy', 'mentalRecover']
+            },
+            skill: {
+              ID: 'chillFascinate_stage_voltage',
+              name: 'チルファッシネイト',
+              AP: 4,
+              detail: [
+                [2.3, 2.5, 2.8, 3, 3.2, 3.5, 3.7, 3.9, 4.1, 4.6, 4.8, 5.1, 5.3, 5.8],
+                [17, 19, 20, 22, 24, 26, 27, 29, 31, 34, 36, 37, 39, 42]
+              ],
+              type: ['chill', 'loveAttraction', 'voltageGain']
+            },
+            characteristic: {
+              name: 'オーバーセクション：ハートキャプチャ',
+              detail: '手札にある状態でセクションが変わるたび、ビートハート4回分のスキルハートを獲得する。',
+              type: ['overSection', 'heartCaptcha']
+            }
+          },
           'Secret Christmas': {
             styleType: 'trickStar',
             mood: 'happy',
@@ -4417,10 +4912,10 @@ export const useCardStore = defineStore('cardList', {
               releaseLevel: 1
             },
             uniqueStatus: {
-              smile: 0,
-              pure: 0,
-              cool: 0,
-              mental: 0,
+              smile: 30,
+              pure: 30,
+              cool: 30,
+              mental: 3,
               BP: 100
             },
             specialAppeal: {
@@ -4495,6 +4990,56 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         UR: {
+          '蓮ノ空歌留多': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: '蓮ノ空歌留多',
+            kana: 'はすのそらかるた',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.4',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1330,
+              pure: 1730,
+              cool: 2230,
+              mental: 203,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyAttraction_stage',
+              name: 'グルーヴィアトラクション',
+              AP: 4,
+              detail: [
+                [2.9, 3.2, 3.5, 3.8, 4.1, 4.4, 4.6, 4.9, 5.2, 5.8, '6.1?', '6.4?', '6.7?', 7.2],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, '4?', '4?', '5?', 6]
+              ],
+              type: ['groovy', 'loveAttraction', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'endurance_voltageMental',
+              name: 'エンデュランス',
+              AP: 4,
+              detail: [
+                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, 40],
+                [4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 8, 8.4, 8.8, 9.2, 10]
+              ],
+              type: ['voltageGain', 'mentalRecover']
+            },
+            characteristic: {
+              name: 'オーバーセクション：ボルテージゲイン & APレデュース：梢',
+              detail: '手札にある状態でセクションが変わるたび、ボルテージPt.を+20する。さらに梢のスキルを使用するたび、手札のこのスキルの消費AP-2。',
+              type: ['overSection', 'voltageGain', 'APreduce' ,'kozue']
+            }
+          },
           '冬のおくりもの': {
             styleType: 'moodMaker',
             mood: 'neutral',
@@ -5176,6 +5721,55 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         SR: {
+          'Special Thanks': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: 'Special Thanks',
+            kana: 'すぺしゃるさんくす',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION Vol.6',
+              period: '冬限定'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1730,
+              pure: 2230,
+              cool: 1330,
+              mental: 203,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'loveAttract_stage',
+              name: 'ラブアトラクト',
+              AP: 5,
+              detail: [
+                [3.2, 3.5, 3.8, 4.2, 4.5, 4.8, 5.1, 5.4, 5.76, 6.4, 6.72, 7.04, 7.36, 8]
+              ],
+              type: ['loveAttract']
+            },
+            skill: {
+              ID: 'groovyBoost_stage',
+              name: 'グルーヴィブースト',
+              AP: 6,
+              detail: [
+                [3.2, 3.5, 3.8, 4.2, 4.5, 4.8, 5.1, 5.4, 5.76, 6.4, 6.72, 7.04, 7.36, 8],
+                [60, 66, 72, 78, 84, 90, 96, 102, 108, 114, 120, 126, 132, 150],
+              ],
+              type: ['groovy', 'loveAttraction', 'heartBoost']
+            },
+            characteristic: {
+              name: 'APレデュース：花帆 & ハートキャプチャ：花帆',
+              detail: '花帆のスキルを使用するたび、手札のこのスキルの消費AP-1し、ビートハート2回分のスキルハートを獲得する。',
+              type: ['APreduce', 'heartCaptcha', 'kaho']
+            }
+          },
           'Link to the FUTURE': {
             styleType: 'moodMaker',
             mood: 'happy',
@@ -6010,10 +6604,10 @@ export const useCardStore = defineStore('cardList', {
               releaseLevel: 1
             },
             uniqueStatus: {
-              smile: 0,
-              pure: 0,
-              cool: 0,
-              mental: 0,
+              smile: 30,
+              pure: 30,
+              cool: 30,
+              mental: 3,
               BP: 100
             },
             specialAppeal: {
@@ -6088,6 +6682,56 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         UR: {
+          '蓮ノ空歌留多': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: '蓮ノ空歌留多',
+            kana: 'はすのそらかるた',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.4',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1430,
+              pure: 1830,
+              cool: 2230,
+              mental: 183,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyAttraction_section8',
+              name: 'グルーヴィアトラクション',
+              AP: 4,
+              detail: [
+                [9, 9.9, 10.8, 11.7, 12.6, 13.5, 14.4, 15.3, 16.2, 18, 18.9, 19.8, 20.7, 22.5],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, '4?', '4?', '5?', 6]
+              ],
+              type: ['groovy', 'loveAttract', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'fascination_section',
+              name: 'ファッシネイション',
+              AP: 4,
+              detail: [
+                [9.6, 10.6, 11.5, 12.5, 13.4, 14.4, 15.4, 16.3, 17.3, 19.2, 20.2, '21.1?', '22.1?', 24],
+                [8, 9, 10, 10, 11, 12, 13, 14, 14, 16, 17, 18, 18, 20]
+              ],
+              type: ['loveAttract', 'voltageGain']
+            },
+            characteristic: {
+              name: 'オーバーセクション：ボルテージゲイン & APレデュース：綴理',
+              detail: '手札にある状態でセクションが変わるたび、ボルテージPt.を+20する。さらに綴理のスキルを使用するたび、手札のこのスキルの消費AP-2。',
+              type: ['overSection', 'voltageGain', 'APreduce' ,'kozue']
+            }
+          },
           'ツバサ・ラ・リベルテ': {
             styleType: 'cheerLeader',
             mood: 'neutral',
@@ -6775,6 +7419,154 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         SR: {
+          '節分 -妖-': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: '節分',
+            kana: 'せつぶん',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.7',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1230,
+              pure: 1830,
+              cool: 2230,
+              mental: 203,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyHeart8_voltageGain_heart',
+              name: 'グルーヴィハート',
+              AP: 4,
+              detail: [
+                [12, 13, 14, 16, 17, 18, 19, 20, 22, 24, 25, 26, 28, 29],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5]
+              ],
+              type: ['groovy', 'voltageGain', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'calmBoost_minus20',
+              name: 'カームブースト',
+              AP: 4,
+              detail: [
+                [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 125]
+              ],
+              type: ['calm', 'boost']
+            },
+            characteristic: {
+              name: 'オーバーセクション：ラブアトラクト',
+              detail: '手札にある状態でセクションが変わるたび、このセクション中、獲得するLOVEを+10%する。',
+              type: ['overSection', 'loveAttract']
+            }
+          },
+          '青とシャボン': {
+            styleType: 'moodMaker',
+            mood: 'melow',
+            series: '青とシャボン',
+            kana: 'あおとしゃぼん',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION Vol.6',
+              period: '冬限定'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1230,
+              pure: 1730,
+              cool: 2330,
+              mental: 203,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'voltageGain',
+              name: 'ボルテージゲイン',
+              AP: 5,
+              detail: [
+                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, 40]
+              ],
+              type: ['voltageGain']
+            },
+            skill: {
+              ID: 'groovyHeart10_voltageGain_heart',
+              name: 'グルーヴィハート',
+              AP: 6,
+              detail: [
+                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, 40],
+                [6, 7, 7, 8, 8, 9, 10, 10, 11, 12, 13, 13, 14, 16]
+              ],
+              type: ['groovy', 'vontageGain', 'heartCaptcha']
+            },
+            characteristic: {
+              name: 'APレデュース：さやか & ボルテージゲイン：さやか',
+              detail: 'さやかのスキルを使用するたび、手札のこのスキルの消費AP-1し、ボルテージPt.を+6する。',
+              type: ['APreduce', 'voltageGain', 'sayaka']
+            }
+          },
+          'Eisritter': {
+            styleType: 'performer',
+            mood: 'melow',
+            series: 'Eisprinzessin / Eisritter',
+            kana: '',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.5',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1430,
+              pure: 1530,
+              cool: 2530,
+              mental: 183,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'chillAttract_stage',
+              name: 'チルアトラクト',
+              AP: 7,
+              detail: [
+                [4.3, 4.7, 5.2, 5.6, 6, 6.5, 6.9, 7.3, 7.7, 8.6, '9?', '9.5?', '9.9?', 10.8],
+                [6.2, 6.8, 7.4, 8.1, 8.7, 9.3, 9.9, 10.5, 11.2, 12.4, '13?', '13.6?', '14.3?', 15.6]
+              ],
+              type: ['chill', 'loveAttract', 'voltageGain']
+            },
+            skill: {
+              ID: 'calmAttraction_section_minus30',
+              name: 'カームアトラクション',
+              AP: 3,
+              detail: [
+                [4, 4, 5, 5, 6, 6, 6, 7, 7, 8, '8?', '9?', '9?', 11],
+                [4.8, 5.3, 5.8, 6.2, 6.7, 7.2, 7.7, 8.2, 8.6, 9.6, 10.1, 10.6, 11.1, 12]
+              ],
+              type: ['calm', 'heartCaptcha', 'loveAttract']
+            },
+            characteristic: {
+              name: 'インタープリテーション＆サーチ：さやか',
+              detail: 'このスキルのムードによる効果増加量を増加させる。さらにスキル使用後、さやかのカードをドローする確率大幅アップ。',
+              type: ['interPretation', 'search', 'sayaka']
+            }
+          },
           'Link to the FUTURE': {
             styleType: 'moodMaker',
             mood: 'happy',
@@ -6807,7 +7599,7 @@ export const useCardStore = defineStore('cardList', {
                 [5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 11, 11, 12, 13],
                 [10.8, 11.9, 13, 14, 15.1, 16.2, 17.3, 18.4, 19.4, 21.6, 22.7, 23.8, 24.8, 27]
               ],
-              type: ['groovy', 'heartCaptcha', 'loveAttract']
+              type: ['groovy', 'loveAttract', 'heartCaptcha']
             },
             skill: {
               ID: 'chillVoltage5',
@@ -6850,14 +7642,14 @@ export const useCardStore = defineStore('cardList', {
               BP: 100
             },
             specialAppeal: {
-              ID: 'groovyAttraction_section',
+              ID: 'groovyAttraction_section8',
               name: 'グルーヴィアトラクション',
               AP: 6,
               detail: [
                 [12, 13.2, 14.4, 15.6, 16.8, 18, 19.2, 20.4, 21.6, 24, 25.2, 26.4, 27.6, 30],
                 [3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 7]
               ],
-              type: ['groovy', 'attraction']
+              type: ['groovy', 'loveAttract', 'heartCaptcha']
             },
             skill: {
               ID: 'groovyAttract_section',
@@ -7662,10 +8454,10 @@ export const useCardStore = defineStore('cardList', {
               releaseLevel: 1
             },
             uniqueStatus: {
-              smile: 0,
-              pure: 0,
-              cool: 0,
-              mental: 0,
+              smile: 30,
+              pure: 30,
+              cool: 30,
+              mental: 3,
               BP: 100
             },
             specialAppeal: {
@@ -7740,6 +8532,105 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         UR: {
+          'ハクチューアラモード': {
+            styleType: 'performer',
+            mood: 'happy',
+            series: 'ハクチューアラモード',
+            kana: 'はくちゅーあらもーど',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.5',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 2430,
+              pure: 1330,
+              cool: 1130,
+              mental: 243,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'extensionsAttract_section1',
+              name: 'エクステアトラクト',
+              AP: 6,
+              detail: [
+                [4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 8, 8.4, 8.8, 9.2, 10]
+              ],
+              type: ['extentions', 'loveAttract']
+            },
+            skill: {
+              ID: 'aggressiveAttraction_section',
+              name: 'アグレッシブアトラクション',
+              AP: 3,
+              detail: [
+                [5, '6?', '6?', '7?', '7?', '8?', '8?', '9?', '9?', '10?', '11?', '11?', '12?', 12],
+                [6, '6.6?', '7.2?', '7.8?', '8.4?', '9?', '9.6?', '10.2?', '10.8?', '12?', '12.6?', '13.2?', '13.8?', 15]
+              ],
+              type: ['aggressive', 'heartCaptcha', 'loveAttract']
+            },
+            characteristic: {
+              name: 'ドロー：ラブアトラクト',
+              detail: 'ドローした時、このステージ中、獲得するLOVEを+4%する。',
+              type: ['draw', 'loveAttract']
+            }
+          },
+          '蓮ノ空歌留多': {
+            styleType: 'moodMaker',
+            mood: 'neutral',
+            series: '蓮ノ空歌留多',
+            kana: 'はすのそらかるた',
+            gacha: {
+              addSeason: 'ライブグランプリ「103期 第7回個人戦」報酬',
+              period: '配布'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1480,
+              pure: 1780,
+              cool: 2130,
+              mental: 193,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'groovyHeart8_mental_heartCaptcha',
+              name: 'グルーヴィハート',
+              AP: 4,
+              detail: [
+                [7.2, 7.92, 8.64, 9.36, 10.08, 10.8, 11.52, 12.24, 12.96, 14.4, 15.12, '15.84?', '16.56?', '18?'],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, '4?', '5?', '6?']
+              ],
+              type: ['groovy', 'mentalRecover', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'voltageHeart',
+              name: 'ボルテージハート',
+              AP: 5,
+              detail: [
+                [16, 18, 19, 21, 22, 24, 26, 27, 29, 32, 34, 35, 37, 40],
+                [2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, '4?', '5?', '6?']
+              ],
+              type: ['voltageGain', 'heartCaptcha']
+            },
+            characteristic: {
+              name: 'オーバーセクション：ボルテージゲイン & APレデュース：慈',
+              detail: '手札にある状態でセクションが変わるたび、ボルテージPt.を+20する。さらに慈のスキルを使用するたび、手札のこのスキルの消費AP-2。',
+              type: ['overSection', 'voltageGain', 'APreduce' ,'megumi']
+            }
+          },
           'Secret Christmas': {
             styleType: 'cheerLeader',
             mood: 'happy',
@@ -7765,7 +8656,7 @@ export const useCardStore = defineStore('cardList', {
               BP: 100
             },
             specialAppeal: {
-              ID: 'healingHeart',
+              ID: 'healingHeart_recover_heart',
               name: 'ヒーリングハート',
               AP: 7,
               detail: [
@@ -7824,7 +8715,7 @@ export const useCardStore = defineStore('cardList', {
               type: ['extensions', 'heartCaptcha']
             },
             skill: {
-              ID: 'groovyHeart8',
+              ID: 'groovyHeart8_heartCaptcha_mental',
               name: 'グルーヴィハート',
               AP: 5,
               detail: [
@@ -7929,7 +8820,7 @@ export const useCardStore = defineStore('cardList', {
                 [40, 44, 48, 52, 56, 60, 64, 68, 72, 76, '?', '?', '?', 100],
                 [12, 13.2, 14.4, 15.6, 16.8, 18, 19.2, 20.4, 21.6, 24, 25.2, 26.4, 27.6, 30]
               ],
-              type: ['cheerful', 'boost']
+              type: ['cheerful', 'heartBoost']
             },
             characteristic: {
               name: 'インタープリテーション & チェイン：さやか',
@@ -8183,6 +9074,106 @@ export const useCardStore = defineStore('cardList', {
           }
         },
         SR: {
+          '節分 -艶-': {
+            styleType: 'trickStar',
+            mood: 'neutral',
+            series: '節分',
+            kana: 'せつぶん',
+            gacha: {
+              addSeason: '2023 WINTER LIMITED COLLECTION vol.7',
+              period: '恒常'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1280,
+              pure: 1730,
+              cool: 2180,
+              mental: 213,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'switchAttraction_voltage_heart_section_5',
+              name: 'スイッチアトラクション',
+              AP: 4,
+              detail: [
+                [13, 14, 16, 17, 18, 20, 21, 22, 23, 26, 27, 29, 30, 32],
+                [3, 3, 4, 4, 4, 5, 5, 5, 5, 6, 6, 7, 7, 7],
+                [3.2, 3.5, 3.8, 4.2, 4.5, 4.8, 5.1, 5.4, 5.8, 6.4, 6.7, 7, 7.3, 8]
+              ],
+              type: ['switch', 'heartCaptcha']
+            },
+            skill: {
+              ID: 'calmAttract_section_minus20',
+              name: 'カームアトラクト',
+              AP: 4,
+              detail: [
+                [10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 25]
+              ],
+              type: ['calm', 'extensions', 'loveAttraact']
+            },
+            characteristic: {
+              name: 'オーバーセクション：ボルテージゲイン',
+              detail: '手札にある状態でセクションが変わるたび、ボルテージPt.を+12する。',
+              type: ['overSection', 'voltageGain']
+            }
+          },
+          'ミルク': {
+            styleType: 'cheerLeader',
+            mood: 'happy',
+            series: 'ミルク',
+            kana: 'みるく',
+            gacha: {
+              addSeason: 'サークル対抗戦 -Exhibition- (2024年1月度)',
+              period: '配布'
+            },
+            favorite: [],
+            fluctuationStatus: {
+              cardLevel: 0,
+              trainingLevel: 0,
+              SALevel: 1,
+              SLevel: 1,
+              releaseLevel: 1
+            },
+            uniqueStatus: {
+              smile: 1730,
+              pure: 2230,
+              cool: 1130,
+              mental: 223,
+              BP: 100
+            },
+            specialAppeal: {
+              ID: 'supportedFeel_stage',
+              name: 'サポーテッドフィール',
+              AP: 5,
+              detail: [
+                [6.4, 7.04, 7.68, 8.32, 8.96, 9.6, 10.24, 10.88, 11.52, 12.8, 13.44, 14.08, 14.72, 16],
+                [1.3, 1.4, 1.6, 1.7, 1.8, 2, 2.1, 2.2, 2.3, 2.6, 2.7, 2.9, 3, 3.2]
+              ],
+              type: ['supported', 'mentalRecover', 'loveAttract']
+            },
+            skill: {
+              ID: 'chillFeel_mental_stage_2',
+              name: 'チルフィール',
+              AP: 3,
+              detail: [
+                [4.4, 4.84, 5.28, 5.72, 6.16, 6.6, 7.04, 7.48, 7.92, 8.8, 9.24, 9.68, 10.12, 11],
+                [5.8, 6.4, 7, 7.5, 8.1, 8.7, 9.3, 9.9, 10.4, 11.6, 12.2, 12.8, 13.3, 14.5]
+              ],
+              type: ['chill', 'mentalRecover', 'loveAttract']
+            },
+            characteristic: {
+              name: 'APレデュース：瑠璃乃 & メンタルリカバー：瑠璃乃',
+              detail: '瑠璃乃のスキルを使用するたび、手札のこのスキルの消費AP-1し、メンタルを最大値の4%回復させる。',
+              type: ['APreduce', 'mentalRecover', 'rurino']
+            }
+          },
           'Link to the FUTURE': {
             styleType: 'cheerLeader',
             mood: 'happy',
@@ -8257,7 +9248,7 @@ export const useCardStore = defineStore('cardList', {
               BP: 100
             },
             specialAppeal: {
-              ID: 'healingHeart',
+              ID: 'healingHeart_recover_heart',
               name: 'ヒーリングハート',
               AP: 6,
               detail: [
@@ -8500,7 +9491,7 @@ export const useCardStore = defineStore('cardList', {
               BP: 100
             },
             specialAppeal: {
-              ID: 'healingHeart',
+              ID: 'healingHeart_recover_heart',
               name: 'ヒーリングハート',
               AP: 6,
               detail: [
