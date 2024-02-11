@@ -16,6 +16,7 @@
         </v-expansion-panels>
       </v-col>
     </v-row>
+
     <!--<v-row
       no-gutters
       v-for="arr in [{id:1,label:'技能書'}, {id:2,label:'ピース'}, {id:3,label:'チャーム'}]"
@@ -36,6 +37,7 @@
         ></v-select>
       </v-col>
     </v-row>-->
+
     <v-row no-gutters>
       <!--<v-col cols="6">
         <v-select
@@ -59,70 +61,115 @@
           clearable
         ></v-select>
       </v-col>-->
-      <v-col cols="12" class="mb-5">
+      <v-col
+        v-for="(v, i) in ['技能書', 'ピース', 'チャーム']"
+        :key="i"
+        cols="12"
+        class="mb-5"
+      >
         <v-select
-          v-model="select.item1.value"
-          :items="select.item1.item"
+          v-model="select[`item${i + 1}`].value"
+          :items="select[`item${i + 1}`].item"
           attach
           chips
-          label="獲得可能アイテム(技能書系)"
+          :label="`獲得可能アイテム(${v}系)`"
           multiple
           clearable
           color="pink"
           base-color="pink"
-          hint="絞り込みたい技能書系アイテムを選んでください"
+          variant="outlined"
+          :hint="`絞り込みたい${v}系アイテムを選んでください`"
           persistent-hint
-        ></v-select>
-      </v-col>
-      <v-col cols="12" class="mb-5">
-        <v-select
-          v-model="select.item2.value"
-          :items="select.item2.item"
-          attach
-          chips
-          label="獲得可能アイテム(ピース系)"
-          multiple
-          clearable
-          color="pink"
-          base-color="pink"
-          hint="絞り込みたいピース系アイテムを選んでください"
-          persistent-hint
-        ></v-select>
-      </v-col>
-      <v-col cols="12" class="mb-5">
-        <v-select
-          v-model="select.item3.value"
-          :items="select.item3.item"
-          attach
-          chips
-          label="獲得可能アイテム(チャーム系)"
-          multiple
-          clearable
-          color="pink"
-          base-color="pink"
-          hint="絞り込みたいチャーム系アイテムを選んでください"
-          persistent-hint
-        ></v-select>
+        >
+          <template v-slot:chip="{ item }">
+            <v-chip
+              v-if="item.title !== '-'"
+              pill
+              class="pl-0"
+              :color="searchColor(item.title)"
+            >
+              <v-avatar left class="mr-1">
+                <v-img
+                  :src="require(`@/assets/trainingItem_icon/${item.title}.png`)"
+                ></v-img>
+              </v-avatar>
+              {{ item.title }}
+            </v-chip>
+            <v-chip v-else>{{ item.title }}</v-chip>
+          </template>
+          <template v-slot:item="{ item }">
+            <v-list-item
+              :title="item.title"
+              @click="selectSkill(item.title, i + 1)"
+            >
+              <template v-slot:prepend>
+                <v-checkbox-btn
+                  color="pink"
+                  :model-value="select[`item${i + 1}`].value.some((elm) => elm === item.title)"
+                ></v-checkbox-btn>
+                <v-img
+                  v-if="item.title !== '-'"
+                  :src="require(`@/assets/trainingItem_icon/${item.title}.png`)"
+                  :alt="item.title"
+                  class="mr-2"
+                  style="width: 40px"
+                ></v-img>
+              </template>
+            </v-list-item>
+          </template>
+        </v-select>
       </v-col>
     </v-row>
-    <v-data-table
-      :headers="headers"
-      :items="filterItems"
-      item-key="name"
-      density="comfortable"
-      items-per-page="75"
-      items-per-page-text="1ページあたりの最大表示数"
-      :items-per-page-options="[
-        {value: 15, title: '15'},
-        {value: 30, title: '30'},
-        {value: 45, title: '45'},
-        {value: 60, title: '60'},
-        {value: 75, title: '75'},
-        {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
-      ]"
-      multi-sort
-      no-data-text="見つからなかったよ😢"
-    ></v-data-table>
+
+    <v-row no-gutters>
+      <v-col cols="12">
+        <v-data-table
+          :headers="headers"
+          :items="filterItems"
+          item-key="name"
+          density="comfortable"
+          items-per-page="75"
+          items-per-page-text="1ページあたりの最大表示数"
+          :items-per-page-options="[
+            {value: 15, title: '15'},
+            {value: 30, title: '30'},
+            {value: 45, title: '45'},
+            {value: 60, title: '60'},
+            {value: 75, title: '75'},
+            {value: -1, title: '$vuetify.dataFooter.itemsPerPageAll'}
+          ]"
+          multi-sort
+          no-data-text="見つからなかったよ😢"
+        >
+          <template v-slot:item="{ item }">
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{ item.area }}</td>
+              <td>{{ item.stage }}</td>
+              <td
+                v-for="i in 3"
+                :key="i"
+              >
+                <v-chip
+                  v-if="item[`獲得可能アイテム${i}`] !== '-'"
+                  pill
+                  class="pl-0"
+                  :color="searchColor(item[`獲得可能アイテム${i}`])"
+                >
+                  <v-avatar left class="mr-1">
+                    <v-img
+                      :src="require(`@/assets/trainingItem_icon/${item[`獲得可能アイテム${i}`]}.png`)"
+                    ></v-img>
+                  </v-avatar>
+                  {{ item[`獲得可能アイテム${i}`] }}
+                </v-chip>
+                <v-chip v-else>{{ item[`獲得可能アイテム${i}`] }}</v-chip>
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -2972,7 +3019,25 @@ export default {
           ]
         }
       },
-      allItemList: []
+      allItemList: [],
+      colorList: {
+        '技能書(初等)': 'green',
+        '技能書(中等)': 'orange',
+        '技能書(高等)': 'red',
+        'ガーネットピース': 'pink-darken-1',
+        'エメラルドピース': 'green-accent-3',
+        'カーネリアンピース': 'deep-orange-accent-3',
+        'ダイヤピース': 'grey-darken-1',
+        'ペリドットピース': 'light-green-accent-3',
+        'ルビーピース': 'pink-accent-3',
+        'サファイアピース': 'blue-accent-4',
+        'トパーズピース': 'yellow-darken-4',
+        'ターコイズピース': 'cyan-lighten-3',
+        'アメジストピース': 'deep-purple',
+        'ソルチャーム': 'orange-darken-4',
+        'ルナチャーム': 'blue-accent-4',
+        'ステラチャーム': 'yellow-darken-3'
+      }
     }
   },
   computed: {
@@ -3019,6 +3084,33 @@ export default {
       };
       
       localStorage.llllMgr_selectItemList = JSON.stringify(setLocalStrageDataList);
+    },
+    searchColor(target) {
+      let color;
+
+      for (const itemName in this.colorList) {
+        if (target.includes(itemName)) {
+          color = this.colorList[itemName];
+          break;
+        }
+      }
+
+      return color;
+    },
+    selectSkill(selector, i) {
+      if (this.select[`item${i}`].value.some((x) => x === selector)) {
+        const result = [];
+
+        for (const skill of this.select[`item${i}`].value) {
+          if (skill !== selector) {
+            result.push(skill);
+          }
+        }
+
+        this.select[`item${i}`].value = result;
+      } else {
+        this.select[`item${i}`].value.push(selector);
+      }
     }
   }
 };
