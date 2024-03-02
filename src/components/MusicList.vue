@@ -213,9 +213,9 @@
     >
       <v-tooltip location="bottom">
         <template v-slot:activator="{ props }">
-          <div v-bind="props">
+          <div v-bind="props" class="mb-2">
             <v-img
-              :lazy-src="require(`@/assets/CD_jacket/NO IMAGE.webp`)"
+              :lazy-src="require(`@/assets/CD_jacket/${store.conversion(songTitle)}.webp`)"
               :src="require(`@/assets/CD_jacket/${store.conversion(songTitle)}.webp`)"
               :alt="songTitle"
               class="songJacket"
