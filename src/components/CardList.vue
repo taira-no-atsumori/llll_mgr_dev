@@ -29,7 +29,7 @@
       <v-col
         cols="12"
         sm="3"
-        v-for="(v, k) in store.spTrainingItemList"
+        v-for="(v, k) in store.tst"
         :key="k"
         class="text-center mb-3"
       >
@@ -45,7 +45,7 @@
               :src="require(`@/assets/trainingItem_icon/${k}(${kk}).png`)"
               style="width: 40px;"
             >
-            <span class="mx-2">×</span>{{ vv }}
+            <span class="mx-1">×</span>{{ vv.toLocaleString() }}
             <v-spacer></v-spacer>
           </v-col>
           <v-divider vertical class="hidden-sm-and-up" v-if="k !== 'トリックスターの証'"></v-divider>
@@ -53,7 +53,7 @@
       </v-col>
     </v-row>
 
-    <h3>必要なスタイルPt.：100,000</h3>
+    <h3 v-if="false">必要なスタイルPt.：100,000</h3>
 
     <v-divider class="my-3"></v-divider>
 

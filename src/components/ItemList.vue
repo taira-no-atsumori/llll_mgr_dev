@@ -100,7 +100,7 @@
           <template v-slot:item="{ item }">
             <v-list-item
               :title="item.title"
-              @click="selectSkill(item.title, i + 1)"
+              @click="selectItem(item.title, i + 1)"
             >
               <template v-slot:prepend>
                 <v-checkbox-btn
@@ -3097,7 +3097,7 @@ export default {
 
       return color;
     },
-    selectSkill(selector, i) {
+    selectItem(selector, i) {
       if (this.select[`item${i}`].value.some((x) => x === selector)) {
         const result = [];
 

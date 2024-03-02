@@ -5,7 +5,7 @@ import { useMusicStore } from './musicList';
 
 export const useStoreCounter = defineStore('store', {
   state: () => ({
-    version: 'ε.22(アーリーアクセス)',
+    version: 'ε.26(アーリーアクセス)',
     dialog: false,
     showModalName: false,
     updateData: false,
@@ -213,28 +213,6 @@ export const useStoreCounter = defineStore('store', {
         SR: [0, 0.15, 0.25, 0.3, 0.35],
         R: [0, 0.1, 0.15, 0.2, 0.25]
       }
-    },
-    spTrainingItemList: {
-      'パフォーマーの証': {
-        '初等': 1000,
-        '中等': 2000,
-        '高等': 3000
-      },
-      'ムードメーカーの証': {
-        '初等': 4000,
-        '中等': 5000,
-        '高等': 6000
-      },
-      'チアリーダーの証': {
-        '初等': 7000,
-        '中等': 8000,
-        '高等': 9000
-      },
-      'トリックスターの証': {
-        '初等': 1000,
-        '中等': 1100,
-        '高等': 1200
-      },
     },
     defaultCardList: []
   }),
@@ -486,6 +464,72 @@ export const useStoreCounter = defineStore('store', {
     },
     setCardIllust() {
       return `${this.conversion(this.settingCard.card)}_${this.charactorName[this.settingCard.name].last}_覚醒後`;
+    },
+    tst() {
+      const spTrainingItemList = {
+        'パフォーマーの証': {
+          '初等': 0, '中等': 0, '高等': 0
+        },
+        'ムードメーカーの証': {
+          '初等': 0, '中等': 0, '高等': 0
+        },
+        'チアリーダーの証': {
+          '初等': 0, '中等': 0, '高等': 0
+        },
+        'トリックスターの証': {
+          '初等': 0, '中等': 0, '高等': 0
+        }
+      };
+      /*const spTrainingPt = {
+        DR: [480],
+        UR: [240, 160],
+        SR: [120, 80],
+        R: [60, 40]
+      };*/
+      const list = [
+        {
+          DR: {
+            '初等': 0, '中等': 150, '高等': 60
+          },
+          UR: {
+            '初等': 48, '中等': 24, '高等': 0
+          },
+          SR: {
+            '初等': 24, '中等': 6, '高等': 0
+          },
+          R: {
+            '初等': 12, '中等': 0, '高等': 0
+          }
+        },
+        {
+          DR: {
+            '初等': 0, '中等': 0, '高等': 0
+          },
+          UR: {
+            '初等': 0, '中等': 48, '高等': 24
+          },
+          SR: {
+            '初等': 48, '中等': 12, '高等': 0
+          },
+          R: {
+            '初等': 24, '中等': 12, '高等': 0
+          }
+        }
+      ];
+
+      for (const targetCard of this.cardList) {
+        if (targetCard.fluctuationStatus.cardLevel === this.maxCardLevel[targetCard.rare][this.maxCardLevel[targetCard.rare].length - 1]) {
+          continue;
+        }
+
+        if (targetCard.fluctuationStatus.trainingLevel < this.maxCardLevel[targetCard.rare].length - 1 && this.maxCardLevel[targetCard.rare][targetCard.fluctuationStatus.trainingLevel] === targetCard.fluctuationStatus.cardLevel) {
+          for (const iterator in list[targetCard.fluctuationStatus.trainingLevel][targetCard.rare]) {
+            spTrainingItemList[`${this.styleType[targetCard.styleType]}の証`][iterator] += list[targetCard.fluctuationStatus.trainingLevel][targetCard.rare][iterator];
+          }
+        }
+      }
+
+      return spTrainingItemList;
     },
     /*makeMusicList() {
       return (selectSkillList) => {

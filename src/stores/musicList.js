@@ -1203,6 +1203,106 @@ export const useMusicStore = defineStore('musicList', {
         bonusSkill: 'ボルテージアップ',
         singingMembers: ['rurino', 'megumi']
       },
+      'BANG YOU グラビティ': {
+        musicData: {
+          kana: 'ばんゆうぐらびてぃ',
+          singer: 'みらくらぱーく！',
+          releaseDate: {
+            year: 2024,
+            month: 3,
+            date: 27
+          },
+          numbering: 'みらくらぱーく！ 2ndシングル',
+          BPM: {
+            original: 180,
+            inGame: 180
+          },
+          time: 134.5,
+          cover: false
+        },
+        attribute: 'pure',
+        BHcount: 99,
+        level: 0,
+        term: 103,
+        center: 'rurino',
+        bonusSkill: 'メンタルリカバー',
+        singingMembers: ['rurino', 'megumi']
+      },
+      'ハッピー至上主義！': {
+        musicData: {
+          kana: 'はっぴーしじょうしゅぎ',
+          singer: 'かほめぐ♡じぇらーと',
+          releaseDate: {
+            year: 2024,
+            month: 3,
+            date: 20
+          },
+          numbering: 'るりのとゆかいなつづりたち＆かほめぐ♡じぇらーと＆蓮ノ休日 シャッフルユニットスプリットシングル',
+          BPM: {
+            original: 173,
+            inGame: 173
+          },
+          time: 113,
+          cover: false
+        },
+        attribute: 'smile',
+        BHcount: 79,
+        level: 0,
+        term: 103,
+        center: 'megumi',
+        bonusSkill: 'メンタルリカバー',
+        singingMembers: ['kaho', 'megumi']
+      },
+      'Pleasure Feather': {
+        musicData: {
+          kana: 'ぷれじゃーふぇざー',
+          singer: '蓮ノ休日',
+          releaseDate: {
+            year: 2024,
+            month: 3,
+            date: 20
+          },
+          numbering: 'るりのとゆかいなつづりたち＆かほめぐ♡じぇらーと＆蓮ノ休日 シャッフルユニットスプリットシングル',
+          BPM: {
+            original: 130,
+            inGame: 130
+          },
+          time: 108.5,
+          cover: false
+        },
+        attribute: 'cool',
+        BHcount: 57,
+        level: 0,
+        term: 103,
+        center: 'sayaka',
+        bonusSkill: 'LOVEボーナス',
+        singingMembers: ['sayaka', 'kozue']
+      },
+      'Colorfulness': {
+        musicData: {
+          kana: 'からふるねす',
+          singer: 'るりのとゆかいなつづりたち',
+          releaseDate: {
+            year: 2024,
+            month: 3,
+            date: 20
+          },
+          numbering: 'るりのとゆかいなつづりたち＆かほめぐ♡じぇらーと＆蓮ノ休日 シャッフルユニットスプリットシングル',
+          BPM: {
+            original: 76,
+            inGame: 76
+          },
+          time: 130.18,
+          cover: false
+        },
+        attribute: 'pure',
+        BHcount: 40,
+        level: 0,
+        term: 103,
+        center: 'rurino',
+        bonusSkill: 'ボルテージアップ',
+        singingMembers: ['rurino', 'tsuzuri']
+      },
       'Runway': {
         musicData: {
           kana: 'らんうぇい',
@@ -1746,7 +1846,7 @@ export const useMusicStore = defineStore('musicList', {
           cover: true
         },
         attribute: 'cool',
-        BHcount: 0,
+        BHcount: 63,
         level: 0,
         term: 103,
         center: 'tsuzuri',
@@ -1771,12 +1871,62 @@ export const useMusicStore = defineStore('musicList', {
           cover: true
         },
         attribute: 'smile',
-        BHcount: 0,
+        BHcount: 63,
         level: 0,
         term: 103,
         center: 'kozue',
         bonusSkill: 'ボルテージアップ',
         singingMembers: ['kaho', 'kozue']
+      },
+      'ダイヤモンドハッピー': {
+        musicData: {
+          kana: 'だいやもんどはっぴー',
+          singer: '乙宗梢・夕霧綴理・藤島慈',
+          releaseDate: {
+            year: 2013,
+            month: 6,
+            date: 26
+          },
+          numbering: 'TVアニメ「アイカツ! -アイドルカツドウ!-」 1年目後期OPテーマ',
+          BPM: {
+            original: 233,
+            inGame: 233
+          },
+          time: 94.21,
+          cover: true
+        },
+        attribute: 'smile',
+        BHcount: 89,
+        level: 0,
+        term: 103,
+        center: 'kozue',
+        bonusSkill: 'LOVEボーナス',
+        singingMembers: ['kozue', 'tsuzuri', 'megumi']
+      },
+      'lucky train!': {
+        musicData: {
+          kana: 'らっきーとれいん',
+          singer: '日野下花帆・村野さやか・大沢瑠璃乃',
+          releaseDate: {
+            year: 2015,
+            month: 10,
+            date: 28
+          },
+          numbering: 'TVアニメ「アイカツ! -アイドルカツドウ!-」 4thシーズンEDテーマ',
+          BPM: {
+            original: 147,
+            inGame: 147
+          },
+          time: 93.45,
+          cover: true
+        },
+        attribute: 'cool',
+        BHcount: 48,
+        level: 0,
+        term: 103,
+        center: 'sayaka',
+        bonusSkill: 'ビートハートアップ',
+        singingMembers: ['kaho', 'sayaka', 'rurino']
       }
     }
   }),

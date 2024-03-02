@@ -204,9 +204,9 @@
     </v-row>
   </v-container>
 
-  <dl id="CDJaketArea">
+  <div id="CDJacketArea">
     <div
-      class="CDJaketInnerArea"
+      class="CDJacketInnerArea"
       v-for="(ary, songTitle) in makeMusicList(store)"
       :key="ary"
       @click="store.showModalEvent('setLeaningLevel'); store.selectMusic(songTitle)"
@@ -214,7 +214,7 @@
       <v-tooltip location="bottom">
         <template v-slot:activator="{ props }">
           <div v-bind="props">
-            <p><img :src="require(`@/assets/CD_jacket/${store.conversion(songTitle)}.jpg`)" :alt="songTitle" class="songJacket"></p>
+            <p><img :src="require(`@/assets/CD_jacket/${store.conversion(songTitle)}.webp`)" :alt="songTitle" class="songJacket"></p>
           </div>
         </template>
         <p class="mb-2">{{ songTitle }}</p>
@@ -222,11 +222,14 @@
         楽曲マスタリーLv.：{{ ary.level }}<br>
         獲得ボーナススキル：{{ ary.bonusSkill }} × {{ Math.floor(ary.level / 10)}}
       </v-tooltip>
-      <dt class="songTitle mb-2 hamidashi">{{ songTitle }}</dt>
-      <dd>獲得ボーナススキル:<img :src="require(`@/assets/${ary.bonusSkill}.png`)" :alt="ary.bonusSkill" class="skillIcon"></dd>
+      <p class="d-flex flex-row align-center songTitle mb-2">
+        <img :src="require(`@/assets/attribute_icon/icon_${ary.attribute}.png`)" :alt="ary.attribute" class="mr-1" style="width: 20px;">
+        <span class="hamidashi">{{ songTitle }}</span>
+      </p>
+      <div>獲得ボーナススキル:<img :src="require(`@/assets/${ary.bonusSkill}.png`)" :alt="ary.bonusSkill" class="skillIcon"></div>
     </div>
     <div v-if="Object.keys(makeMusicList(store)).length === 0">見つかりませんでした…</div>
-  </dl>
+  </div>
 </template>
 
 <script setup>
@@ -328,13 +331,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#CDJaketArea {
+#CDJacketArea {
   display: flex;
   flex-wrap: wrap;
   font-size: 14px;
 }
 
-.CDJaketInnerArea {
+.CDJacketInnerArea {
   width: 150px;
   height: 100%;
   margin: 0 5px 5px 5px;
@@ -382,7 +385,7 @@ img {
 }
 
 @media screen and (max-width: 600px) {
-  .CDJaketInnerArea {
+  .CDJacketInnerArea {
     width: 47%;
     height: 100%;
     margin: 0 1.5% 5px 1.5%;
@@ -393,11 +396,6 @@ img {
     border-radius: 5px;
     padding: 3px;
     margin-bottom: 5px;
-    text-align: center;
-  }
-
-  .skillIcon {
-    width: 35px;
   }
 
   .songJacket {
