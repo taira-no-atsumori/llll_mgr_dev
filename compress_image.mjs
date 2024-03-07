@@ -44,8 +44,8 @@ function renameCommpressedImage(imagePath){
 async function commpressImage(imagePath){
   const outputPath = imagePath + ".zip";
   try{
-    const width = imageSize(imagePath)[1];
-    if(width <= 512) return false;
+    const { height, width } = imageSize(imagePath);
+    if(height > 0 && width <= 512) return false;
 
     await sharp(imagePath).resize(512).png({
       progressive: true,
