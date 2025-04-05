@@ -1,44 +1,138 @@
+<script setup>
+import { useStoreCounter } from './stores/counter';
+const store = useStoreCounter();
+store.init();
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
 <template>
-  <v-app>
-    <v-app-bar density="comfortable" color="pink">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-sm-and-up"></v-app-bar-nav-icon>
-      <v-toolbar-title class="d-none d-sm-block">リンクラ マネージャー！</v-toolbar-title>
+  <v-app :theme="store.localStorageData.siteSettings.all.darkMode">
+    <v-app-bar
+      :scroll-behavior="store.localStorageData.siteSettings.all.headerTracking"
+      density="comfortable"
+      color="pink"
+    >
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        class="hidden-sm-and-up"
+      ></v-app-bar-nav-icon>
+      <v-bottom-sheet v-model="drawer" v-if="false">
+        <template v-slot:activator="{ props }">
+          <v-icon
+            v-bind="props"
+            @click="drawer = true"
+            class="ml-3 hidden-sm-and-up"
+          >
+            mdi-menu
+          </v-icon>
+        </template>
+
+        <v-sheet class="py-2">
+          <v-list-item
+            class="px-2 pt-0 pb-2"
+            title="リンクラ マネージャー！"
+            :subtitle="`Ver. ${store.version}`"
+          ></v-list-item>
+
+          <v-divider class="pb-1"></v-divider>
+
+          <v-list-item
+            v-for="(arr, pageTitle) of pageList"
+            :key="arr"
+            :title="pageTitle.toUpperCase()"
+            :subtitle="arr.name_ja"
+            class="px-2"
+            @click="
+              pageMove(arr.name_en);
+              drawer = false;
+            "
+          >
+            <template v-slot:prepend>
+              <v-icon>{{ `mdi-${arr.icon}` }}</v-icon>
+            </template>
+          </v-list-item>
+        </v-sheet>
+      </v-bottom-sheet>
+
+      <v-toolbar-title class="d-none d-sm-block">
+        リンクラ マネージャー！<span class="text-subtitle-2">Ver.{{ store.version }}</span>
+      </v-toolbar-title>
       <v-toolbar-title class="hidden-sm-and-up">リンマネ</v-toolbar-title>
+
       <v-spacer></v-spacer>
-      <a
-        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-        class="twitter-share-button"
-        data-url="x.gd/VR5u2"
-        data-hashtags="リンマネ"
-        data-show-count="false"
-        v-if="false"
-      >
-        Share
-      </a>
-      <span class="ml-3"></span>
-      <span
-        v-for="(arr, pageTitle) of pageList"
-        :key="arr"
-      >
-        <v-tooltip location="bottom">
-          <template v-slot:activator="{ props }">
-            <v-btn
-              v-bind="props"
-              v-if="pageTitle !== 'License'"
-              class="d-none d-sm-block"
-              text
-              @click="pageMove(arr.url)"
-            >{{ pageTitle }}</v-btn>
-          </template>
-          {{ arr.name }}
-        </v-tooltip>
-      </span>
-      <v-icon
-        @click="store.showModalEvent('settings');"
-        class="mr-2"
-        v-if="false"
-      >mdi-cog</v-icon>
+
+      <ul class="d-none d-sm-flex">
+        <template v-for="(arr, pageTitle) of pageList" :key="arr">
+          <v-tooltip location="bottom" v-if="pageTitle !== 'License'">
+            <template v-slot:activator="{ props }">
+              <li style="border-right: 1px solid">
+                <v-btn
+                  v-bind="props"
+                  class="px-2"
+                  @click="pageMove(arr.name_en)"
+                >
+                  <v-icon class="mr-1">{{ `mdi-${arr.icon}` }}</v-icon>
+                  {{ pageTitle }}
+                </v-btn>
+              </li>
+            </template>
+            {{ arr.name_ja }}
+          </v-tooltip>
+        </template>
+      </ul>
+
+      <ul class="d-flex" style="height: 36px">
+        <li class="align-self-center ml-1">
+          <v-tooltip location="bottom">
+            <template v-slot:activator="{ props }">
+              <v-icon
+                v-bind="props"
+                @click="store.showModalEvent('share')"
+                class="ml-1 mr-2"
+              >
+                mdi-share-variant
+              </v-icon>
+            </template>
+            シェア
+          </v-tooltip>
+        </li>
+        <li class="d-none d-sm-flex">
+          <v-divider class="border-opacity-100" vertical></v-divider>
+        </li>
+        <li class="align-self-center ml-1">
+          <v-tooltip location="bottom">
+            <template v-slot:activator="{ props }">
+              <v-icon
+                v-bind="props"
+                @click="store.showModalEvent('backup')"
+                class="ml-1 mr-2"
+              >
+                mdi-backup-restore
+              </v-icon>
+            </template>
+            データバックアップ・リセット
+          </v-tooltip>
+        </li>
+        <li class="d-none d-sm-flex">
+          <v-divider class="border-opacity-100" vertical></v-divider>
+        </li>
+        <li class="align-self-center ml-1">
+          <v-tooltip location="bottom">
+            <template v-slot:activator="{ props }">
+              <v-icon
+                v-bind="props"
+                @click="store.showModalEvent('settings')"
+                class="ml-1 mr-2"
+              >
+                mdi-cog
+              </v-icon>
+            </template>
+            サイト設定
+          </v-tooltip>
+        </li>
+      </ul>
     </v-app-bar>
+
     <v-navigation-drawer
       v-model="drawer"
       temporary
@@ -48,90 +142,138 @@
       <v-list-item
         class="px-2 pt-0 pb-2"
         title="リンクラ マネージャー！"
-        :subtitle="`Ver. ${store.version}`"
+        :subtitle="`Ver.${store.version}`"
       ></v-list-item>
+
       <v-divider class="pb-1"></v-divider>
+
       <v-list-item
         v-for="(arr, pageTitle) of pageList"
         :key="arr"
         :title="pageTitle.toUpperCase()"
-        :subtitle="arr.name"
+        :subtitle="arr.name_ja"
         class="px-2"
-        @click="pageMove(arr.url)">
+        @click="pageMove(arr.name_en)"
+      >
+        <template v-slot:prepend>
+          <v-icon>{{ `mdi-${arr.icon}` }}</v-icon>
+        </template>
       </v-list-item>
     </v-navigation-drawer>
 
-    <v-main>
-      <router-view/>
+    <v-main class="pb-2">
+      <router-view />
     </v-main>
 
-    <Modal/>
+    <v-fab
+      v-if="false"
+      icon="mdi-arrow-up"
+      app
+      location="bottom"
+      class="mb-10"
+      @click="$vuetify.goTo(0)"
+    ></v-fab>
 
-    <v-footer color="pink">
+    <Modal />
+
+    <v-footer color="pink" class="mb-10">
       <v-row no-gutters justify="center">
-        <v-col cols="12" class="mt-2 mb-3 text-center">
+        <v-col cols="12" class="mx-2 text-center">
           <a
             v-for="(arr, pageTitle) of pageList"
             :key="arr"
             href="javascript:void(0)"
             class="mx-3 mb-2 footer-link"
-            @click="pageMove(arr.url)"
-          >{{ pageTitle.toUpperCase() }}</a>
+            @click="pageMove(arr.name_en)"
+          >
+            {{ pageTitle.toUpperCase() }}
+          </a>
         </v-col>
         <v-col cols="12" class="text-center">
-          © 2023 - {{ new Date().getFullYear() }} <strong>taira no atsumori</strong>
+          © 2023 - {{ new Date().getFullYear() }}
+          <strong>taira no atsumori</strong>
         </v-col>
       </v-row>
     </v-footer>
+
+    <v-bottom-navigation
+      bg-color="pink"
+      density="compact"
+      class="d-flex flex-row align-center"
+    >
+      ご意見・ご要望・バグ報告は「
+      <a
+        href="https://odaibako.net/u/taira_no_atsumori"
+        target="_blank"
+        class="text-white font-weight-bold"
+      >
+        お題箱
+      </a>」まで
+    </v-bottom-navigation>
   </v-app>
 </template>
 
 <script>
-// import './reset.css'
-import Modal from './components/ModalArea.vue'
+import Modal from './components/ModalArea.vue';
 
 export default {
   name: 'App',
   components: {
-    Modal
+    Modal,
   },
   data() {
     return {
-      windowSize: {
-        w: 0,
-        h: 0
-      },
       drawer: false,
+      siteName: 'リンクラ マネージャー！(リンマネ)',
       pageList: {
         'Home': {
-          url: '/llll_mgr_dev/',
-          name: 'ホーム'
+          name_en: 'Home',
+          name_ja: 'ホーム',
+          url: '/llllMgr/',
+          icon: 'home',
         },
+        /*'WithStar Mgr': {
+          name_en: 'WithStarMgr',
+          name_ja: '獲得WithStar計算ツール',
+          url: 'withStarMgr',
+          icon: 'star'
+        },*/
         'Simulation': {
+          name_en: 'Simulation',
+          name_ja: '編成シミュレーション',
           url: 'simulation',
-          name: '獲得グランプリPt.計算ツール'
+          icon: 'calculator'
         },
         'Card List': {
+          name_en: 'CardList',
+          name_ja: 'カード一覧 / 所持カード設定',
           url: 'cardlist',
-          name: 'カード一覧 / 所持カード設定'
+          icon: 'cards',
         },
         'Music List': {
+          name_en: 'MusicList',
+          name_ja: '楽曲一覧 / 楽曲マスタリーレベル設定',
           url: 'musiclist',
-          name: '楽曲一覧 / 楽曲マスタリーレベル設定'
+          icon: 'music',
         },
         'Item List': {
+          name_en: 'ItemList',
+          name_ja: 'スキルアップ素材獲得ステージリスト',
           url: 'Itemlist',
-          name: 'スキルアップ素材獲得ステージリスト'
+          icon: 'book',
         },
         'License': {
+          name_en: 'License',
+          name_ja: 'ライセンス',
           url: 'license',
-          name: 'ライセンス'
-        }
-      }
-    }
+          icon: 'text-box-outline',
+        },
+      },
+    };
   },
   created() {
     const userAgent = window.navigator.userAgent.toLowerCase();
+
     if (userAgent.indexOf('msie') !== -1 || userAgent.indexOf('trident') !== -1) {
       alert('本サイトはInternet Explorerに対応しておりません。\n別のブラウザから閲覧することを推奨します。');
     }
@@ -139,34 +281,70 @@ export default {
     if (localStorage.inflow !== undefined) {
       const pageName = localStorage.inflow;
       localStorage.removeItem('inflow');
-      this.pageMove(`/llll_mgr_dev/${pageName}`);
+
+      for (const listName in this.pageList) {
+        if (this.pageList[listName].url.toLowerCase() === pageName.toLowerCase()) {
+          this.pageMove(this.pageList[listName].name_en);
+          return;
+        }
+      }
+
+      this.pageMove(this.pageList.Home.name_en);
     }
   },
-  mounted() {
-    this.onResize();
-  },
+  mounted() {},
   methods: {
+    /**
+     * ページ移動
+     *
+     * @param movePageName 移動先ページ名
+     */
     pageMove(movePageName) {
-      this.$router.replace(movePageName);
+      // this.$router.replace(movePageName);
+      this.$router.replace({
+        name: movePageName,
+        // query: {
+        //   page: 5
+        // }
+      });
+      window.scrollTo(0, 0);
     },
-    onResize () {
-      this.windowSize = {
-        w: window.innerWidth,
-        h: window.innerHeight
-      };
-    }
-  }
+    /**
+     * ページタイトル変更
+     *
+     * @param to タイトル
+     */
+    pageTitle(to) {
+      document.title = `${to.meta.title}${this.siteName}`;
+    },
+    /**
+     * トップへ移動
+     */
+    goToTop() {
+      this.$vuetify.goTo(0);
+    },
+  },
+  watch: {
+    $route(to) {
+      this.pageTitle(to);
+    },
+  },
+};
+</script>
+
+<style scoped>
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
 }
-</script>
-
-<script setup>
-  import { useStoreCounter } from './stores/counter';
-  const store = useStoreCounter();
-  //store.getLocalStorage();
-  store.init();
-</script>
-
-<style lang="scss" scoped>
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
 .footer-link {
   display: inline-block;
   color: #fff;
@@ -174,18 +352,25 @@ export default {
 </style>
 
 <style lang="scss">
+.v-list-item__spacer {
+  width: 12px !important;
+}
+
 /* メンバーイメージカラー */
-$kaho: #F8B500;
-$sayaka: #5383C3;
-$rurino: #E7609E;
-$kozue: #68BE8D;
-$tsuzuri: #BA2636;
-$megumi: #C8C2C6;
+$kaho: #f8b500;
+$sayaka: #5383c3;
+$rurino: #e7609e;
+$kozue: #68be8d;
+$tsuzuri: #ba2636;
+$megumi: #c8c2c6;
+$ginko: #a2d7dd;
+$kosuzu: #fad664;
+$hime: #9c8de2;
 
 /* ムードカラー */
-$happy: #EF8DC8;
-$neutral: #A9FCC7;
-$melow: #A1BAFA;
+$happy: #ef8dc8;
+$neutral: #a9fcc7;
+$melow: #a1bafa;
 
 /* コンテンツカラー */
 $series: #ff1493;
@@ -204,6 +389,10 @@ a {
   }
 }
 
+ul {
+  list-style-type: none;
+}
+
 .pc {
   display: block;
 }
@@ -212,87 +401,90 @@ a {
   display: none;
 }
 
-.pb10 {
-  padding-bottom: 10px;
-}
-
-.mr5 {
-  margin-right: 5px;
-}
-
-.mr10 {
-  margin-right: 10px;
-}
-
-.ml5 {
-  margin-left: 5px;
-}
-
-.ml10 {
-  margin-left: 10px;
-}
-
-.mb5 {
-  margin-bottom: 5px;
-}
-
-.mb10 {
-  margin-bottom: 10px;
-}
-
 main {
   width: 1600px;
   margin: 0 auto;
 }
 
-.charactorArea {
+.subtitle {
+  color: #fff;
+  background: #e5762c;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+.memberArea {
   border: 3px solid;
 
-  &[data-charactorname="kaho"] {
+  &[data-member_name='kaho'] {
     border-color: $kaho;
 
-    .charactorDetailArea {
+    .characterDetailArea {
       background-color: rgba($color: $kaho, $alpha: 0.75);
     }
   }
 
-  &[data-charactorname="sayaka"] {
+  &[data-member_name='sayaka'] {
     border-color: $sayaka;
 
-    .charactorDetailArea {
+    .characterDetailArea {
       background-color: rgba($color: $sayaka, $alpha: 0.75);
     }
   }
-  
-  &[data-charactorname="rurino"] {
+
+  &[data-member_name='rurino'] {
     border-color: $rurino;
 
-    .charactorDetailArea {
+    .characterDetailArea {
       background-color: rgba($color: $rurino, $alpha: 0.75);
     }
   }
-  
-  &[data-charactorname="kozue"] {
+
+  &[data-member_name='kozue'] {
     border-color: $kozue;
 
-    .charactorDetailArea {
+    .characterDetailArea {
       background-color: rgba($color: $kozue, $alpha: 0.75);
     }
   }
-  
-  &[data-charactorname="tsuzuri"] {
+
+  &[data-member_name='tsuzuri'] {
     border-color: $tsuzuri;
 
-    .charactorDetailArea {
+    .characterDetailArea {
       background-color: rgba($color: $tsuzuri, $alpha: 0.75);
     }
   }
-  
-  &[data-charactorname="megumi"] {
+
+  &[data-member_name='megumi'] {
     border-color: $megumi;
 
-    .charactorDetailArea {
+    .characterDetailArea {
       background-color: rgba($color: $megumi, $alpha: 0.75);
+    }
+  }
+
+  &[data-member_name='ginko'] {
+    border-color: $ginko;
+
+    .characterDetailArea {
+      background-color: rgba($color: $ginko, $alpha: 0.75);
+    }
+  }
+
+  &[data-member_name='kosuzu'] {
+    border-color: $kosuzu;
+
+    .characterDetailArea {
+      background-color: rgba($color: $kosuzu, $alpha: 0.75);
+    }
+  }
+
+  &[data-member_name='hime'] {
+    border-color: $hime;
+
+    .characterDetailArea {
+      background-color: rgba($color: $hime, $alpha: 0.75);
     }
   }
 }
@@ -336,7 +528,7 @@ main {
       border-right: 1px solid #000;
     }
 
-    &:not([data-selected="true"]) {
+    &:not([data-selected='true']) {
       background: #999;
       border-bottom: 1px solid #000;
     }
@@ -347,6 +539,18 @@ main {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.v-expansion-panel-title {
+  padding: 0 16px;
+}
+
+.v-expansion-panel-text__wrapper {
+  padding: 16px;
+}
+
+.v-label {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 600px) {

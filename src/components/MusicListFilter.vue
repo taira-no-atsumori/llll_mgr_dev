@@ -8,27 +8,34 @@
           clearable
           chips
           label="センター"
-          :items="memberNameList"
+          :items="store.memberNameList"
           variant="outlined"
           color="pink"
         >
           <!--<template v-slot:chip="{ item, index }">
             <v-chip
-              :color="store.memberColor[Object.keys(store.charactorName)[index]]"
+              :color="store.memberColor[Object.keys(store.memberName)[index]]"
             >
               <v-avatar left>
-                <v-img :src="require(`@/assets/member_icon/icon_SD_${Object.keys(store.charactorName)[index]}.png`)"></v-img>
+                <v-img :src="store.getImagePath('member_icon', `icon_SD_${Object.keys(store.memberName)[index]}`)"></v-img>
               </v-avatar>
               {{ item.title }}
             </v-chip>
           </template>-->
           <template v-slot:item="{ item, index }">
-            <v-list-item :title="item.title" @click="selectCenter(item.title)">
+            <v-list-item
+              :title="item.title"
+              @click="selectCenter(item.title)"
+            >
               <template v-slot:prepend>
-                <v-img
-                  :src="require(`@/assets/member_icon/icon_SD_${Object.keys(store.charactorName)[index]}.png`)"
-                  class="icon member"
-                ></v-img>
+                <template
+                  v-if="!store.isOtherMember(item.title)"
+                >
+                  <v-img
+                    :src="store.getImagePath('member_icon', `icon_SD_${Object.keys(store.memberName)[index]}`)"
+                    class="icon member"
+                  ></v-img>
+                </template>
               </template>
             </v-list-item>
           </template>
@@ -40,7 +47,7 @@
         md="3"
         lg="2"
         xl="2"
-        v-for="(name_ja, name_en) in store.charactorName"
+        v-for="(name_ja, name_en) in store.memberName"
         :key="name_ja"
         class="pa-0"
       >
@@ -51,7 +58,7 @@
           >
             <template v-slot:label>
               <v-img
-                :src="require(`@/assets/member_icon/icon_SD_${name_en}.png`)"
+                :src="store.getImagePath('member_icon', `icon_SD_${name_en}`)"
                 class="icon member"
               ></v-img>{{ name_ja.first }} {{ name_ja.last }}
             </template>
@@ -63,12 +70,12 @@
 </template>
 
 <script setup>
-  import { useStoreCounter } from '../stores/counter';
+  import { useStoreCounter } from '@/stores/counter';
   const store = useStoreCounter();
   const memberNameList = [];
 
-  for (const memberName in store.charactorName) {
-    memberNameList.push(`${store.charactorName[memberName].first} ${store.charactorName[memberName].last}`);
+  for (const memberName in store.memberName) {
+    memberNameList.push(`${store.memberName[memberName].first} ${store.memberName[memberName].last}`);
   }
 </script>
 
