@@ -1697,10 +1697,17 @@ export const useStoreCounter = defineStore('store', {
       return images[filePath]?.default || '';
     },
     async fetchFiles() {
-      const ACCESS_TOKEN = import.meta.env.VITE_DROPBOX_TOKEN;
+      // const ACCESS_TOKEN = import.meta.env.VITE_DROPBOX_TOKEN;
+      const APP_KEY = import.meta.env.VITE_DROPBOX_APP_KEY;
+      const ACCESS_APP_SECRET = import.meta.env.VITE_DROPBOX_APP_SECRET;
+      const OATH2_REFRESH_TOKEN = import.meta.env.VITE_DROPBOX_OATH2_REFRESH_TOKEN;
 
       try {
-        const dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
+        const dbx = new Dropbox({
+          clientId: APP_KEY,
+          clientSecret: ACCESS_APP_SECRET,
+          refreshToken: OATH2_REFRESH_TOKEN,
+        });
         const response = await dbx.filesListFolder({ path: '/CD_jacket' });
         const files = response.result.entries;
         const imageMimeType = ['image/webp'];
