@@ -7,7 +7,7 @@ import { Dropbox } from 'dropbox';
 
 export const useStoreCounter = defineStore('store', {
   state: () => ({
-    version: 'ζ.13(アーリーアクセス)',
+    version: 'ζ.14(アーリーアクセス)',
     dialog: false,
     showModalName: false,
     updateData: false,
