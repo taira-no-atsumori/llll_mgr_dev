@@ -417,10 +417,17 @@
           "
         >
           <v-img
-            :lazy-src="store.getImagePath('CD_jacket', store.conversion(songTitle))"
-            :src="store.getImagePath('CD_jacket', store.conversion(songTitle))"
+            v-if="store.images?.find((x) => x.name === store.conversion(songTitle))?.url"
+            :src="store.images.find((x) => x.name === store.conversion(songTitle))?.url"
             :alt="songTitle"
           ></v-img>
+          <v-skeleton-loader
+            v-else
+            type="image"
+            class="d-flex justify-center align-center"
+            :width="'100%'"
+            :height="'150px'"
+          ></v-skeleton-loader>
           <v-card-title class="text-subtitle-2 text-center px-2 pt-1 pb-0">{{ songTitle }}</v-card-title>
           <v-divider class="mb-1 border-opacity-25"></v-divider>
           <v-card-text class="pt-0 px-1 pb-1">
@@ -523,6 +530,7 @@
 import { useStoreCounter } from '../stores/counter';
 const store = useStoreCounter();
 store.setSupportSkillLevel();
+store.fetchFiles();
 </script>
 
 <script>
