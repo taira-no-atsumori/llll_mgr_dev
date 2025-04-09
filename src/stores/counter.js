@@ -1697,7 +1697,7 @@ export const useStoreCounter = defineStore('store', {
       return images[filePath]?.default || '';
     },
     async fetchFiles() {
-      const ACCESS_TOKEN = import.meta.env.DROPBOX_TOKEN;
+      const ACCESS_TOKEN = import.meta.env.VITE_DROPBOX_TOKEN;
 
       try {
         const dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
