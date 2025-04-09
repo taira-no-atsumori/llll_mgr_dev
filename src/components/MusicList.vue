@@ -416,13 +416,12 @@
             store.selectMusic(songTitle);
           "
         >
-          <v-img
+          <!-- <v-img
             v-if="store.images?.find((x) => x.name === store.conversion(songTitle))?.url"
             :src="store.images.find((x) => x.name === store.conversion(songTitle))?.url"
             :alt="songTitle"
-          ></v-img>
+          ></v-img> -->
           <v-skeleton-loader
-            v-else
             type="image"
             class="d-flex justify-center align-center"
             :width="'100%'"
