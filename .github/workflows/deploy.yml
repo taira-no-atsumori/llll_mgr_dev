@@ -22,7 +22,7 @@ jobs:
 
       - name: Build project
         env:
-          VITE_DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+          DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
         run: npm run build
 
       - name: Deploy to GitHub Pages
