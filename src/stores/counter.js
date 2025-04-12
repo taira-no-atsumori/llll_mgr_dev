@@ -1750,6 +1750,7 @@ export const useStoreCounter = defineStore('store', {
         console.log('取得した画像データ:', this.imageLoaded);
       } catch (error) {
         console.error("Error fetching files:", error.error || error.message);
+        location.reload();
       } finally {
         this.loading = false;
       }
