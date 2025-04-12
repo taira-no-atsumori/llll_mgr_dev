@@ -11,6 +11,7 @@ export const useStoreCounter = defineStore('store', {
     version: 'ζ.14(アーリーアクセス)',
     loading: true,
     dialog: false,
+    dialogError: false,
     showModalName: false,
     updateData: false,
     selectCharacter: '',
@@ -1701,7 +1702,6 @@ export const useStoreCounter = defineStore('store', {
       return images[filePath]?.default || '';
     },
     async fetchFiles() {
-      // const ACCESS_TOKEN = import.meta.env.VITE_DROPBOX_TOKEN;
       const APP_KEY = import.meta.env.VITE_DROPBOX_APP_KEY;
       const ACCESS_APP_SECRET = import.meta.env.VITE_DROPBOX_APP_SECRET;
       const OATH2_REFRESH_TOKEN = import.meta.env.VITE_DROPBOX_OATH2_REFRESH_TOKEN;
@@ -1724,7 +1724,7 @@ export const useStoreCounter = defineStore('store', {
             file['.tag'] === 'file' &&
             imageMimeType.some((type) => this.conversion(file.name).endsWith(type.split('/')[1]))
         );
-        console.log('取得したファイルデータ:', imageFiles);
+        // console.log('取得したファイルデータ:', imageFiles);
 
         // 一時リンクを取得し、画像データを構築
         const imageUrls = await Promise.all(
@@ -1749,18 +1749,24 @@ export const useStoreCounter = defineStore('store', {
         imageUrls.forEach((image) => {
           this.imageLoaded[this.conversion(image.name)] = false; // 初期状態は false
         });
-    
-        console.log('取得した画像データ:', this.imageLoaded);
-      } catch (error) {
-        console.error("Error fetching files:", error.error || error.message);
-      } finally {
+
         this.loading = false;
+        // console.log('取得した画像データ:', this.imageLoaded);
+      } catch (error) {
+        this.dialogError = true;
+        // console.error("Error fetching files:", error.error || error.message);
       }
     },
     /** 
      * バックオフ処理を実装
+     * 
+     * @param {Function} fetchFunction - リトライ対象の関数
+     * @returns {Promise} - リトライ後の結果
      */ 
-    async fetchWithBackoff(fetchFunction, retries = 5, delay = 1000) {
+    async fetchWithBackoff(fetchFunction) {
+      const retries = 5;
+      const delay = 5000;
+
       for (let i = 0; i < retries; i++) {
         try {
           return await fetchFunction();

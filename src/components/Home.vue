@@ -19,6 +19,7 @@
                 v-if="event.type === 'other'"
                 class="white--text align-end text-center"
                 :src="store.getImagePath('event_information', event.img)"
+                :aspect-ratio="1.7778"
                 eager
               ></v-img>
               <a

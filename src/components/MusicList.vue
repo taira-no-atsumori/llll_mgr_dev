@@ -398,7 +398,7 @@
 
     <ul id="CDJacketArea">
       <li
-        v-if="Object.keys(makeMusicList(store)).length === 0"
+        v-if="Object.keys(makeMusicList(store)).length === 0 || store.images.length === 0"
         class="w-100"
       >
         見つかりませんでした…

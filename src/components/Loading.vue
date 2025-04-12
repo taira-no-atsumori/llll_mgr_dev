@@ -5,7 +5,29 @@
     persistent
   >
     <v-sheet class="pa-3">
-      <v-progress-linear color="pink" indeterminate></v-progress-linear>
+      <p class="mb-3">Now Loading…</p>
+      <v-progress-linear
+        v-if="!store.dialogError"
+        color="pink"
+        indeterminate
+      ></v-progress-linear>
+      <div v-else>
+        <v-alert
+          type="error"
+        >
+          データの取得に失敗しました。<br />
+          時間を置いてからリロードしてください。
+        </v-alert>
+        <div class="mt-2 text-center">
+          <v-btn
+            prepend-icon="mdi-close"
+            :theme="store.localStorageData.siteSettings.all.darkMode"
+            @click="store.loading = false"
+          >
+            CLOSE
+          </v-btn>
+        </div>
+      </div>
     </v-sheet>
   </v-dialog>
 </template>
