@@ -1712,7 +1712,10 @@ export const useStoreCounter = defineStore('store', {
           clientSecret: ACCESS_APP_SECRET,
           refreshToken: OATH2_REFRESH_TOKEN,
         });
-        const response = await dbx.filesListFolder({ path: '/CD_jacket' });
+        // Dropboxフォルダ内のファイルを取得
+        const response = await this.fetchWithBackoff(async () => {
+          return await dbx.filesListFolder({ path: '/CD_jacket' });
+        });
         const files = response.result.entries;
         const imageMimeType = ['image/webp'];
 
@@ -1750,7 +1753,6 @@ export const useStoreCounter = defineStore('store', {
         console.log('取得した画像データ:', this.imageLoaded);
       } catch (error) {
         console.error("Error fetching files:", error.error || error.message);
-        location.reload();
       } finally {
         this.loading = false;
       }
