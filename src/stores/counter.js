@@ -4,10 +4,12 @@ import { useSkillStore } from './skillList';
 import { useMusicStore } from './musicList';
 import Dexie from 'dexie';
 import { Dropbox } from 'dropbox';
+import { reactive } from 'vue';
 
 export const useStoreCounter = defineStore('store', {
   state: () => ({
     version: 'ζ.14(アーリーアクセス)',
+    loading: true,
     dialog: false,
     showModalName: false,
     updateData: false,
@@ -480,7 +482,8 @@ export const useStoreCounter = defineStore('store', {
       w: 0,
       h: 0,
     },
-    images: [],
+    images: reactive([]),
+    imageLoaded: reactive({}),
   }),
   getters: {
     defaultCard() {
@@ -969,6 +972,7 @@ export const useStoreCounter = defineStore('store', {
       this.card = JSON.parse(JSON.stringify(this.defaultCard));
       this.getLocalStorage();
       this.setSupportSkillLevel();
+      this.fetchFiles();
       //this.makeNewDeck();
       // console.log(window.location.search.replace('?', ''));
       // if (window.location.search.replace('?', '') !== '') {
@@ -1715,28 +1719,70 @@ export const useStoreCounter = defineStore('store', {
         const imageFiles = files.filter(
           (file) =>
             file['.tag'] === 'file' &&
-            imageMimeType.some((type) => file.name.endsWith(type.split('/')[1]))
+            imageMimeType.some((type) => this.conversion(file.name).endsWith(type.split('/')[1]))
         );
         console.log('取得したファイルデータ:', imageFiles);
 
+        // 一時リンクを取得し、画像データを構築
         const imageUrls = await Promise.all(
           imageFiles.map(async (file) => {
-            const linkResponse = await dbx.filesGetTemporaryLink({
-              path: file.path_lower,
+            return this.fetchWithBackoff(async () => {
+              const linkResponse = await dbx.filesGetTemporaryLink({
+                path: file.path_lower,
+              });
+              return {
+                id: file.id,
+                name: this.conversion(file.name.split('.webp')[0]),
+                url: linkResponse.result.link,
+              };
             });
-            return {
-              id: file.id,
-              name: file.name.split('.webp')[0],
-              url: linkResponse.result.link,
-            };
           })
         );
-
+    
+        // 画像データを状態に保存
         this.images = imageUrls;
-        console.log('取得した画像データ:', imageUrls);
+
+        // 画像の読み込み状態を初期化
+        imageUrls.forEach((image) => {
+          this.imageLoaded[this.conversion(image.name)] = false; // 初期状態は false
+        });
+    
+        console.log('取得した画像データ:', this.imageLoaded);
       } catch (error) {
         console.error("Error fetching files:", error.error || error.message);
+      } finally {
+        this.loading = false;
       }
-    }
+    },
+    /** 
+     * バックオフ処理を実装
+     */ 
+    async fetchWithBackoff(fetchFunction, retries = 5, delay = 1000) {
+      for (let i = 0; i < retries; i++) {
+        try {
+          return await fetchFunction();
+        } catch (error) {
+          if (error.status === 429 && i < retries - 1) {
+            // レート制限エラーの場合、待機してリトライ
+            const waitTime = delay * Math.pow(2, i); // エクスポネンシャルバックオフ
+            console.warn(`Rate limit hit. Retrying in ${waitTime / 1000} seconds...`);
+            await new Promise((resolve) => setTimeout(resolve, waitTime));
+          } else {
+            // 他のエラー、またはリトライ回数を超えた場合はエラーをスロー
+            throw error;
+          }
+        }
+      }
+      throw new Error('Failed to fetch after multiple retries.');
+    },
+    markImageLoaded(imageKey) {
+      // 画像が読み込まれた際にフラグを更新
+      this.imageLoaded[imageKey] = true;
+    },
+    markImageError(imageKey) {
+      // 画像の読み込みに失敗した際の処理
+      console.error(`Failed to load image: ${imageKey}`);
+      this.imageLoaded[imageKey] = false;
+    },
   },
 });

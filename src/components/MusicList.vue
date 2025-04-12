@@ -416,18 +416,23 @@
             store.selectMusic(songTitle);
           "
         >
-          <v-img
-            v-if="store.images?.find((x) => x.name === store.conversion(songTitle))?.url"
-            :src="store.images.find((x) => x.name === store.conversion(songTitle))?.url"
-            :alt="songTitle"
-          ></v-img>
           <v-skeleton-loader
-            v-else
+            v-if="!store.images.find((x) => x.name === store.conversion(songTitle))"
             type="image"
             class="d-flex justify-center align-center"
             :width="'100%'"
             :height="'150px'"
           ></v-skeleton-loader>
+          <v-img
+            v-else
+            :lazy-src="store.getImagePath('CD_Jacket', 'NO IMAGE')"
+            :src="store.images.find((x) => x.name === store.conversion(songTitle)).url"
+            :alt="store.conversion(songTitle)"
+            @load="store.markImageLoaded(store.conversion(songTitle))"
+            @error="store.markImageError(store.conversion(songTitle))"
+            :aspect-ratio="1"
+            eager
+          ></v-img>
           <v-card-title class="text-subtitle-2 text-center px-2 pt-1 pb-0">{{ songTitle }}</v-card-title>
           <v-divider class="mb-1 border-opacity-25"></v-divider>
           <v-card-text class="pt-0 px-1 pb-1">
@@ -437,6 +442,7 @@
                   :src="store.getImagePath('bonusSkill_icon', ary.bonusSkill)"
                   :alt="ary.bonusSkill"
                   class="skillIcon"
+                  eager
                 ></v-img>
               </li>
               <li class="mr-1">
@@ -444,6 +450,7 @@
                   :src="store.getImagePath('attribute_icon', `icon_${ary.attribute}`)"
                   :alt="ary.attribute"
                   class="skillIcon"
+                  eager
                 ></v-img>
               </li>
               <li class="mr-1">
@@ -451,6 +458,7 @@
                   :src="store.getImagePath('member_icon', `icon_SD_${ary.center}`)"
                   :alt="ary.center"
                   class="skillIcon"
+                  eager
                 ></v-img>
               </li>
               <li class="align-self-center text-caption">MLv.{{ store.musicList[songTitle].level }}</li>
@@ -471,10 +479,22 @@
                 store.selectMusic(songTitle);
               "
             >
+              <v-skeleton-loader
+                v-if="!store.images.find((x) => x.name === store.conversion(songTitle))"
+                type="image"
+                class="d-flex justify-center align-center"
+                :width="'100%'"
+                :height="'150px'"
+              ></v-skeleton-loader>
               <v-img
-                :lazy-src="store.getImagePath('CD_jacket', store.conversion(songTitle))"
-                :src="store.getImagePath('CD_jacket', store.conversion(songTitle))"
-                :alt="songTitle"
+                v-else
+                :lazy-src="store.getImagePath('CD_Jacket', 'NO IMAGE')"
+                :src="store.images.find((x) => x.name === store.conversion(songTitle)).url"
+                :alt="store.conversion(songTitle)"
+                @load="store.markImageLoaded(store.conversion(songTitle))"
+                @error="store.markImageError(store.conversion(songTitle))"
+                :aspect-ratio="1"
+                eager
               ></v-img>
               <v-card-title class="text-subtitle-2 text-center px-2 pt-1 pb-0">{{ songTitle }}</v-card-title>
               <v-divider class="mb-1 border-opacity-25"></v-divider>
@@ -485,6 +505,7 @@
                       :src="store.getImagePath('bonusSkill_icon', ary.bonusSkill)"
                       :alt="ary.bonusSkill"
                       class="skillIcon"
+                      eager
                     ></v-img>
                   </li>
                   <li class="mr-1">
@@ -492,6 +513,7 @@
                       :src="store.getImagePath('attribute_icon', `icon_${ary.attribute}`)"
                       :alt="ary.attribute"
                       class="skillIcon"
+                      eager
                     ></v-img>
                   </li>
                   <li class="mr-1">
@@ -499,6 +521,7 @@
                       :src="store.getImagePath('member_icon', `icon_SD_${ary.center}`)"
                       :alt="ary.center"
                       class="skillIcon"
+                      eager
                     ></v-img>
                   </li>
                   <li
@@ -530,7 +553,6 @@
 import { useStoreCounter } from '../stores/counter';
 const store = useStoreCounter();
 store.setSupportSkillLevel();
-store.fetchFiles();
 </script>
 
 <script>
@@ -603,6 +625,13 @@ export default {
     this.onResize();
   },
   methods: {
+    onImageLoad(store, imageKey) {
+      store.imageLoaded[image.name] = true;
+    },
+    onImageError(store, imageKey) {
+      console.error(`Failed to load image: ${imageKey}`);
+      store.imageLoaded[imageKey] = false;
+    },
     selectCenter(store, select) {
       this.center_en = select;
       this.center_ja = select === null ? null : store.makeFullName(select);

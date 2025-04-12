@@ -1,10 +1,3 @@
-<script setup>
-import { useStoreCounter } from './stores/counter';
-const store = useStoreCounter();
-store.init();
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <v-app :theme="store.localStorageData.siteSettings.all.darkMode">
     <v-app-bar
@@ -174,6 +167,7 @@ import HelloWorld from './components/HelloWorld.vue'
       @click="$vuetify.goTo(0)"
     ></v-fab>
 
+    <Loading />
     <Modal />
 
     <v-footer color="pink" class="mb-10">
@@ -213,13 +207,21 @@ import HelloWorld from './components/HelloWorld.vue'
   </v-app>
 </template>
 
+<script setup>
+import { useStoreCounter } from './stores/counter';
+const store = useStoreCounter();
+store.init();
+</script>
+
 <script>
 import Modal from './components/ModalArea.vue';
+import Loading from './components/Loading.vue';
 
 export default {
   name: 'App',
   components: {
     Modal,
+    Loading,
   },
   data() {
     return {
