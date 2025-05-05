@@ -1,8 +1,10 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vuetify from 'vite-plugin-vuetify';
-import path from 'path';
+import * as path from 'path';
+import { join } from 'path';
 import { webcrypto } from 'crypto';
+import { copyFileSync } from 'fs';
 
 global.crypto = webcrypto;
 
@@ -23,6 +25,15 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       vuetify(),
+      {
+        name: 'copy-txt-files',
+        buildEnd() {
+          const sourceDir = './';
+          const targetDir = './docs';
+          const file = 'version.txt';
+          copyFileSync(join(sourceDir, file), join(targetDir, file));
+        }
+      }
     ],
     server: {
       host: '0.0.0.0',
@@ -30,6 +41,7 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'docs',
+      emptyOutDir: false,
       rollupOptions: {
         output: {
           entryFileNames: 'js/[name].js',
