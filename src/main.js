@@ -22,7 +22,7 @@ app.use(router);
 
 app.use(VueGtag, {
   property: {
-    id: 'G-ZXJJX9H0JB',
+    id: import.meta.env.VITE_GTAG_ID,
   },
 }, router);
 

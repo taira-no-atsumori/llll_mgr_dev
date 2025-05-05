@@ -231,7 +231,7 @@ export default {
         'Home': {
           name_en: 'Home',
           name_ja: 'ホーム',
-          url: '/llllMgr/',
+          url: `/${import.meta.env.VITE_PATHNAME}/`,
           icon: 'home',
         },
         /*'WithStar Mgr': {
