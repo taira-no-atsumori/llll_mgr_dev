@@ -1033,6 +1033,7 @@ export const useStoreCounter = defineStore('store', {
       this.card = JSON.parse(JSON.stringify(this.defaultCard));
       this.getLocalStorage();
       this.setSupportSkillLevel();
+      this.getVersion();
       // this.fetchFiles();
       // this.makeNewDeck();
       // console.log(window.location.search.replace('?', ''));
@@ -1900,6 +1901,15 @@ export const useStoreCounter = defineStore('store', {
     markImageError(imageKey) {
       console.error(`Failed to load image: ${ imageKey }`);
       this.imageLoaded[imageKey] = false;
+    },
+    async getVersion() {
+      try {
+        const response = await fetch('./version.txt');
+        this.version = await response.text();
+      } catch (error) {
+        console.error('バージョン情報の取得に失敗しました:', error);
+        this.version = '不明';
+      }
     }
   }
 });
