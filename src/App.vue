@@ -24,7 +24,7 @@
           <v-list-item
             class="px-2 pt-0 pb-2"
             title="リンクラ マネージャー！"
-            :subtitle="`Ver. ${store.version}`"
+            :subtitle="`Ver. ${version}`"
           ></v-list-item>
 
           <v-divider class="pb-1"></v-divider>
@@ -48,7 +48,7 @@
       </v-bottom-sheet>
 
       <v-toolbar-title class="d-none d-sm-block">
-        リンクラ マネージャー！<span class="text-subtitle-2">Ver.{{ store.version }}</span>
+        リンクラ マネージャー！<span class="text-subtitle-2">Ver.{{ version }}</span>
       </v-toolbar-title>
       <v-toolbar-title class="hidden-sm-and-up">リンマネ</v-toolbar-title>
 
@@ -135,7 +135,7 @@
       <v-list-item
         class="px-2 pt-0 pb-2"
         title="リンクラ マネージャー！"
-        :subtitle="`Ver.${store.version}`"
+        :subtitle="`Ver.${version}`"
       ></v-list-item>
 
       <v-divider class="pb-1"></v-divider>
@@ -209,21 +209,21 @@
 
 <script setup>
 import { useStoreCounter } from './stores/counter';
-// import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const store = useStoreCounter();
 store.init();
 
-// const version = ref(null);
+const version = ref(null);
 
-// onMounted(async () => {
-//   try {
-//     const response = await fetch('./version.txt');
-//     version.value = await response.text();
-//   } catch (error) {
-//     console.error('バージョン情報の取得に失敗しました:', error);
-//   }
-// });
+onMounted(async () => {
+  try {
+    const response = await fetch('./version.txt');
+    version.value = await response.text();
+  } catch (error) {
+    console.error('バージョン情報の取得に失敗しました:', error);
+  }
+});
 </script>
 
 <script>
