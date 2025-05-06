@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main  # リリース対象ブランチ
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v3
+
+      - name: Node.js セットアップ
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: 依存関係のインストール
+        run: npm install
+
+      - name: semantic-release を実行
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
