@@ -24,8 +24,12 @@
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
     "@vitejs/plugin-vue": "^5.2.1",
     "sass-embedded": "^1.86.3",
+    "semantic-release": "^22.0.12",
     "vite": "^6.2.0"
   }
 }
