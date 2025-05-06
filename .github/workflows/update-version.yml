@@ -20,4 +20,5 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add version.txt
           git commit -m "Update version to ζ.$NEXT_VERSION(アーリーアクセス)"
+          git pull --rebase origin main
           git push
