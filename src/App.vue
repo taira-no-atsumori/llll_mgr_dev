@@ -209,21 +209,22 @@
 
 <script setup>
 import { useStoreCounter } from './stores/counter';
-import { ref, onMounted } from 'vue';
+// import { ref, onMounted } from 'vue';
 
 const store = useStoreCounter();
 store.init();
+const version = __APP_VERSION__;
 
-const version = ref(null);
+// const version = ref(null);
 
-onMounted(async () => {
-  try {
-    const response = await fetch('./version.txt');
-    version.value = await response.text();
-  } catch (error) {
-    console.error('バージョン情報の取得に失敗しました:', error);
-  }
-});
+// onMounted(async () => {
+//   try {
+//     const response = await fetch('./version.txt');
+//     version.value = await response.text();
+//   } catch (error) {
+//     console.error('バージョン情報の取得に失敗しました:', error);
+//   }
+// });
 </script>
 
 <script>

@@ -4,7 +4,9 @@ import vuetify from 'vite-plugin-vuetify';
 import * as path from 'path';
 import { join } from 'path';
 import { webcrypto } from 'crypto';
-import { copyFileSync } from 'fs';
+import { copyFileSync, readFileSync } from 'fs';
+
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf-8'));
 
 global.crypto = webcrypto;
 
@@ -14,6 +16,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       'import.meta.env': env,
+      __APP_VERSION__: JSON.stringify(packageJson.version),
     },
     base: `/${env.VITE_PATHNAME}/`,
     assetsDir: './',
