@@ -1,20 +1,20 @@
 // eslint.config.js
-import js from "@eslint/js";
-import pluginVue from "eslint-plugin-vue";
-import * as parserVue from "vue-eslint-parser";
-import tsParser from "@typescript-eslint/parser";
-import pluginTs from "@typescript-eslint/eslint-plugin";
-import globals from "globals";
+import js from '@eslint/js';
+import pluginVue from 'eslint-plugin-vue';
+import * as parserVue from 'vue-eslint-parser';
+import tsParser from '@typescript-eslint/parser';
+import pluginTs from '@typescript-eslint/eslint-plugin';
+import globals from 'globals';
 
 export default [
   // 1. グローバルに無視するファイル/ディレクトリを指定
   {
     ignores: [
-        "dist/**",
-        "node_modules/**",
-        "*.config.js", // vite.config.js, postcss.config.js など
-        "*.config.mjs",
-        "*.config.cjs",
+      'dist/**',
+      'node_modules/**',
+      '*.config.js', // vite.config.js, postcss.config.js など
+      '*.config.mjs',
+      '*.config.cjs',
     ],
   },
 
@@ -26,7 +26,7 @@ export default [
 
   // 4. TypeScriptとVueファイルに対する設定
   {
-    files: ["**/*.{ts,vue}"], // .ts と .vue ファイルが対象
+    files: ['**/*.{ts,vue}'], // .ts と .vue ファイルが対象
     // プラグインの登録 (旧 plugins: ['@typescript-eslint'])
     plugins: {
       '@typescript-eslint': pluginTs,
@@ -37,7 +37,7 @@ export default [
       parser: parserVue, // .vueファイルをパースするために必須
       parserOptions: {
         parser: tsParser, // <script lang="ts"> をパースするために必須
-        sourceType: "module",
+        sourceType: 'module',
         ecmaVersion: 2022,
       },
       // グローバル変数の設定 (旧 env, globals)
