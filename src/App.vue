@@ -238,135 +238,133 @@
 </template>
 
 <script setup lang="ts">
-import { useStoreCounter } from './stores/counter';
-const siteversion = import.meta.env.VITE_SITEVERSION;
-
-const store = useStoreCounter();
-store.init();
-</script>
-
-<script lang="ts">
+import { ref, reactive, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import Modal from './components/ModalArea.vue';
 import Loading from './components/Loading.vue';
-import { useGoTo } from 'vuetify';
+import { useGoTo } from 'vuetify/lib/framework.mjs';
+import { useStoreCounter } from './stores/counter';
 
-export default {
-  name: 'App',
-  components: {
-    Modal,
-    Loading,
-  },
-  data() {
-    return {
-      drawer: false,
-      siteName: 'リンクラ マネージャー！(リンマネ)',
-      pageList: {
-        Home: {
-          name_en: 'Home',
-          name_ja: 'ホーム',
-          url: `/${import.meta.env.VITE_PATHNAME}/`,
-          icon: 'home',
-        },
-        /*'WithStar Mgr': {
-         name_en: 'WithStarMgr',
-         name_ja: '獲得WithStar計算ツール',
-         url: 'withStarMgr',
-         icon: 'star'
-         },*/
-        Simulation: {
-          name_en: 'Simulation',
-          name_ja: '編成シミュレーション',
-          url: 'simulation',
-          icon: 'calculator',
-        },
-        'Card List': {
-          name_en: 'CardList',
-          name_ja: 'カード一覧 / 所持カード設定',
-          url: 'cardlist',
-          icon: 'cards',
-        },
-        'Music List': {
-          name_en: 'MusicList',
-          name_ja: '楽曲一覧 / 楽曲マスタリーレベル設定',
-          url: 'musiclist',
-          icon: 'music',
-        },
-        'Item List': {
-          name_en: 'ItemList',
-          name_ja: 'スキルアップ素材獲得ステージリスト',
-          url: 'Itemlist',
-          icon: 'book',
-        },
-        License: {
-          name_en: 'License',
-          name_ja: 'ライセンス',
-          url: 'license',
-          icon: 'text-box-outline',
-        },
-      },
-    };
-  },
-  created() {
-    const userAgent = window.navigator.userAgent.toLowerCase();
+// --- storeとrouterの初期化 ---
+const store = useStoreCounter();
+store.init();
+const router = useRouter();
+const route = useRoute();
+const goTo = useGoTo();
 
-    if (userAgent.indexOf('msie') !== -1 || userAgent.indexOf('trident') !== -1) {
-      alert(
-        '本サイトはInternet Explorerに対応しておりません。\n別のブラウザから閲覧することを推奨します。',
-      );
-    }
+/** ページ情報の型 */
+interface PageInfo {
+  name_en: string;
+  name_ja: string;
+  url: string;
+  icon: string;
+}
 
-    if (localStorage.inflow !== undefined) {
-      const pageName: string = localStorage.inflow;
-      localStorage.removeItem('inflow');
+// --- リアクティブな状態 (data) ---
+const drawer = ref(false);
+const siteName = 'リンクラ マネージャー！(リンマネ)';
+const pageList = reactive<Record<string, PageInfo>>({
+  'Home': {
+    name_en: 'Home',
+    name_ja: 'ホーム',
+    url: `/${import.meta.env.VITE_PATHNAME}/`,
+    icon: 'home',
+  },
+  /*'WithStar Mgr': {
+    name_en: 'WithStarMgr',
+    name_ja: '獲得WithStar計算ツール',
+    url: 'withStarMgr',
+    icon: 'star'
+  },*/
+  'Simulation': {
+    name_en: 'Simulation',
+    name_ja: '編成シミュレーション',
+    url: 'simulation',
+    icon: 'calculator',
+  },
+  'Card List': {
+    name_en: 'CardList',
+    name_ja: 'カード一覧 / 所持カード設定',
+    url: 'cardlist',
+    icon: 'cards',
+  },
+  'Music List': {
+    name_en: 'MusicList',
+    name_ja: '楽曲一覧 / 楽曲マスタリーレベル設定',
+    url: 'musiclist',
+    icon: 'music',
+  },
+  'Item List': {
+    name_en: 'ItemList',
+    name_ja: 'スキルアップ素材獲得ステージリスト',
+    url: 'Itemlist',
+    icon: 'book',
+  },
+  License: {
+    name_en: 'License',
+    name_ja: 'ライセンス',
+    url: 'license',
+    icon: 'text-box-outline',
+  },
+});
 
-      for (const listName in this.pageList) {
-        if (this.pageList[listName].url.toLowerCase() === pageName.toLowerCase()) {
-          this.pageMove(this.pageList[listName].name_en);
-          return;
-        }
-      }
-
-      this.pageMove(this.pageList.Home.name_en);
-    }
-  },
-  setup() {
-    const goTo = useGoTo();
-    return goTo;
-  },
-  mounted() {},
-  methods: {
-    /**
-     * ページ移動
-     *
-     * @param movePageName 移動先ページ名
-     * @returns void
-     */
-    pageMove(movePageName: string): void {
-      // this.$router.replace(movePageName);
-      this.$router.replace({
-        name: movePageName,
-        // query: {
-        //   page: 5
-        // }
-      });
-      window.scrollTo(0, 0);
-    },
-    /**
-     * ページタイトル変更
-     *
-     * @param to タイトル
-     */
-    pageTitle(to: any): void {
-      document.title = `${to.meta.title}${this.siteName}`;
-    },
-    /**
-     * トップへ移動
-     */
-    goToTop() {
-      this.goTo(0);
-    },
-  },
+// --- 関数 (methods) ---
+/**
+ * ページ移動
+ * @param movePageName 移動先ページ名
+ */
+const pageMove = (movePageName: string): void => {
+  router.replace({ name: movePageName });
+  window.scrollTo(0, 0);
 };
+
+/**
+ * トップへ移動
+ */
+const goToTop = () => {
+  goTo(0);
+};
+
+// --- ライフサイクルフック相当のロジック (created, mounted, watch) ---
+
+// IEチェック (created)
+const userAgent = window.navigator.userAgent.toLowerCase();
+if (userAgent.indexOf('msie') !== -1 || userAgent.indexOf('trident') !== -1) {
+  alert(
+    '本サイトはInternet Explorerに対応しておりません。\n別のブラウザから閲覧することを推奨します。',
+  );
+}
+
+// 外部サイトからの流入処理 (created)
+if (localStorage.inflow !== undefined) {
+  const pageName: string = localStorage.inflow;
+  localStorage.removeItem('inflow');
+
+  let found = false;
+  for (const listName in pageList) {
+    if (pageList[listName].url.toLowerCase() === pageName.toLowerCase()) {
+      pageMove(pageList[listName].name_en);
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    pageMove(pageList.Home.name_en);
+  }
+}
+
+// ページタイトルをルートに応じて更新 (watch)
+watch(
+  () => route.meta,
+  (newMeta) => {
+    if (newMeta && newMeta.title) {
+      document.title = `${newMeta.title} | ${siteName}`;
+    } else {
+      document.title = siteName;
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <style scoped>
