@@ -6,7 +6,7 @@ import WebFont from 'webfontloader';
 import router from './router/router';
 import VueGtag from 'vue-gtag-next';
 import 'vuetify/styles';
-import '@mdi/font/css/materialdesignicons.css'
+import '@mdi/font/css/materialdesignicons.css';
 
 const app = createApp(App);
 
