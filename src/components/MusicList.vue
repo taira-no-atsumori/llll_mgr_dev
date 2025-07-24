@@ -26,7 +26,9 @@
       >
         <v-expansion-panels>
           <v-expansion-panel>
-            <v-expansion-panel-title> <v-icon class="mr-2">mdi-filter</v-icon>絞り込み </v-expansion-panel-title>
+            <v-expansion-panel-title>
+              <v-icon class="mr-2">mdi-filter</v-icon>絞り込み
+            </v-expansion-panel-title>
             <v-expansion-panel-text>
               <v-row no-gutters>
                 <v-col
@@ -96,7 +98,7 @@
                       <v-img
                         :src="store.getImagePath('member_icon', `icon_SD_${item.title}`)"
                         class="icon member"
-                        style="width: 25px;"
+                        style="width: 25px"
                       ></v-img>
                     </template>
                     <template v-slot:item="{ item }">
@@ -214,7 +216,7 @@
               <v-row>
                 <v-col
                   cols="12"
-                  sm="5"
+                  sm="6"
                 >
                   <h3>ボルテージアップ</h3>
                   <p class="mb-1">
@@ -247,12 +249,23 @@
                         <td class="text-center">5</td>
                         <td class="text-center">4</td>
                       </tr>
+                      <tr>
+                        <td class="text-center">一定量</td>
+                        <td class="text-center">11</td>
+                        <td class="text-center">10</td>
+                        <td class="text-center">9</td>
+                        <td class="text-center">8</td>
+                        <td class="text-center">7</td>
+                        <td class="text-center">6</td>
+                        <td class="text-center">5</td>
+                        <td class="text-center">4</td>
+                      </tr>
                     </tbody>
                   </v-table>
                 </v-col>
                 <v-col
                   cols="12"
-                  sm="5"
+                  sm="6"
                 >
                   <h3>メンタルリカバー</h3>
                   <p class="mb-1">
@@ -292,16 +305,42 @@
                 </v-col>
                 <v-col
                   cols="12"
-                  sm="2"
+                  sm="6"
                 >
-                  <div class="mb-3 mb-md-10">
-                    <h3>ビートハートアップ</h3>
-                    ビートハートアップレベル×0.5%
-                  </div>
-                  <div>
-                    <h3>LOVEボーナス</h3>
-                    LOVEボーナスレベル×0.5%
-                  </div>
+                  <h3>LOVEボーナス</h3>
+                  <p class="mb-1">
+                    LOVEボーナスレベルによって得られるLOVEが増加する。<br />
+                    増加量は以下のとおり。
+                  </p>
+                  <v-table>
+                    <thead>
+                      <tr>
+                        <th class="text-center">Lv</th>
+                        <th class="text-center">1～5</th>
+                        <th class="text-center">6～10</th>
+                        <th class="text-center">11～25</th>
+                        <th class="text-center">26～50</th>
+                        <th class="text-center">51～</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-center">増加量</td>
+                        <td class="text-center">(Lv.×10)%</td>
+                        <td class="text-center">(50+(Lv.-5)×5)%</td>
+                        <td class="text-center">(75+(Lv.-10)×4)%</td>
+                        <td class="text-center">(135+(Lv.-25)×3)%</td>
+                        <td class="text-center">(210+(Lv.-50)×2.5)%</td>
+                      </tr>
+                    </tbody>
+                  </v-table>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                >
+                  <h3>ビートハートアップ</h3>
+                  ビートハートアップレベル×0.5%
                 </v-col>
               </v-row>
             </v-expansion-panel-text>
@@ -321,8 +360,7 @@
       >
         <v-col
           v-if="!store.isOtherMember(memberName)"
-          cols="6"
-          md="4"
+          cols="4"
           lg="2"
           :class="`text-center align-self-end ${windowSize.w > 600 ? '' : 'px-1'}`"
         >
@@ -340,10 +378,19 @@
                   :src="store.getImagePath('member_icon', `icon_SD_${memberName}`)"
                   style="width: 30px"
                 />
-                <span class="pt-1 pl-1" :style="`font-size: ${windowSize.w > 600 && memberName === 'seras' ? 0.8 : 1}em;`">
-                  {{ store.makeFullName(memberName) }} <span class="text-body-2">
-                    (Lv.{{ store.makeTotalMasteryLv(memberName) }})
-                  </span>
+                <span
+                  v-if="windowSize.w > 600"
+                  class="pt-1 pl-1"
+                  :style="`font-size: ${memberName === 'seras' ? 0.8 : 1}em;`"
+                >
+                  {{ store.makeFullName(memberName) }}
+                  <span class="text-body-2"> (Lv.{{ store.makeTotalMasteryLv(memberName) }}) </span>
+                </span>
+                <span
+                  v-else
+                  class="pt-1 pl-1 text-body-2"
+                >
+                  (Lv.{{ store.makeTotalMasteryLv(memberName) }})
                 </span>
               </h4>
             </v-col>
@@ -351,10 +398,12 @@
               cols="12"
               class="px-sm-2"
             >
-              <p class="font-weight-bold mb-2 subtitle">獲得ボーナススキル</p>
+              <p class="font-weight-bold mb-2 subtitle">
+                <span v-if="windowSize.w > 600">獲得済</span>ボーナススキル
+              </p>
               <v-row no-gutters>
                 <v-col
-                  cols="3"
+                  cols="6"
                   sm="3"
                   v-for="skillName in bonusSkillList"
                   :key="skillName"
@@ -364,20 +413,15 @@
                     <v-col
                       cols="12"
                       sm="6"
-                      style="height: 30px"
+                      style="height: 30px; font-size: 15px"
+                      :class="`d-flex align-center`"
                     >
                       <img
                         :src="store.getImagePath('bonusSkill_icon', skillName)"
                         style="width: 30px; border-radius: 3px"
                       />
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      style="font-size: 15px"
-                      :class="`d-flex align-center ${windowSize.w > 600 ? '' : 'justify-center'}`"
-                    >
-                      <span style="padding: 0 1px">×</span>{{ store.setBonusSkillLevel(memberName, skillName) }}
+                      <span style="padding: 0 1px 0 2px">×</span
+                      >{{ store.setBonusSkillLevel(memberName, skillName) }}
                     </v-col>
                   </v-row>
                 </v-col>
@@ -388,79 +432,125 @@
       </template>
 
       <v-col
-        cols="6"
-        md="4"
+        cols="4"
         lg="2"
         align-self="center"
         class="text-center"
       >
-        <v-btn
-          @click="store.showModalEvent('masteryLevel')"
-        >
-          詳細を見る
-        </v-btn>
+        <v-btn @click="store.showModalEvent('masteryLevel')">詳細を見る</v-btn>
       </v-col>
     </v-row>
 
     <v-divider class="mb-2"></v-divider>
 
     <div class="align-self-center d-inline-block mb-2 mb-md-0">
-      <v-btn
-        color="blue"
-        class="mr-2"
-      >
-        <v-icon class="mr-2">mdi-sort</v-icon>ソート
-        <v-menu
-          activator="parent"
-          transition="slide-y-transition"
+      <div class="d-flex flex-row align-center">
+        <v-btn
+          color="blue"
+          class="mr-2"
         >
-          <v-list>
-            <v-list-item
-              v-for="(label, val) in sortTypeList"
-              :key="val"
-              :value="val"
-              @click="sortingProcess(store, 'sortType', val);"
-            >
-              <v-list-item-title>
-                {{ label }}
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </v-btn>
+          <v-icon class="mr-2">mdi-sort</v-icon>ソート
+          <v-menu
+            activator="parent"
+            transition="slide-y-transition"
+          >
+            <v-list density="compact">
+              <template
+                v-for="(label, val) in sortTypeList"
+              >
+                <v-list-item
+                  v-if="!/difficultyLevel|maxCombo/.test(val)"
+                  :key="val"
+                  :title="label"
+                  :value="val"
+                  @click="sortingProcess(store, 'sortType', val)"
+                >
+                </v-list-item>
+                <v-list-group
+                  v-if="val === 'difficultyLevel' && isSchoolShow"
+                  value="difficultyLevel"
+                >
+                  <template v-slot:activator="{ props }">
+                    <v-list-item
+                      v-bind="props"
+                      :title="label"
+                    ></v-list-item>
+                  </template>
 
-      <v-btn-toggle
-        v-model="store.localStorageData.sortSettings.musicList.order"
-        density="compact"
-        variant="outlined"
-        color="pink"
-        class="mr-2"
-        mandatory
-      >
-        <v-btn
-          value="descending"
-          class="px-0 px-sm-2"
-          @click="store.changeSettings('sortSettings');"
-        >
-          <v-icon>mdi-sort-descending</v-icon>
-          <span class="ml-2 hidden-sm-and-down">降順</span>
+                  <v-list-item
+                    v-for="difficulty_val in ['NORMAL', 'HARD', 'EXPERT', 'MASTER']"
+                    :key="`difficultyLevel_${difficulty_val}`"
+                    :title="difficulty_val"
+                    @click="sortingProcess(store, 'sortType', `difficultyLevel_${difficulty_val}`)"
+                  ></v-list-item>
+                </v-list-group>
+                <v-list-group
+                  v-if="val === 'maxCombo' && isSchoolShow"
+                  value="maxCombo"
+                >
+                  <template v-slot:activator="{ props }">
+                    <v-list-item
+                      v-bind="props"
+                      :title="label"
+                    ></v-list-item>
+                  </template>
+
+                  <v-list-item
+                    v-for="combo_val in ['NORMAL', 'HARD', 'EXPERT', 'MASTER']"
+                    :key="`maxCombo_${combo_val}`"
+                    :title="combo_val"
+                    @click="sortingProcess(store, 'sortType', `maxCombo_${combo_val}`)"
+                  ></v-list-item>
+                </v-list-group>
+              </template>
+            </v-list>
+          </v-menu>
         </v-btn>
-        <v-btn
-          value="ascending"
-          class="px-0 px-sm-2"
-          @click="store.changeSettings('sortSettings');"
+
+        <v-btn-toggle
+          v-model="store.localStorageData.sortSettings.musicList.order"
+          density="compact"
+          variant="outlined"
+          color="pink"
+          class="mr-2"
+          mandatory
         >
-          <v-icon>mdi-sort-ascending</v-icon>
-          <span class="ml-2 hidden-sm-and-down">昇順</span>
-        </v-btn>
-      </v-btn-toggle>
+          <v-btn
+            value="descending"
+            class="px-0 px-sm-2"
+            @click="store.changeSettings('sortSettings')"
+          >
+            <v-icon>mdi-sort-descending</v-icon>
+            <span class="ml-2 hidden-sm-and-down">降順</span>
+          </v-btn>
+          <v-btn
+            value="ascending"
+            class="px-0 px-sm-2"
+            @click="store.changeSettings('sortSettings')"
+          >
+            <v-icon>mdi-sort-ascending</v-icon>
+            <span class="ml-2 hidden-sm-and-down">昇順</span>
+          </v-btn>
+        </v-btn-toggle>
+
+        <v-switch
+          v-model="isSchoolShow"
+          label="スクショウ"
+          density="compact"
+          hide-details
+          class="pl-2 mr-3"
+          color="pink"
+        ></v-switch>
+      </div>
     </div>
 
     <p class="align-self-center d-block d-md-inline-block">
-      絞り込み結果：{{ Object.keys(makeMusicList(store)).length }} 曲<span class="ml-1 mr-md-1">/</span>
+      絞り込み結果：{{ Object.keys(makeMusicList(store)).length }} 曲<span class="ml-1 mr-md-1"
+        >/</span
+      >
     </p>
     <p class="align-self-center d-block d-md-inline-block">
-      現在のソート：{{ sortTypeList[store.localStorageData.sortSettings.musicList.sortType] }}
+      現在のソート：{{ sortTypeLabel(store, store.localStorageData.sortSettings.musicList.sortType) }}
     </p>
 
     <v-divider class="my-2"></v-divider>
@@ -478,7 +568,9 @@
         :key="ary"
       >
         <v-card
-          v-if="store.localStorageData.siteSettings.musicList.hover === 'false' || windowSize.w <= 600"
+          v-if="
+            store.localStorageData.siteSettings.musicList.hover === 'false' || windowSize.w <= 600
+          "
           :color="attributeColor[ary.attribute]"
           @click="
             store.showModalEvent('setLeaningLevel');
@@ -492,32 +584,33 @@
             @load="checkImagesLoaded(store, Object.keys(makeMusicList(store)).length)"
             eager
           ></v-img>
-          <v-card-title class="text-subtitle-2 text-center px-2 pt-1 pb-0">{{ songTitle }}</v-card-title>
+          <v-card-title class="text-subtitle-2 text-center px-2 pt-1 pb-0">{{
+            songTitle
+          }}</v-card-title>
           <v-divider class="mb-1 border-opacity-25"></v-divider>
           <v-card-text class="pt-0 px-1 pb-1">
             <ul class="d-flex">
-              <li class="mr-1">
-                <v-img
+              <li class="skillIconArea mr-1">
+                <img
                   :src="store.getImagePath('bonusSkill_icon', ary.bonusSkill)"
                   :alt="ary.bonusSkill"
-                  class="skillIcon"
-                ></v-img>
+                />
               </li>
-              <li class="mr-1">
-                <v-img
+              <li class="skillIconArea mr-1">
+                <img
                   :src="store.getImagePath('attribute_icon', `icon_${ary.attribute}`)"
                   :alt="ary.attribute"
-                  class="skillIcon"
-                ></v-img>
+                />
               </li>
-              <li class="mr-1">
-                <v-img
+              <li class="skillIconArea mr-1">
+                <img
                   :src="store.getImagePath('member_icon', `icon_SD_${ary.center}`)"
                   :alt="ary.center"
-                  class="skillIcon"
-                ></v-img>
+                />
               </li>
-              <li class="align-self-center text-caption">MLv.{{ store.musicList[songTitle].level }}</li>
+              <li class="align-self-center text-caption">
+                MLv.{{ store.musicList[songTitle].level }}
+              </li>
             </ul>
           </v-card-text>
         </v-card>
@@ -539,37 +632,34 @@
                 :lazy-src="store.getImagePath('CD_jacket', store.conversion(songTitle))"
                 :src="store.getImagePath('CD_jacket', store.conversion(songTitle))"
                 :alt="songTitle"
-                @load="checkImagesLoaded(store, Object.keys(makeMusicList(store)).length);"
+                @load="checkImagesLoaded(store, Object.keys(makeMusicList(store)).length)"
                 eager
               ></v-img>
-              <v-card-title class="text-subtitle-2 text-center px-2 pt-1 pb-0">{{ songTitle }}</v-card-title>
+              <v-card-title class="text-subtitle-2 text-center px-2 pt-1 pb-0">{{
+                songTitle
+              }}</v-card-title>
               <v-divider class="mb-1 border-opacity-25"></v-divider>
               <v-card-item class="pt-0 px-1 pb-1">
                 <ul class="d-flex">
-                  <li class="mr-1">
-                    <v-img
+                  <li class="skillIconArea mr-1">
+                    <img
                       :src="store.getImagePath('bonusSkill_icon', ary.bonusSkill)"
                       :alt="ary.bonusSkill"
-                      class="skillIcon"
-                    ></v-img>
+                    />
                   </li>
-                  <li class="mr-1">
-                    <v-img
+                  <li class="skillIconArea mr-1">
+                    <img
                       :src="store.getImagePath('attribute_icon', `icon_${ary.attribute}`)"
                       :alt="ary.attribute"
-                      class="skillIcon"
-                    ></v-img>
+                    />
                   </li>
-                  <li class="mr-1">
-                    <v-img
+                  <li class="skillIconArea mr-1">
+                    <img
                       :src="store.getImagePath('member_icon', `icon_SD_${ary.center}`)"
                       :alt="ary.center"
-                      class="skillIcon"
-                    ></v-img>
+                    />
                   </li>
-                  <li
-                    class="align-self-center text-caption"
-                  >
+                  <li class="align-self-center text-caption">
                     MLv.{{ store.musicList[songTitle].level }}
                   </li>
                 </ul>
@@ -593,7 +683,8 @@
 </template>
 
 <script setup lang="ts">
-import { useStoreCounter } from '../stores/counter';
+import { CounterState } from '@/types/counter';
+import { useStoreCounter } from '@/stores/counter';
 const store = useStoreCounter();
 store.setSupportSkillLevel();
 store.loading = true;
@@ -609,11 +700,22 @@ export default {
         w: 0,
         h: 0,
       },
+      isSchoolShow: false,
       inputMusicTitle: null,
       masteryLv: [0, 50],
       selectCenterList: [],
-      bonusSkillList: ['ボルテージアップ', 'メンタルリカバー', 'ビートハートアップ', 'LOVEボーナス'],
-      selectBonusSkillList: ['ボルテージアップ', 'メンタルリカバー', 'ビートハートアップ', 'LOVEボーナス'],
+      bonusSkillList: [
+        'ボルテージアップ',
+        'メンタルリカバー',
+        'ビートハートアップ',
+        'LOVEボーナス',
+      ],
+      selectBonusSkillList: [
+        'ボルテージアップ',
+        'メンタルリカバー',
+        'ビートハートアップ',
+        'LOVEボーナス',
+      ],
       attrList: ['smile', 'pure', 'cool'],
       selectAttrList: ['smile', 'pure', 'cool'],
       attributeColor: {
@@ -628,6 +730,8 @@ export default {
         BHcount: 'ビートハート発生回数',
         time: '秒数',
         releaseDate: '発売日',
+        difficultyLevel: '難易度',
+        maxCombo: 'コンボ数',
       },
       loadedImagesCount: 0,
     };
@@ -635,11 +739,19 @@ export default {
   created() {},
   computed: {
     makeMusicList() {
-      return (store): Object => {
-        const list = Array.from(
-          Object.entries(store.musicList),
-          ([key, value]) => ({ title: key, ...value })
-        );
+      return (store: CounterState): Object => {
+        if (
+          !this.isSchoolShow &&
+          (store.localStorageData.sortSettings.musicList.sortType.includes('difficultyLevel') ||
+          store.localStorageData.sortSettings.musicList.sortType.includes('maxCombo'))
+        ) {
+          this.sortingProcess(store, 'sortType', 'default');
+        }
+
+        const list = Array.from(Object.entries(store.musicList), ([key, value]) => ({
+          title: key,
+          ...value,
+        }));
 
         const result = list.filter((musicData) => {
           if (typeof musicData.level !== 'number') {
@@ -647,45 +759,70 @@ export default {
           }
 
           if (
-            musicData.level < this.masteryLv[0] || musicData.level > this.masteryLv[1] ||
+            musicData.level < this.masteryLv[0] ||
+            musicData.level > this.masteryLv[1] ||
             // this.inputMusicTitle && !musicData.musicData.kana.includes(this.inputMusicTitle) ||
-            this.selectCenterList.length > 0 && !this.selectCenterList.includes(musicData.center) ||
-            this.selectBonusSkillList.length > 0 && !this.selectBonusSkillList.includes(musicData.bonusSkill) ||
-            this.selectAttrList.length > 0 && !this.selectAttrList.includes(musicData.attribute)) {
+            (this.selectCenterList.length > 0 &&
+              !this.selectCenterList.includes(musicData.center)) ||
+            (this.selectBonusSkillList.length > 0 &&
+              !this.selectBonusSkillList.includes(musicData.bonusSkill)) ||
+            (this.selectAttrList.length > 0 && !this.selectAttrList.includes(musicData.attribute))
+          ) {
             return false;
-          } else {
+          } else if (!this.isSchoolShow) {
             return true;
+          } else {
+            return !!(musicData?.scoreData ?? false);
           }
         });
 
         result.sort((a, b) => {
-          switch (store.localStorageData.sortSettings.musicList.sortType) {
-            case 'level':
-            case 'BHcount':
-              return sorting(
-                store.localStorageData.sortSettings.musicList.order === 'ascending',
-                a[store.localStorageData.sortSettings.musicList.sortType],
-                b[store.localStorageData.sortSettings.musicList.sortType]
-              );
-            case 'kana':
-            case 'time':
-              return sorting(
-                store.localStorageData.sortSettings.musicList.order === 'ascending',
-                a.musicData[store.localStorageData.sortSettings.musicList.sortType],
-                b.musicData[store.localStorageData.sortSettings.musicList.sortType]
-              );
-            case 'releaseDate':
-              return sorting(
-                store.localStorageData.sortSettings.musicList.order === 'ascending',
-                new Date(a.musicData.releaseDate.year, a.musicData.releaseDate.month - 1, a.musicData.releaseDate.date),
-                new Date(b.musicData.releaseDate.year, b.musicData.releaseDate.month - 1, b.musicData.releaseDate.date)
-              );
-            default:
-              return sorting(
-                store.localStorageData.sortSettings.musicList.order === 'ascending',
-                a.ID,
-                b.ID
-              );
+          const sortType = store.localStorageData.sortSettings.musicList.sortType.split('_')[0];
+          const difficulty = store.localStorageData.sortSettings.musicList.sortType.split('_')[1] ?? '';
+
+          if (this.isSchoolShow && /difficultyLevel|maxCombo/.test(sortType)) {
+            return sorting(
+              store.localStorageData.sortSettings.musicList.order === 'ascending',
+              a.scoreData[sortType][difficulty],
+              b.scoreData[sortType][difficulty],
+            );
+          } else {
+            switch (sortType) {
+              case 'level':
+              case 'BHcount':
+                return sorting(
+                  store.localStorageData.sortSettings.musicList.order === 'ascending',
+                  a[store.localStorageData.sortSettings.musicList.sortType],
+                  b[store.localStorageData.sortSettings.musicList.sortType],
+                );
+              case 'kana':
+              case 'time':
+                return sorting(
+                  store.localStorageData.sortSettings.musicList.order === 'ascending',
+                  a.musicData[store.localStorageData.sortSettings.musicList.sortType],
+                  b.musicData[store.localStorageData.sortSettings.musicList.sortType],
+                );
+              case 'releaseDate':
+                return sorting(
+                  store.localStorageData.sortSettings.musicList.order === 'ascending',
+                  new Date(
+                    a.musicData.releaseDate.year,
+                    a.musicData.releaseDate.month - 1,
+                    a.musicData.releaseDate.date,
+                  ),
+                  new Date(
+                    b.musicData.releaseDate.year,
+                    b.musicData.releaseDate.month - 1,
+                    b.musicData.releaseDate.date,
+                  ),
+                );
+              default:
+                return sorting(
+                  store.localStorageData.sortSettings.musicList.order === 'ascending',
+                  a.ID,
+                  b.ID,
+                );
+            }
           }
         });
 
@@ -710,7 +847,18 @@ export default {
     this.onResize();
   },
   methods: {
-    selectCenter(store, selector: string | null): void {
+    sortingProcess(store: CounterState, type: 'sortType' | 'order', val: string): void {
+      if (store.localStorageData.sortSettings.musicList[type] !== val) {
+        store.loading = true;
+
+        if (type === 'sortType') {
+          store.localStorageData.sortSettings.musicList[type] = val;
+        }
+
+        store.changeSettings('sortSettings');
+      }
+    },
+    selectCenter(store: CounterState, selector: string | null): void {
       if (selector === null) {
         this.selectCenterList = [];
       } else if (this.selectCenterList.some((x) => x === selector)) {
@@ -767,33 +915,21 @@ export default {
         h: window.innerHeight,
       };
     },
-    sortingProcess(
-      store: any,
-      type: 'sortType' | 'order',
-      val: string,
-    ): void {
-      if (
-        store.localStorageData.sortSettings.musicList[type] !== val
-      ) {
-        store.loading = true;
-
-        if (type === 'sortType') {
-          store.localStorageData.sortSettings.musicList[type] = val;
-        }
-
-        store.changeSettings('sortSettings');
-      }
-    },
-    checkImagesLoaded(
-      store: any,
-      totalImages: number
-    ): void {
+    checkImagesLoaded(store: CounterState, totalImages: number): void {
       this.loadedImagesCount += 1;
 
       if (this.loadedImagesCount === totalImages) {
         store.loading = false;
         this.loadedImagesCount = 0;
       }
+    },
+    sortTypeLabel(store: CounterState, sortTypeValue: string): string {
+      const sortType = sortTypeValue.split('_')[0];
+      const difficulty = sortTypeValue.split('_')[1] ?? '';
+      if (this.isSchoolShow && /difficultyLevel|maxCombo/.test(sortType)) {
+        return `${this.sortTypeList[sortType]} (${difficulty})`;
+      }
+      return this.sortTypeList[sortType] || '標準';
     },
   },
 };
@@ -810,9 +946,14 @@ export default {
   }
 }
 
-.skillIcon {
+.skillIconArea {
   width: 28px;
-  border-radius: 3px;
+  height: 28px;
+
+  img {
+    width: 100%;
+    border-radius: 3px;
+  }
 }
 
 .member {

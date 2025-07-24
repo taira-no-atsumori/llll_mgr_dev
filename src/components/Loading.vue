@@ -47,5 +47,6 @@ export default {
   created() {},
   computed: {},
   methods: {},
+  watch() {},
 }
 </script>

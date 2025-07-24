@@ -1,50 +1,35 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vuetify from 'vite-plugin-vuetify';
-import * as path from 'path';
-import { join } from 'path';
-import { webcrypto } from 'crypto';
-import { copyFileSync, readFileSync } from 'fs';
+import path from 'path';
+// import { webcrypto } from 'crypto';
 
-const packageJson = JSON.parse(readFileSync('./package.json', 'utf-8'));
+// global.crypto = webcrypto;
 
-global.crypto = webcrypto;
-
-export default defineConfig(({ mode }) => {
+export default defineConfig(({mode}) => {
   const env = loadEnv(mode, process.cwd());
 
   return {
     define: {
-      'import.meta.env': env,
-      __APP_VERSION__: JSON.stringify(packageJson.version),
+      'import.meta.env': env
     },
-    base: `/${env.VITE_PATHNAME}/`,
+    base: `/${ env.VITE_PATHNAME }/`,
     assetsDir: './',
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
-      },
+        '@': path.resolve(__dirname, './src')
+      }
     },
     plugins: [
       vue(),
-      vuetify(),
-      {
-        name: 'copy-txt-files',
-        buildEnd() {
-          const sourceDir = './';
-          const targetDir = './docs';
-          const file = 'version.txt';
-          copyFileSync(join(sourceDir, file), join(targetDir, file));
-        }
-      }
+      vuetify()
     ],
     server: {
       host: '0.0.0.0',
-      port: 8080,
+      port: 8080
     },
     build: {
       outDir: 'docs',
-      emptyOutDir: false,
       rollupOptions: {
         output: {
           entryFileNames: 'js/[name].js',
@@ -60,9 +45,9 @@ export default defineConfig(({ mode }) => {
               return 'css/[name][extname]';
             }
             return 'assets/[name][extname]';
-          },
-        },
-      },
-    },
+          }
+        }
+      }
+    }
   };
 });

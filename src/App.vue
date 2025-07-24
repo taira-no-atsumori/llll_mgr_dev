@@ -9,7 +9,10 @@
         @click.stop="drawer = !drawer"
         class="hidden-sm-and-up"
       ></v-app-bar-nav-icon>
-      <v-bottom-sheet v-model="drawer" v-if="false">
+      <v-bottom-sheet
+        v-model="drawer"
+        v-if="false"
+      >
         <template v-slot:activator="{ props }">
           <v-icon
             v-bind="props"
@@ -24,7 +27,7 @@
           <v-list-item
             class="px-2 pt-0 pb-2"
             title="リンクラ マネージャー！"
-            :subtitle="`Ver. ${version}`"
+            :subtitle="`Ver. ${store.version}`"
           ></v-list-item>
 
           <v-divider class="pb-1"></v-divider>
@@ -48,15 +51,21 @@
       </v-bottom-sheet>
 
       <v-toolbar-title class="d-none d-sm-block">
-        リンクラ マネージャー！<span class="text-subtitle-2">Ver.{{ version }}</span>
+        リンクラ マネージャー！<span class="text-subtitle-2">Ver.{{ store.version }}</span>
       </v-toolbar-title>
       <v-toolbar-title class="hidden-sm-and-up">リンマネ</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <ul class="d-none d-sm-flex">
-        <template v-for="(arr, pageTitle) of pageList" :key="arr">
-          <v-tooltip location="bottom" v-if="pageTitle !== 'License'">
+        <template
+          v-for="(arr, pageTitle) of pageList"
+          :key="arr"
+        >
+          <v-tooltip
+            location="bottom"
+            v-if="pageTitle !== 'License'"
+          >
             <template v-slot:activator="{ props }">
               <li style="border-right: 1px solid">
                 <v-btn
@@ -74,7 +83,10 @@
         </template>
       </ul>
 
-      <ul class="d-flex" style="height: 36px">
+      <ul
+        class="d-flex"
+        style="height: 36px"
+      >
         <li class="align-self-center ml-1">
           <v-tooltip location="bottom">
             <template v-slot:activator="{ props }">
@@ -90,7 +102,10 @@
           </v-tooltip>
         </li>
         <li class="d-none d-sm-flex">
-          <v-divider class="border-opacity-100" vertical></v-divider>
+          <v-divider
+            class="border-opacity-100"
+            vertical
+          ></v-divider>
         </li>
         <li class="align-self-center ml-1">
           <v-tooltip location="bottom">
@@ -107,7 +122,10 @@
           </v-tooltip>
         </li>
         <li class="d-none d-sm-flex">
-          <v-divider class="border-opacity-100" vertical></v-divider>
+          <v-divider
+            class="border-opacity-100"
+            vertical
+          ></v-divider>
         </li>
         <li class="align-self-center ml-1">
           <v-tooltip location="bottom">
@@ -135,7 +153,7 @@
       <v-list-item
         class="px-2 pt-0 pb-2"
         title="リンクラ マネージャー！"
-        :subtitle="`Ver.${version}`"
+        :subtitle="`Ver.${store.version}`"
       ></v-list-item>
 
       <v-divider class="pb-1"></v-divider>
@@ -164,15 +182,24 @@
       app
       location="bottom"
       class="mb-10"
-      @click="$vuetify.goTo(0)"
+      @click="goToTop()"
     ></v-fab>
 
-    <Loading />
     <Modal />
+    <Loading />
 
-    <v-footer color="pink" class="mb-10">
-      <v-row no-gutters justify="center">
-        <v-col cols="12" class="mx-2 text-center">
+    <v-footer
+      color="pink"
+      class="mb-10"
+    >
+      <v-row
+        no-gutters
+        justify="center"
+      >
+        <v-col
+          cols="12"
+          class="mx-2 text-center"
+        >
           <a
             v-for="(arr, pageTitle) of pageList"
             :key="arr"
@@ -183,7 +210,10 @@
             {{ pageTitle.toUpperCase() }}
           </a>
         </v-col>
-        <v-col cols="12" class="text-center">
+        <v-col
+          cols="12"
+          class="text-center"
+        >
           © 2023 - {{ new Date().getFullYear() }}
           <strong>taira no atsumori</strong>
         </v-col>
@@ -201,35 +231,24 @@
         target="_blank"
         class="text-white font-weight-bold"
       >
-        お題箱
-      </a>」まで
+        お題箱 </a
+      >」まで
     </v-bottom-navigation>
   </v-app>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useStoreCounter } from './stores/counter';
-// import { ref, onMounted } from 'vue';
+const siteversion = import.meta.env.VITE_SITEVERSION;
 
 const store = useStoreCounter();
 store.init();
-const version = __APP_VERSION__;
-
-// const version = ref(null);
-
-// onMounted(async () => {
-//   try {
-//     const response = await fetch('./version.txt');
-//     version.value = await response.text();
-//   } catch (error) {
-//     console.error('バージョン情報の取得に失敗しました:', error);
-//   }
-// });
 </script>
 
-<script>
+<script lang="ts">
 import Modal from './components/ModalArea.vue';
 import Loading from './components/Loading.vue';
+import { useGoTo } from 'vuetify';
 
 export default {
   name: 'App',
@@ -242,23 +261,23 @@ export default {
       drawer: false,
       siteName: 'リンクラ マネージャー！(リンマネ)',
       pageList: {
-        'Home': {
+        Home: {
           name_en: 'Home',
           name_ja: 'ホーム',
           url: `/${import.meta.env.VITE_PATHNAME}/`,
           icon: 'home',
         },
         /*'WithStar Mgr': {
-          name_en: 'WithStarMgr',
-          name_ja: '獲得WithStar計算ツール',
-          url: 'withStarMgr',
-          icon: 'star'
-        },*/
-        'Simulation': {
+         name_en: 'WithStarMgr',
+         name_ja: '獲得WithStar計算ツール',
+         url: 'withStarMgr',
+         icon: 'star'
+         },*/
+        Simulation: {
           name_en: 'Simulation',
           name_ja: '編成シミュレーション',
           url: 'simulation',
-          icon: 'calculator'
+          icon: 'calculator',
         },
         'Card List': {
           name_en: 'CardList',
@@ -278,7 +297,7 @@ export default {
           url: 'Itemlist',
           icon: 'book',
         },
-        'License': {
+        License: {
           name_en: 'License',
           name_ja: 'ライセンス',
           url: 'license',
@@ -291,11 +310,13 @@ export default {
     const userAgent = window.navigator.userAgent.toLowerCase();
 
     if (userAgent.indexOf('msie') !== -1 || userAgent.indexOf('trident') !== -1) {
-      alert('本サイトはInternet Explorerに対応しておりません。\n別のブラウザから閲覧することを推奨します。');
+      alert(
+        '本サイトはInternet Explorerに対応しておりません。\n別のブラウザから閲覧することを推奨します。',
+      );
     }
 
     if (localStorage.inflow !== undefined) {
-      const pageName = localStorage.inflow;
+      const pageName: string = localStorage.inflow;
       localStorage.removeItem('inflow');
 
       for (const listName in this.pageList) {
@@ -308,14 +329,19 @@ export default {
       this.pageMove(this.pageList.Home.name_en);
     }
   },
+  setup() {
+    const goTo = useGoTo();
+    return goTo;
+  },
   mounted() {},
   methods: {
     /**
      * ページ移動
      *
      * @param movePageName 移動先ページ名
+     * @returns void
      */
-    pageMove(movePageName) {
+    pageMove(movePageName: string): void {
       // this.$router.replace(movePageName);
       this.$router.replace({
         name: movePageName,
@@ -330,19 +356,14 @@ export default {
      *
      * @param to タイトル
      */
-    pageTitle(to) {
+    pageTitle(to: any): void {
       document.title = `${to.meta.title}${this.siteName}`;
     },
     /**
      * トップへ移動
      */
     goToTop() {
-      this.$vuetify.goTo(0);
-    },
-  },
-  watch: {
-    $route(to) {
-      this.pageTitle(to);
+      this.goTo(0);
     },
   },
 };
@@ -355,12 +376,15 @@ export default {
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
+
 .footer-link {
   display: inline-block;
   color: #fff;
@@ -382,6 +406,8 @@ $megumi: #c8c2c6;
 $ginko: #a2d7dd;
 $kosuzu: #fad664;
 $hime: #9c8de2;
+$seras: #f56455;
+$izumi: #1ebecd;
 
 /* ムードカラー */
 $happy: #ef8dc8;
@@ -503,6 +529,22 @@ main {
       background-color: rgba($color: $hime, $alpha: 0.75);
     }
   }
+
+  &[data-member_name='seras'] {
+    border-color: $seras;
+
+    .characterDetailArea {
+      background-color: rgba($color: $seras, $alpha: 0.75);
+    }
+  }
+
+  &[data-member_name='izumi'] {
+    border-color: $izumi;
+
+    .characterDetailArea {
+      background-color: rgba($color: $izumi, $alpha: 0.75);
+    }
+  }
 }
 
 .cardList {
@@ -567,6 +609,24 @@ main {
 
 .v-label {
   opacity: 0.8;
+}
+
+.paramSetArea {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 22.5% 22.5% 10% 22.5% 22.5%;
+  align-items: center;
+  text-align: center;
+
+  div:first-child,
+  div:nth-child(2) {
+    text-align: left;
+  }
+
+  div:nth-child(4),
+  div:last-child {
+    text-align: right;
+  }
 }
 
 @media screen and (max-width: 600px) {
