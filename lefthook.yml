@@ -8,6 +8,7 @@ pre-commit:
     eslint:
       glob: "*.{js,ts,vue}"
       run: npx eslint --fix {staged_files}
+      exclude: "*.config.{js,mjs,cjs}"
     # prettier:
     #   glob: "*.{js,ts,vue,css,scss,json,md}"
     #   run: npx prettier --write {staged_files}
